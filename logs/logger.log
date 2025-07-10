@@ -1,0 +1,58 @@
+2025-07-10T03:00:26.250+02:00  WARN 15168 --- [blueskyWarehouse] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10h9m17s30ms83µs200ns).
+2025-07-10T08:45:08.838+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Starting BlueskyWarehouseApplication using Java 21.0.4 with PID 16228 (C:\Users\admin\IdeaProjects\blueskyWarehouse\target\classes started by admin in C:\Users\admin\IdeaProjects\blueskyWarehouse)
+2025-07-10T08:45:08.842+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-07-10T08:45:08.901+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-07-10T08:45:08.902+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-07-10T08:45:10.650+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-10T08:45:10.782+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 122 ms. Found 11 JPA repository interfaces.
+2025-07-10T08:45:11.639+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-10T08:45:11.664+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-10T08:45:11.665+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-07-10T08:45:11.726+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-10T08:45:11.726+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2824 ms
+2025-07-10T08:45:11.971+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-10T08:45:12.059+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-07-10T08:45:12.118+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-10T08:45:12.520+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-10T08:45:12.573+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-10T08:45:13.154+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a36ccdb
+2025-07-10T08:45:13.164+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-10T08:45:13.313+02:00  WARN 16228 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-10T08:45:13.315+02:00  WARN 16228 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-07-10T08:45:13.355+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-10T08:45:15.458+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-10T08:45:16.028+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-10T08:45:16.539+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-07-10T08:45:17.312+02:00  WARN 16228 --- [blueskyWarehouse] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-10T08:45:17.375+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-07-10T08:45:18.447+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-07-10T08:45:18.545+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-07-10T08:45:18.556+02:00  INFO 16228 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Started BlueskyWarehouseApplication in 10.27 seconds (process running for 12.036)
+2025-07-10T08:46:51.127+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-07-10T08:46:51.128+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-07-10T08:46:51.129+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-07-10T08:46:51.225+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] c.e.b.S.OptimalStorageLocationService    : 用户尝试登录，用户名: Zhuyi Admin
+2025-07-10T08:46:51.432+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] c.e.b.S.OptimalStorageLocationService    : 用户 [Zhuyi Admin] 登录成功
+2025-07-10T08:51:29.163+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.S.OptimalStorageLocationService    : 用户尝试登录，用户名: Zhuyi Admin
+2025-07-10T08:51:29.242+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.S.OptimalStorageLocationService    : 用户 [Zhuyi Admin] 登录成功
+2025-07-10T08:52:12.234+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-6] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Antiquariat KAMAS / Meyer-Thoene, itemId=9, 数量=500, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:52:43.830+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-8] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Nicole Tinz, itemId=7, 数量=500, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:52:58.958+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-9] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Stephanie Rossow, itemId=7, 数量=500, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:53:12.603+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-10] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Peter Milas, itemId=7, 数量=500, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:53:27.688+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Uwe Feddersen, itemId=7, 数量=500, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:54:04.131+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-5] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Sebastian Spitzkat, itemId=10, 数量=300, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:54:25.866+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Denize Göksular, itemId=10, 数量=300, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:54:40.139+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-4] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Melanie Brenner, itemId=10, 数量=300, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T08:56:54.985+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-10] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=土耳其小哥, itemId=9, 数量=500, 状态=0, 操作时间=2025-07-10T12:00
+2025-07-10T09:34:52.105+02:00  WARN 16228 --- [blueskyWarehouse] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m8s198ms85µs900ns).
+2025-07-10T11:31:13.279+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.S.OptimalStorageLocationService    : 用户尝试登录，用户名: Zhuyi Admin
+2025-07-10T11:31:13.421+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.S.OptimalStorageLocationService    : 用户 [Zhuyi Admin] 登录成功
+2025-07-10T11:31:19.418+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-4] c.e.b.S.OptimalStorageLocationService    : 成功查询所有产品价格，条目数: 24
+2025-07-10T11:31:19.418+02:00  INFO 16228 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-7] c.e.b.S.OptimalStorageLocationService    : 成功查询所有产品价格，条目数: 24
