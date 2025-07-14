@@ -24,22 +24,30 @@ Ein System zur Aufgabenvergabe für Lageraufgaben, das verschiedene Dimensionen 
 
 🛠 Technologischer Stack und Projektstruktur
 📦 Übersicht der verwendeten Technologien
+
 Ebene	Technologie
 Sprache	Java 21 — Unterstützung für moderne Parallelität und Leistungsoptimierungen
-Framework	Spring Boot 3.x — Schnelle Entwicklung und Microservices
+
+Framework	Spring Boot 3.x 
+
 ORM	Spring Data JPA — Persistenzschicht basierend auf Hibernate
+
 Sicherheit	Spring Security + JWT — Authentifizierung und Autorisierung
+
 Datenbank	MySQL — Relationale Datenbankverwaltung
+
 Nebenläufigkeit	Optimistische Sperren (@Version) und pessimistische Sperren (@Lock), geschäftskritische Logik mit ReentrantLock fein abgestimmt
+
 Fehlerbehandlung	Eigene Fehlerklassen + globale Fehlerbehandlung für eine einheitliche API-Ausgabe
+
 Containerisierung	Docker & Docker Compose — Unterstützung für Container-basierte Bereitstellung
+
 Frontend	React (siehe Frontend-Repository)
+
 Bereitstellung	Interne Serverbereitstellung mit Firewall- und Sicherheitsisolierung sowie Portweiterleitung
 
 🧱 Projektstruktur
-text
-复制
-编辑
+
 src/
 ├── controller/      // Controller-Schicht: Empfängt Frontend-Anfragen, verarbeitet Parameter, ruft Geschäftslogik auf
 ├── service/         // Service-Schicht: Kapselt Kernlogik und Geschäftsregeln
@@ -49,13 +57,15 @@ src/
 ├── exception/       // Fehlerbehandlung: Eigene Fehlerklassen und globale Fehlerbehandlung
 ├── response/        // Einheitliche Antwortstruktur: Standardisierte API-Antworten
 ├── Application.java // Einstiegspunkt der Anwendung
-⚙️ Schnellstart-Anleitung
+
+
+⚙️ Schnellstart-Anleitung 还需完善
 1. Projekt klonen
 bash
-复制
-编辑
+
 git clone https://github.com/ZhuyiLiW/Bluesky-Warehouse-Management-System.git
 cd Bluesky-Warehouse-Management-System
+
 2. Datenbank-Konfiguration
 Erstellen Sie die Datenbank bluesky_warehouse und konfigurieren Sie die Verbindung in der application.yml:
 
