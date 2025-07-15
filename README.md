@@ -59,7 +59,7 @@ src/
 ├── Application.java // Einstiegspunkt der Anwendung
 
 
-⚙️ Schnellstart-Anleitung 还需完善
+⚙️ Schnellstart-Anleitung 
 1. Projekt klonen
 bash
 
@@ -70,8 +70,6 @@ cd Bluesky-Warehouse-Management-System
 Erstellen Sie die Datenbank bluesky_warehouse und konfigurieren Sie die Verbindung in der application.yml:
 
 yaml
-复制
-编辑
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/bluesky_warehouse
@@ -79,21 +77,15 @@ spring:
     password: ihr_passwort
 3. Lokale Ausführung
 bash
-复制
-编辑
 mvn clean install
 mvn spring-boot:run
-4. Docker-Start (optional)
+4. Docker-Start (Die Docker-Konfigurationsdatei finden Sie in meinem GitHub-Repository. )
 bash
-复制
-编辑
 docker-compose up -d
 📡 API-Antwortformat
 Die einheitliche Antwortstruktur sieht folgendermaßen aus:
 
 json
-复制
-编辑
 {
   "code": 200,
   "message": "Operation erfolgreich",
