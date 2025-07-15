@@ -82,7 +82,9 @@ mvn spring-boot:run
 4. Docker-Start (Die Docker-Konfigurationsdatei finden Sie in meinem GitHub-Repository. )
 bash
 docker-compose up -d
+
 📡 API-Antwortformat
+
 Die einheitliche Antwortstruktur sieht folgendermaßen aus:
 
 json
@@ -95,7 +97,9 @@ json
 }
 Fehlerbehandlungen folgen ebenfalls diesem einheitlichen Format, um eine globale Fehlerbehandlung und Frontend-Integration zu erleichtern.
 
+
 📝 Changelog
+
 v1.0.0
 Fertigstellung der Kernmodule (Authentifizierung, Ein- und Auslagerung, Bestandsmanagement)
 
@@ -106,6 +110,7 @@ Aufbau der globalen Fehlerbehandlung und einheitlichen API-Antwortstruktur
 Docker-Containerisierung für die Bereitstellung
 
 🤝 Beitrag leisten
+
 Beiträge sind willkommen! Bitte folgen Sie diesen Schritten:
 
 Forken Sie dieses Repository
@@ -119,5 +124,6 @@ Pushen Sie den Branch: git push origin feature/xxx
 Erstellen Sie eine Pull-Anfrage
 
 📄 Lizenz
+
 Dieses Projekt wird unter der MIT-Lizenz lizenziert.
 
