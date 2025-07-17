@@ -473,3 +473,4 @@ Caused by: java.net.UnknownHostException: db
 2025-07-17T13:36:54.254+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2025-07-17T13:36:54.297+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
 2025-07-17T13:36:54.307+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Started BlueskyWarehouseApplication in 6.704 seconds (process running for 7.744)
+2025-07-17T16:24:40.967+02:00  INFO 18548 --- [blueskyWarehouse] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
