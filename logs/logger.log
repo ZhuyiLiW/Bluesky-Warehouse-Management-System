@@ -1,0 +1,475 @@
+2025-07-17T08:58:05.170+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Starting BlueskyWarehouseApplication using Java 21.0.4 with PID 16448 (C:\Users\admin\IdeaProjects\blueskyWarehouse\target\classes started by admin in C:\Users\admin\IdeaProjects\blueskyWarehouse)
+2025-07-17T08:58:05.177+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T08:58:05.232+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-07-17T08:58:05.233+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-07-17T08:58:06.874+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-17T08:58:07.003+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 117 ms. Found 12 JPA repository interfaces.
+2025-07-17T08:58:07.881+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-17T08:58:07.903+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-17T08:58:07.904+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-07-17T08:58:07.952+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-17T08:58:07.952+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2719 ms
+2025-07-17T08:58:08.205+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-17T08:58:08.283+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-07-17T08:58:08.345+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-17T08:58:08.725+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-17T08:58:08.787+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-17T08:58:12.672+02:00  WARN 16448 --- [blueskyWarehouse] [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 08S01
+2025-07-17T08:58:12.673+02:00 ERROR 16448 --- [blueskyWarehouse] [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2025-07-17T08:58:12.674+02:00  WARN 16448 --- [blueskyWarehouse] [restartedMain] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+
+org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:320) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:226) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:194) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1442) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1513) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1865) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1814) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970) ~[spring-context-6.2.6.jar:6.2.6]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.6.jar:6.2.6]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1362) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1351) ~[spring-boot-3.4.5.jar:3.4.5]
+	at com.example.blueskywarehouse.BlueskyWarehouseApplication.main(BlueskyWarehouseApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.4.5.jar:3.4.5]
+Caused by: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111) ~[HikariCP-5.1.0.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:126) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	... 38 common frames omitted
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 51 common frames omitted
+Caused by: java.net.UnknownHostException: 不知道这样的主机。 (db)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method) ~[na:na]
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52) ~[na:na]
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211) ~[na:na]
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828) ~[na:na]
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:130) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 54 common frames omitted
+
+2025-07-17T08:58:12.716+02:00  WARN 16448 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-17T08:58:12.718+02:00  WARN 16448 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-07-17T08:58:12.736+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (null)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-17T08:58:14.190+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-17T08:58:14.226+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-17T08:58:15.231+02:00  WARN 16448 --- [blueskyWarehouse] [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 08S01
+2025-07-17T08:58:15.231+02:00 ERROR 16448 --- [blueskyWarehouse] [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2025-07-17T08:58:15.238+02:00 ERROR 16448 --- [blueskyWarehouse] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+2025-07-17T08:58:15.239+02:00  WARN 16448 --- [blueskyWarehouse] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+2025-07-17T08:58:15.243+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-07-17T08:58:15.258+02:00  INFO 16448 --- [blueskyWarehouse] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-07-17T08:58:15.286+02:00 ERROR 16448 --- [blueskyWarehouse] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1818) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970) ~[spring-context-6.2.6.jar:6.2.6]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.6.jar:6.2.6]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1362) ~[spring-boot-3.4.5.jar:3.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1351) ~[spring-boot-3.4.5.jar:3.4.5]
+	at com.example.blueskywarehouse.BlueskyWarehouseApplication.main(BlueskyWarehouseApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.4.5.jar:3.4.5]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:431) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1865) ~[spring-beans-6.2.6.jar:6.2.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1814) ~[spring-beans-6.2.6.jar:6.2.6]
+	... 18 common frames omitted
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:74) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcDatabaseMetaData(ImprovedExtractionContextImpl.java:70) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.extract.internal.InformationExtractorJdbcDatabaseMetaDataImpl.processTableResultSet(InformationExtractorJdbcDatabaseMetaDataImpl.java:65) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.extract.internal.AbstractInformationExtractorImpl.getTables(AbstractInformationExtractorImpl.java:570) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.getTablesInformation(DatabaseInformationImpl.java:122) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:72) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:233) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:112) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:280) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1517) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.2.6.jar:6.2.6]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419) ~[spring-orm-6.2.6.jar:6.2.6]
+	... 22 common frames omitted
+Caused by: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111) ~[HikariCP-5.1.0.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:126) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46) ~[hibernate-core-6.6.13.Final.jar:6.6.13.Final]
+	... 43 common frames omitted
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 56 common frames omitted
+Caused by: java.net.UnknownHostException: db
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818) ~[na:na]
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:130) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 59 common frames omitted
+
+2025-07-17T08:59:24.044+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Starting BlueskyWarehouseApplication using Java 21.0.4 with PID 16080 (C:\Users\admin\IdeaProjects\blueskyWarehouse\target\classes started by admin in C:\Users\admin\IdeaProjects\blueskyWarehouse)
+2025-07-17T08:59:24.046+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T08:59:24.097+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-07-17T08:59:24.097+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-07-17T08:59:25.040+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-17T08:59:25.146+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 89 ms. Found 12 JPA repository interfaces.
+2025-07-17T08:59:25.904+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-17T08:59:25.921+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-17T08:59:25.921+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-07-17T08:59:25.967+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-17T08:59:25.967+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1869 ms
+2025-07-17T08:59:26.181+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-17T08:59:26.249+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-07-17T08:59:26.292+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-17T08:59:26.626+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-17T08:59:26.659+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-17T08:59:26.877+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@33096ce
+2025-07-17T08:59:26.879+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-17T08:59:26.958+02:00  WARN 16080 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-17T08:59:26.960+02:00  WARN 16080 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-07-17T08:59:26.981+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-17T08:59:28.150+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-17T08:59:28.264+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T08:59:28.563+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-07-17T08:59:29.097+02:00  WARN 16080 --- [blueskyWarehouse] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-17T08:59:29.127+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-07-17T08:59:29.889+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-07-17T08:59:29.936+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-07-17T08:59:29.946+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Started BlueskyWarehouseApplication in 6.528 seconds (process running for 7.634)
+2025-07-17T09:00:00.504+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-07-17T09:00:00.504+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-07-17T09:00:00.505+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-07-17T09:00:00.592+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-1] c.e.b.S.OptimalStorageLocationService    : 用户尝试登录，用户名: Zhuyi Admin
+2025-07-17T09:00:00.797+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-1] c.e.b.S.OptimalStorageLocationService    : 用户 [Zhuyi Admin] 登录成功
+2025-07-17T09:00:20.177+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-6] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Mercato Italiano GmbH, itemId=7, 数量=500, 状态=0, 操作时间=2025-07-17T12:00
+2025-07-17T09:00:38.871+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-5] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Christiane Lammertz, itemId=7, 数量=1000, 状态=0, 操作时间=2025-07-17T12:00
+2025-07-17T09:01:15.939+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Theodosios Tsitsopoulos, itemId=10, 数量=300, 状态=0, 操作时间=2025-07-17T12:00
+2025-07-17T09:01:35.022+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-7] c.e.b.Service.WorkLogService             : 成功插入工作日志：customer=Christiane Anke Holland-Letz, itemId=10, 数量=300, 状态=0, 操作时间=2025-07-17T12:00
+2025-07-17T10:14:09.791+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-6] c.e.b.S.OptimalStorageLocationService    : 用户尝试登录，用户名: Tian Cheng
+2025-07-17T10:14:09.889+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-6] c.e.b.S.OptimalStorageLocationService    : 用户 [Tian Cheng] 登录成功
+2025-07-17T10:14:37.901+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-5] c.e.b.Service.WorkLogService             : 仓位搜索：[]
+2025-07-17T10:14:42.405+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-4] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@2e56c7aa]
+2025-07-17T10:14:57.558+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.Service.WorkLogService             : 仓位搜索：[]
+2025-07-17T10:14:58.017+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-7] c.e.b.Service.WorkLogService             : 仓位搜索：[]
+2025-07-17T10:15:42.246+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] c.e.b.S.OptimalStorageLocationService    : 仓位移动成功
+2025-07-17T10:15:47.395+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-8] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@6b6aab87]
+2025-07-17T10:16:05.200+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-9] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@40ca4b7e]
+2025-07-17T10:16:14.869+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-10] c.e.b.Service.WorkLogService             : 仓位搜索：[]
+2025-07-17T10:16:16.146+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-1] c.e.b.Service.WorkLogService             : 仓位搜索：[]
+2025-07-17T10:16:51.709+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-6] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@2c16aa29]
+2025-07-17T10:16:52.257+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-5] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@18875efb]
+2025-07-17T10:17:26.583+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-4] c.e.b.S.OptimalStorageLocationService    : 仓位移动成功
+2025-07-17T10:17:40.287+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@345e5ef8]
+2025-07-17T10:17:40.825+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-7] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@36f4bb44]
+2025-07-17T10:17:40.962+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-2] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@1d102713]
+2025-07-17T10:17:41.089+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-8] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@7f0cf099]
+2025-07-17T10:17:41.224+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-9] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@7060761f]
+2025-07-17T10:17:43.986+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-10] c.e.b.Service.WorkLogService             : 仓位搜索：[]
+2025-07-17T10:45:41.748+02:00  WARN 16080 --- [blueskyWarehouse] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=23m13s362ms519µs900ns).
+2025-07-17T11:09:01.467+02:00  WARN 16080 --- [blueskyWarehouse] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m49s509ms866µs200ns).
+2025-07-17T11:11:22.329+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-5] c.e.b.S.OptimalStorageLocationService    : 用户尝试登录，用户名: Zhuyi Admin
+2025-07-17T11:11:22.413+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-5] c.e.b.S.OptimalStorageLocationService    : 用户 [Zhuyi Admin] 登录成功
+2025-07-17T11:11:30.293+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-4] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@489e1462]
+2025-07-17T11:11:44.626+02:00  INFO 16080 --- [blueskyWarehouse] [http-nio-0.0.0.0-8080-exec-3] c.e.b.Service.WorkLogService             : 仓位搜索：[[Ljava.lang.Object;@27953ff4]
+2025-07-17T12:57:11.094+02:00  INFO 16080 --- [blueskyWarehouse] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-07-17T12:57:11.221+02:00  INFO 16080 --- [blueskyWarehouse] [Thread-5] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-17T12:57:11.264+02:00  INFO 16080 --- [blueskyWarehouse] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-07-17T12:57:11.316+02:00  INFO 16080 --- [blueskyWarehouse] [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T12:57:11.404+02:00  INFO 16080 --- [blueskyWarehouse] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-07-17T12:57:11.418+02:00  INFO 16080 --- [blueskyWarehouse] [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-07-17T12:57:11.848+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Starting BlueskyWarehouseApplication using Java 21.0.4 with PID 16080 (C:\Users\admin\IdeaProjects\blueskyWarehouse\target\classes started by admin in C:\Users\admin\IdeaProjects\blueskyWarehouse)
+2025-07-17T12:57:11.849+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T12:57:12.979+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-17T12:57:13.031+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 12 JPA repository interfaces.
+2025-07-17T12:57:13.296+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-17T12:57:13.299+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-17T12:57:13.299+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-07-17T12:57:13.325+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-17T12:57:13.325+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1473 ms
+2025-07-17T12:57:13.441+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-17T12:57:13.446+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-17T12:57:13.469+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-17T12:57:13.470+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-07-17T12:57:13.476+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@f7e7fa5
+2025-07-17T12:57:13.476+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-07-17T12:57:13.478+02:00  WARN 16080 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-17T12:57:13.478+02:00  WARN 16080 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-07-17T12:57:13.479+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-17T12:57:13.791+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-17T12:57:13.832+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T12:57:14.410+02:00  WARN 16080 --- [blueskyWarehouse] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-17T12:57:14.428+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-07-17T12:57:14.758+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-07-17T12:57:14.778+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-07-17T12:57:14.784+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Started BlueskyWarehouseApplication in 3.016 seconds (process running for 14272.472)
+2025-07-17T12:57:14.787+02:00  INFO 16080 --- [blueskyWarehouse] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2025-07-17T13:03:02.813+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Starting BlueskyWarehouseApplication using Java 21.0.4 with PID 19704 (C:\Users\admin\IdeaProjects\blueskyWarehouse\target\classes started by admin in C:\Users\admin\IdeaProjects\blueskyWarehouse)
+2025-07-17T13:03:02.817+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T13:03:02.887+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-07-17T13:03:02.887+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-07-17T13:03:04.137+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-17T13:03:04.268+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 115 ms. Found 12 JPA repository interfaces.
+2025-07-17T13:03:05.275+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-17T13:03:05.294+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-17T13:03:05.294+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-07-17T13:03:05.347+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-17T13:03:05.347+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2459 ms
+2025-07-17T13:03:05.559+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-17T13:03:05.628+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-07-17T13:03:05.667+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-17T13:03:06.002+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-17T13:03:06.038+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-17T13:03:06.205+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@56ca618b
+2025-07-17T13:03:06.209+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-17T13:03:06.272+02:00  WARN 19704 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-17T13:03:06.273+02:00  WARN 19704 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-07-17T13:03:06.295+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-17T13:03:07.588+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-17T13:03:07.724+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T13:03:08.073+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-07-17T13:03:08.710+02:00  WARN 19704 --- [blueskyWarehouse] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-17T13:03:08.743+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-07-17T13:03:09.568+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-07-17T13:03:09.627+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-07-17T13:03:09.636+02:00  INFO 19704 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Started BlueskyWarehouseApplication in 7.451 seconds (process running for 8.671)
+2025-07-17T13:04:07.098+02:00  INFO 19704 --- [blueskyWarehouse] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-17T13:04:07.103+02:00  INFO 19704 --- [blueskyWarehouse] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-07-17T13:04:07.110+02:00  INFO 19704 --- [blueskyWarehouse] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T13:04:07.113+02:00  INFO 19704 --- [blueskyWarehouse] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-07-17T13:04:07.127+02:00  INFO 19704 --- [blueskyWarehouse] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-07-17T13:35:13.913+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Starting BlueskyWarehouseApplication using Java 21.0.4 with PID 16196 (C:\Users\admin\IdeaProjects\blueskyWarehouse\target\classes started by admin in C:\Users\admin\IdeaProjects\blueskyWarehouse)
+2025-07-17T13:35:13.918+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T13:35:13.983+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-07-17T13:35:13.984+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-07-17T13:35:15.037+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-17T13:35:15.156+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 108 ms. Found 12 JPA repository interfaces.
+2025-07-17T13:35:16.028+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-07-17T13:35:16.047+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-17T13:35:16.048+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-07-17T13:35:16.099+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-17T13:35:16.100+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2116 ms
+2025-07-17T13:35:16.354+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-17T13:35:16.429+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-07-17T13:35:16.476+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-17T13:35:16.852+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-17T13:35:16.893+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-17T13:35:17.101+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@66adb261
+2025-07-17T13:35:17.104+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-17T13:35:17.167+02:00  WARN 16196 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-17T13:35:17.169+02:00  WARN 16196 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-07-17T13:35:17.192+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-17T13:35:18.482+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-17T13:35:18.578+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T13:35:18.905+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-07-17T13:35:19.447+02:00  WARN 16196 --- [blueskyWarehouse] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-17T13:35:19.477+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-07-17T13:35:20.258+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-07-17T13:35:20.315+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2025-07-17T13:35:20.324+02:00  INFO 16196 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Started BlueskyWarehouseApplication in 7.089 seconds (process running for 8.395)
+2025-07-17T13:36:39.946+02:00  INFO 16196 --- [blueskyWarehouse] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-17T13:36:39.953+02:00  INFO 16196 --- [blueskyWarehouse] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-07-17T13:36:39.961+02:00  INFO 16196 --- [blueskyWarehouse] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T13:36:39.966+02:00  INFO 16196 --- [blueskyWarehouse] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-07-17T13:36:39.980+02:00  INFO 16196 --- [blueskyWarehouse] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-07-17T13:36:48.222+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Starting BlueskyWarehouseApplication using Java 21.0.4 with PID 18548 (C:\Users\admin\IdeaProjects\blueskyWarehouse\target\classes started by admin in C:\Users\admin\IdeaProjects\blueskyWarehouse)
+2025-07-17T13:36:48.224+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-07-17T13:36:48.294+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-07-17T13:36:48.295+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-07-17T13:36:49.313+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-17T13:36:49.409+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 86 ms. Found 12 JPA repository interfaces.
+2025-07-17T13:36:50.189+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-07-17T13:36:50.209+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-17T13:36:50.210+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-07-17T13:36:50.264+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-17T13:36:50.265+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1969 ms
+2025-07-17T13:36:50.481+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-17T13:36:50.552+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-07-17T13:36:50.593+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-17T13:36:50.972+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-17T13:36:51.037+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-17T13:36:51.224+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@33096ce
+2025-07-17T13:36:51.226+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-17T13:36:51.321+02:00  WARN 18548 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-17T13:36:51.323+02:00  WARN 18548 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-07-17T13:36:51.347+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-17T13:36:52.559+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-17T13:36:52.645+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-17T13:36:52.954+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-07-17T13:36:53.480+02:00  WARN 18548 --- [blueskyWarehouse] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-17T13:36:53.526+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-07-17T13:36:54.254+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-07-17T13:36:54.297+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2025-07-17T13:36:54.307+02:00  INFO 18548 --- [blueskyWarehouse] [restartedMain] c.e.b.BlueskyWarehouseApplication        : Started BlueskyWarehouseApplication in 6.704 seconds (process running for 7.744)
