@@ -1,11 +1,12 @@
 package com.example.blueskywarehouse.Configuration;
 
+import com.example.blueskywarehouse.Logging.LogContextFilter;
 import com.example.blueskywarehouse.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,13 +23,16 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-public class SecurityFilterConfig {
+@Profile("prod")
+public class ProdSecurityFilterConfig {
 
     @Autowired
     private UserService userDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private LogContextFilter logContextFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -44,20 +48,21 @@ public class SecurityFilterConfig {
                         .requestMatchers("/api/UserController/login").permitAll()
                         .anyRequest().authenticated()
                 )
+                .addFilterBefore(logContextFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .logout(logout -> logout.permitAll());
 
         return http.build();
     }
-//setAllowedOrigin 比setAllowedOriginPatterns 更严格问题
+    //setAllowedOrigin 比setAllowedOriginPatterns 更严格问题
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://192.168.178.*:3000"));
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:3001", "http://192.168.178.94:3000","http://192.168.2.132:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
+        configuration.setMaxAge(36000L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

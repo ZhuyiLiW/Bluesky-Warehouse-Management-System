@@ -13,9 +13,9 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "SELECT id FROM USER WHERE name like concat('%', :userName,'%')", nativeQuery = true)
+    @Query(value = "SELECT id FROM user WHERE name like concat('%', :userName,'%')", nativeQuery = true)
     Integer userId(@Param("userName") String userName);
-    @Query(value = "SELECT name FROM USER WHERE id=:userId", nativeQuery = true)
+    @Query(value = "SELECT name FROM user WHERE id=:userId", nativeQuery = true)
     String checkUserName(Integer userId);
     @Modifying
     @Transactional
@@ -27,10 +27,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     String getPwd(String userName);
     @Query(value = "select role_id from user where name=:userName", nativeQuery = true)
     Integer getRoleId(String userName);
-    @Query(value = "SELECT * FROM USER", nativeQuery = true)
+    @Query(value = "SELECT * FROM user", nativeQuery = true)
     List<User> getAllUser();
     @Modifying
     @Transactional
-    @Query(value = "delete from User where id=:id", nativeQuery = true)
+    @Query(value = "delete from user where id=:id", nativeQuery = true)
     void deleteUser(int id);
 }
