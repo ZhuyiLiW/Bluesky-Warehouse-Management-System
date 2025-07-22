@@ -27,24 +27,25 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
     @InjectMocks
     private UserService userService;
+
     @Test
     void testGetUserId_success() {
         String username = "testUser";
         int mockUserId = 42;
         String checkUserName = "testUser";
 
-        // 模拟 userRepository 行为
+        // Simulation des Verhaltens von userRepository
         when(userRepository.userId(username)).thenReturn(mockUserId);
         when(userRepository.checkUserName(mockUserId)).thenReturn(checkUserName);
 
-        // 调用方法
+        // Methodenaufruf
         ApiResponse<?> response = userService.getUserId(username);
 
-        // 验证调用与结果
+        // Überprüfen der Aufrufe und des Ergebnisses
         verify(userRepository).userId(username);
         verify(userRepository).checkUserName(mockUserId);
 
-        assertEquals("获取用户ID成功", response.getMessage());
+        assertEquals("Benutzer-ID erfolgreich abgerufen", response.getMessage());
         assertEquals(mockUserId + ":" + checkUserName, response.getData());
     }
 
@@ -64,7 +65,6 @@ public class UserServiceTest {
         assertThrows(BusinessException.class, () -> userService.getUserId(username));
         verify(userRepository).userId(username);
     }
-
 
     @Test
     void testLogin_emptyUsernameOrPassword() {
@@ -109,5 +109,4 @@ public class UserServiceTest {
         verify(userRepository).getPwd(username);
         verify(passwordEncoder).matches(inputPassword, encodedPassword);
     }
-
 }

@@ -23,33 +23,50 @@ public class OptimalStorageLocationServiceTest {
 
     @Mock
     private OptimalStorageLocationRepository optimalStorageLocationRepository;
+
     @InjectMocks
     private OptimalStorageLocationService optimalStorageLocationService;
 
     @Test
-    void getOptimalBinTest(){
-        String mockOptimalSlot="Ptest";
-        List<String> mockBinList= Arrays.asList("Ptest-01-1","Ptest-02-1","Ptest-03-1");
+    void getOptimalBinTest() {
+        String mockOptimalSlot = "Ptest";
+        List<String> mockBinList = Arrays.asList("Ptest-01-1", "Ptest-02-1", "Ptest-03-1");
+
+        // Simuliere Rückgabe von optimalem Slot und Bin-Liste
         when(optimalStorageLocationRepository.getOptimalSlot(3)).thenReturn(mockOptimalSlot);
         when(optimalStorageLocationRepository.getOptimalBinlist(mockOptimalSlot)).thenReturn(mockBinList);
-        ApiResponse<?> response=optimalStorageLocationService.getOptimalBin(3);
-        assertEquals("成功获取最佳仓位集合",response.getMessage());
-        List<String>result= (List<String>) response.getData();
+
+        ApiResponse<?> response = optimalStorageLocationService.getOptimalBin(3);
+
+        // Erfolgreiche Rückmeldung prüfen
+        assertEquals("Optimale Lagerplätze erfolgreich abgerufen", response.getMessage());
+
+        List<String> result = (List<String>) response.getData();
         assertEquals("Ptest-03-1", result.get(2));
+
+        // Simuliere leere Rückgabe (Fehlerfall)
         when(optimalStorageLocationRepository.getOptimalBinlist(mockOptimalSlot)).thenReturn(Collections.emptyList());
 
+        // Erwartete Ausnahme prüfen
         BusinessException exception = assertThrows(BusinessException.class, () -> {
             optimalStorageLocationService.getOptimalBin(3);
         });
-        assertEquals("系统错误，未找到合适仓位", exception.getMessage());
+
+        assertEquals("Systemfehler: Kein geeigneter Lagerplatz gefunden", exception.getMessage());
     }
+
     @Test
-    void InsertPalletsIntoNewBin(){
-        String newBinCode="NewTest-01-01";
-        String oldBinCode="OldTest-01-01";
-        String newSlotCode=newBinCode.split("-")[0];
-        assertEquals("NewTest",newSlotCode);
-        ApiResponse<?> response=optimalStorageLocationService.InsertPalletsIntoNewBin(newBinCode,oldBinCode);
-        assertEquals("仓位移动成功",response.getMessage());
+    void InsertPalletsIntoNewBin() {
+        String newBinCode = "NewTest-01-01";
+        String oldBinCode = "OldTest-01-01";
+        String newSlotCode = newBinCode.split("-")[0];
+
+        // Slot-Code korrekt extrahiert?
+        assertEquals("NewTest", newSlotCode);
+
+        ApiResponse<?> response = optimalStorageLocationService.InsertPalletsIntoNewBin(newBinCode, oldBinCode);
+
+        // Erfolgsnachricht prüfen
+        assertEquals("Lagerplatz erfolgreich verschoben", response.getMessage());
     }
 }

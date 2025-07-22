@@ -273,14 +273,14 @@ SELECT * from  inventory_operations where operation_date BETWEEN :startDate and 
     List<WorkLog> getWorklistByPeriodeAndItemIdAndCName(String startDate, String endDate, int itemId, String customerName);
     @Query(value = """
     SELECT
-        ROW_NUMBER() OVER (ORDER BY io.operation_date) AS `工作号`,
-        io.customer_name AS `客户发货地`,
-        i.name AS `货品`,
-        io.items_count AS `数量`,
+        ROW_NUMBER() OVER (ORDER BY io.operation_date) AS `Arbeitsnummer`,
+        io.customer_name AS `Lieferadresse`,
+        i.name AS `Waren`,
+        io.items_count AS `Zahl`,
         CASE
-            WHEN io.status = 0 THEN '发货'
-            ELSE '入库'
-        END AS `备注`,
+            WHEN io.status = 0 THEN 'Versand'
+            ELSE 'Eingang'
+        END AS `Remark`,
         DATE(io.operation_date) AS date
       
     FROM

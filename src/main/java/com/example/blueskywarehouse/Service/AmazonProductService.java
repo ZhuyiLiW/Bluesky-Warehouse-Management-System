@@ -17,26 +17,26 @@ public class AmazonProductService {
     Logger logger = LoggerFactory.getLogger(ItemManagementService.class);
 
     /**
-     * 添加一个新的产品信息。 如果是客户库存那么item name定义为客户名+产品名   type为客户名
+     * Neuen Produkteintrag hinzufügen. Bei Kundenlager: Artikelname = Kundenname + Produktname, Typ = Kundenname.
      */
 
     public ApiResponse<Object> getNewBarCode(String oldBarCode) {
-        // 参数校验
+        // Parameterprüfung
         if (oldBarCode == null || oldBarCode.trim().isEmpty()) {
-            throw new BusinessException("请输入有效的旧条码");
+            throw new BusinessException("Bitte geben Sie einen gültigen alten Barcode ein.");
         }
 
-        // 查询新条码
+        // Neuen Barcode abfragen
         String newBarCode = amazonProductRepository.getNewBarCode(oldBarCode);
 
-        // 判断新条码是否存在
+        // Überprüfen, ob der neue Barcode existiert
         if (newBarCode == null || newBarCode.trim().isEmpty()) {
-            logger.warn("旧条码 [{}] 不存在对应的新条码", oldBarCode);
-            throw new BusinessException("老标签不存在");
+            logger.warn("Der alte Barcode [{}] hat keinen zugehörigen neuen Barcode.", oldBarCode);
+            throw new BusinessException("Altes Etikett existiert nicht.");
         }
 
-        // 返回成功响应
-        return ApiResponse.success("新条码获取成功",newBarCode);
+        // Erfolgreiche Antwort zurückgeben
+        return ApiResponse.success("Neuer Barcode erfolgreich erhalten.",newBarCode);
     }
 
 

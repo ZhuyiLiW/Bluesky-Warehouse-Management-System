@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * 产品管理服务类，负责处理商品相关的业务逻辑，如添加、更新、查询产品信息。
+ * Produktverwaltungsservice, verantwortlich für die Verarbeitung der geschäftlichen Logik rund um Produkte wie Hinzufügen, Aktualisieren und Abfragen von Produktinformationen.
  */
 @Service
 public class ItemManagementService {
@@ -27,54 +27,51 @@ public class ItemManagementService {
     Logger logger = LoggerFactory.getLogger(ItemManagementService.class);
 
     /**
-     * 添加一个新的产品信息。 如果是客户库存那么item name定义为客户名+产品名   type为客户名
+     * Einen neuen Produkteintrag hinzufügen. Falls es sich um Kundenlagerbestand handelt, wird der Artikelname als Kundenname + Produktname definiert, und der Typ entspricht dem Kundennamen.
      */
     @Transactional
     public ApiResponse<?> addItem(String name, String type, Integer unitPerBox, String productGroup) {
-            itemManagementRepository.addItem(name, type, unitPerBox, productGroup);
-            return ApiResponse.success("入新品类产品成功",null);
+        itemManagementRepository.addItem(name, type, unitPerBox, productGroup);
+        return ApiResponse.success("Neues Produkt erfolgreich hinzugefügt",null);
     }
 
     /**
-     * 更新已有产品的名称和类型。
+     * Bestehendes Produktname und Typ aktualisieren.
      */
     @Transactional
     public ApiResponse<?> updateItem(int id, String name, String type, int unitPerBox,String productGroup) {
-        Item item=itemManagementRepository.findById((long) id).orElseThrow(() -> new RuntimeException("托盘信息不存在，id=" + id));
+        Item item=itemManagementRepository.findById((long) id).orElseThrow(() -> new RuntimeException("Paletteninformation nicht gefunden, id=" + id));
         item.setName(name);
         item.setUnitPerBox(unitPerBox);
         item.setProductGroup(productGroup);
         itemManagementRepository.save(item);
-        return ApiResponse.success("更新新品类产品成功",null);
+        return ApiResponse.success("Produkt erfolgreich aktualisiert",null);
     }
 
     /**
-     * 根据产品名称模糊搜索产品信息。
+     * Produkte anhand des Namens per Like-Suche suchen.
      */
-
     public ApiResponse<?> searchItem(String name) {
         name = name == null ? "" : name.trim();
-            List<Item> itemsList = Optional.ofNullable(itemManagementRepository.searchItem(name))
-                    .orElse(Collections.emptyList());
-            if(itemsList.size()==0)throw new BusinessException("物料不存在");
-            return ApiResponse.success("产品详细信息获取成功", itemsList);
+        List<Item> itemsList = Optional.ofNullable(itemManagementRepository.searchItem(name))
+                .orElse(Collections.emptyList());
+        if(itemsList.size()==0)throw new BusinessException("Material existiert nicht");
+        return ApiResponse.success("Produktdetails erfolgreich abgerufen", itemsList);
     }
 
     /**
-     * 查询某个品类产品的位置
+     * Lagerort eines Produkttyps abfragen.
      */
-
     public ApiResponse<?> searchItemLocation(int itemId) {
-            List<String> itemsLocationList = itemManagementRepository.searchItemLocation(itemId);
-            return ApiResponse.success("已成功获取产品位置", itemsLocationList);
+        List<String> itemsLocationList = itemManagementRepository.searchItemLocation(itemId);
+        return ApiResponse.success("Produktstandorte erfolgreich abgerufen", itemsLocationList);
     }
     /**
-     * 查询某个品类产品的数量 itemsCount[0]是箱数 itemsCount[1]是件数
+     * Menge eines Produkttyps abfragen: itemsCount[0] = Kartonanzahl, itemsCount[1] = Stückzahl
      */
-
     public ApiResponse<?> searchItemCount(int itemId) {
-           Object[] itemCount =itemManagementRepository.searchItemCount(itemId);
-            return ApiResponse.success("已成功获取产品数量", itemCount);
+        Object[] itemCount =itemManagementRepository.searchItemCount(itemId);
+        return ApiResponse.success("Produktmengen erfolgreich abgerufen", itemCount);
 
     }
 

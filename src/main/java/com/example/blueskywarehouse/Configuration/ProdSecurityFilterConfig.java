@@ -54,7 +54,7 @@ public class ProdSecurityFilterConfig {
 
         return http.build();
     }
-    //setAllowedOrigin 比setAllowedOriginPatterns 更严格问题
+    //setAllowedOrigin ist sicherer und wird in Produktionsumgebungen empfohlen, da nur eine ganz bestimmte Domain erlaubt wird.
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

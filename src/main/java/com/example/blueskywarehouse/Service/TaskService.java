@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Service
 public class TaskService {
 
@@ -27,141 +25,141 @@ public class TaskService {
     private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 
     /**
-     * 插入任务记录
+     * Fügt einen Aufgaben-Eintrag hinzu
      */
     @Transactional
     public ApiResponse<?> insertTask(int userId, LocalDate taskDate, LocalDate deadline, String content, int ifFinished, String remark) {
         if (userId <= 0) {
-            logger.warn("插入任务失败：参数不合法 userId={}", userId);
-            throw new InvalidParameterException("参数不合法");
+            logger.warn("Aufgabeneinfügung fehlgeschlagen: ungültige Parameter userId={}", userId);
+            throw new InvalidParameterException("Ungültige Parameter");
         }
 
         taskRepository.insertTask(userId, taskDate, deadline, content, ifFinished, remark);
-        logger.info("成功插入任务：userId={}, taskDate={}, deadline={}, ifFinished={}, remark={}",
+        logger.info("Aufgabe erfolgreich eingefügt: userId={}, taskDate={}, deadline={}, ifFinished={}, remark={}",
                 userId, taskDate, deadline, ifFinished, remark);
-        return ApiResponse.success("任务插入成功",null);
+        return ApiResponse.success("Aufgabe erfolgreich eingefügt", null);
     }
 
     /**
-     * 根据任务ID删除任务
+     * Löscht eine Aufgabe anhand der Aufgaben-ID
      */
     @Transactional
     public ApiResponse<?> deleteTask(int taskId) {
         if (taskId <= 0) {
-            logger.warn("删除任务失败：参数不合法 taskId={}", taskId);
-            throw new InvalidParameterException("参数不合法");
+            logger.warn("Aufgabenlöschung fehlgeschlagen: ungültige Parameter taskId={}", taskId);
+            throw new InvalidParameterException("Ungültige Parameter");
         }
 
         taskRepository.deleteTask(taskId);
-        logger.info("成功删除任务 taskId={}", taskId);
-        return ApiResponse.success("任务删除成功",null);
+        logger.info("Aufgabe erfolgreich gelöscht taskId={}", taskId);
+        return ApiResponse.success("Aufgabe erfolgreich gelöscht", null);
     }
 
     /**
-     * 更新任务完成状态
+     * Aktualisiert den Status einer Aufgabe
      */
     @Transactional
     public ApiResponse<?> updateTaskStatus(int taskId, int ifFinished, String remark) {
         if (taskId <= 0) {
-            logger.warn("更新任务失败：参数不合法 taskId={}", taskId);
-            throw new InvalidParameterException("参数不合法");
+            logger.warn("Aufgabenaktualisierung fehlgeschlagen: ungültige Parameter taskId={}", taskId);
+            throw new InvalidParameterException("Ungültige Parameter");
         }
         Task task  = taskRepository.findById((long) taskId)
-                .orElseThrow(() -> new RuntimeException("任务不存在，id=" + id));
+                .orElseThrow(() -> new RuntimeException("Aufgabe nicht gefunden, id=" + taskId));
         task.setIfFinished(ifFinished);
         task.setRemark(remark);
         taskRepository.save(task);
 
-        logger.info("成功更新任务状态 taskId={}, ifFinished={}, remark={}", taskId, ifFinished, remark);
-        return ApiResponse.success("任务更新成功",null);
+        logger.info("Aufgabenstatus erfolgreich aktualisiert taskId={}, ifFinished={}, remark={}", taskId, ifFinished, remark);
+        return ApiResponse.success("Aufgabe erfolgreich aktualisiert", null);
     }
 
     /**
-     * 根据用户ID获取任务列表
+     * Holt Aufgaben anhand der Benutzer-ID
      */
     public ApiResponse<?> findTasksByUserId(@Param("userId") int userId) {
         if (userId <= 0) {
-            logger.warn("查询任务失败：参数不合法 userId={}", userId);
-            throw new InvalidParameterException("参数不合法");
+            logger.warn("Aufgabensuche fehlgeschlagen: ungültige Parameter userId={}", userId);
+            throw new InvalidParameterException("Ungültige Parameter");
         }
 
         List<Task> getTaskByUser = taskRepository.findTasksByUserId(userId);
         if (getTaskByUser == null) {
-            logger.warn("未找到任务记录 userId={}", userId);
-            throw new BusinessException("用户任务不存在");
+            logger.warn("Keine Aufgaben gefunden userId={}", userId);
+            throw new BusinessException("Benutzeraufgaben nicht gefunden");
         }
 
-        logger.info("查询用户任务成功 userId={}, 数量={}", userId, getTaskByUser.size());
-        return ApiResponse.success("任务获取成功", getTaskByUser);
+        logger.info("Benutzeraufgaben erfolgreich abgefragt userId={}, Anzahl={}", userId, getTaskByUser.size());
+        return ApiResponse.success("Aufgaben erfolgreich abgerufen", getTaskByUser);
     }
 
     /**
-     * 根据用户ID和时间范围获取任务
+     * Holt Aufgaben anhand von Benutzer-ID und Zeitbereich
      */
     public ApiResponse<?> findTasksByUserIdAndDateRange(int userId, LocalDate taskStartDate, LocalDate taskEndDate) {
         if (userId <= 0) {
-            logger.warn("查询任务失败：参数不合法 userId={}", userId);
-            throw new InvalidParameterException("参数不合法");
+            logger.warn("Aufgabensuche fehlgeschlagen: ungültige Parameter userId={}", userId);
+            throw new InvalidParameterException("Ungültige Parameter");
         }
 
         List<Task> getTaskByUser = taskRepository.findTasksByUserIdAndDateRange(userId, taskStartDate, taskEndDate);
         if (getTaskByUser == null) {
-            logger.warn("未找到任务记录 userId={}, 日期范围：{} ~ {}", userId, taskStartDate, taskEndDate);
-            throw new BusinessException("用户任务不存在");
+            logger.warn("Keine Aufgaben gefunden userId={}, Zeitraum: {} ~ {}", userId, taskStartDate, taskEndDate);
+            throw new BusinessException("Benutzeraufgaben nicht gefunden");
         }
 
-        logger.info("按用户和时间范围查询任务成功 userId={}, 数量={}", userId, getTaskByUser.size());
-        return ApiResponse.success("任务获取成功", getTaskByUser);
+        logger.info("Aufgaben nach Benutzer und Zeitraum erfolgreich abgefragt userId={}, Anzahl={}", userId, getTaskByUser.size());
+        return ApiResponse.success("Aufgaben erfolgreich abgerufen", getTaskByUser);
     }
 
     /**
-     * 根据时间范围获取所有任务
+     * Holt alle Aufgaben anhand eines Zeitbereichs
      */
     public ApiResponse<?> findTasksByDateRange(LocalDate taskStartDate, LocalDate taskEndDate) {
         List<Task> getTaskByUser = taskRepository.findTasksByDateRange(taskStartDate, taskEndDate);
         if (getTaskByUser == null) {
-            logger.warn("按日期范围查询任务失败：{} ~ {}", taskStartDate, taskEndDate);
-            throw new BusinessException("用户任务不存在");
+            logger.warn("Aufgabensuche nach Zeitraum fehlgeschlagen: {} ~ {}", taskStartDate, taskEndDate);
+            throw new BusinessException("Benutzeraufgaben nicht gefunden");
         }
 
-        logger.info("按时间范围查询任务成功，数量={}", getTaskByUser.size());
-        return ApiResponse.success("任务获取成功", getTaskByUser);
+        logger.info("Aufgaben nach Zeitraum erfolgreich abgefragt, Anzahl={}", getTaskByUser.size());
+        return ApiResponse.success("Aufgaben erfolgreich abgerufen", getTaskByUser);
     }
 
     /**
-     * 获取所有已完成任务
+     * Holt alle erledigten Aufgaben
      */
     public ApiResponse<?> findCompletedTasks() {
         List<Task> getAllFinishedTask = taskRepository.findCompletedTasks();
-        logger.info("查询所有已完成任务成功，数量={}", getAllFinishedTask.size());
-        return ApiResponse.success("任务获取成功", getAllFinishedTask);
+        logger.info("Alle erledigten Aufgaben erfolgreich abgefragt, Anzahl={}", getAllFinishedTask.size());
+        return ApiResponse.success("Aufgaben erfolgreich abgerufen", getAllFinishedTask);
     }
 
     /**
-     * 根据用户ID获取已完成任务
+     * Holt erledigte Aufgaben eines bestimmten Benutzers
      */
     public ApiResponse<?> findCompletedTasksByUserId(int userId) {
         List<Task> getAllCompletedTasksByUserId = taskRepository.findTasksByUserId(userId);
-        logger.info("查询指定用户已完成任务成功 userId={}, 数量={}", userId, getAllCompletedTasksByUserId.size());
-        return ApiResponse.success("任务获取成功", getAllCompletedTasksByUserId);
+        logger.info("Erledigte Aufgaben für Benutzer erfolgreich abgefragt userId={}, Anzahl={}", userId, getAllCompletedTasksByUserId.size());
+        return ApiResponse.success("Aufgaben erfolgreich abgerufen", getAllCompletedTasksByUserId);
     }
 
     /**
-     * 获取所有失败任务
+     * Holt alle fehlgeschlagenen Aufgaben
      */
     public ApiResponse<?> findFailedTasks() {
         List<Task> getAllFailedTasks = taskRepository.findFailedTasks();
-        logger.info("查询所有失败任务成功，数量={}", getAllFailedTasks.size());
-        return ApiResponse.success("任务获取成功", getAllFailedTasks);
+        logger.info("Alle fehlgeschlagenen Aufgaben erfolgreich abgefragt, Anzahl={}", getAllFailedTasks.size());
+        return ApiResponse.success("Aufgaben erfolgreich abgerufen", getAllFailedTasks);
     }
 
     /**
-     * 根据用户ID获取失败任务
+     * Holt fehlgeschlagene Aufgaben eines bestimmten Benutzers
      */
     public ApiResponse<?> findFailedTasksByUserId(int userId) {
         List<Task> getAllFailedTasks = taskRepository.findFailedTasksByUserId(userId);
-        logger.info("查询指定用户失败任务成功 userId={}, 数量={}", userId, getAllFailedTasks.size());
-        return ApiResponse.success("任务获取成功", getAllFailedTasks);
+        logger.info("Fehlgeschlagene Aufgaben für Benutzer erfolgreich abgefragt userId={}, Anzahl={}", userId, getAllFailedTasks.size());
+        return ApiResponse.success("Aufgaben erfolgreich abgerufen", getAllFailedTasks);
     }
 
 }

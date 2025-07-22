@@ -37,7 +37,7 @@ public class DevSecurityFilterConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:3001")); // 允许前端地址
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:3001")); // Zugelassene Frontend-URL
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

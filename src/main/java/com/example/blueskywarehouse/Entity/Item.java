@@ -20,7 +20,6 @@ public class Item {
     @Version
     private Integer version;
 
-    // -------------------- 构造方法 --------------------
 
     public Item() {
     }
@@ -41,7 +40,7 @@ public class Item {
         this.productGroup = productGroup;
         this.version = version;
     }
-    // -------------------- Getter 和 Setter --------------------
+
 
     public int getId() {
         return id;

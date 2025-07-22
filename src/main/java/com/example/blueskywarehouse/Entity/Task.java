@@ -26,7 +26,7 @@ public class Task {
     private String remark;
     @Version
     private Integer version;
-    // -------------------- 构造方法 --------------------
+
 
 
     public Task() {
@@ -52,7 +52,7 @@ public class Task {
         this.remark = remark;
         this.version = version;
     }
-    // -------------------- Getter 和 Setter --------------------
+
 
     public int getId() {
         return id;

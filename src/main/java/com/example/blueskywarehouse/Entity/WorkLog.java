@@ -39,7 +39,6 @@ public class WorkLog {
     @Version
     private Integer version;
 
-    // -------------------- 构造方法 --------------------
 
     public WorkLog() {
     }
@@ -100,7 +99,7 @@ public class WorkLog {
         this.operationDate=operationDate;
     }
 
-    // -------------------- Getter 和 Setter --------------------
+
 
     public Long getId() {
         return id;

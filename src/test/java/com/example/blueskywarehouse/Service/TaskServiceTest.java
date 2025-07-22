@@ -25,20 +25,21 @@ public class TaskServiceTest {
 
     @Mock
     private TaskRepository taskRepository;
+
     @InjectMocks
     private TaskService taskService;
 
     @Test
     void testInsertTask_success() {
-        ApiResponse<?> response = taskService.insertTask(1, LocalDate.now(), LocalDate.now().plusDays(1), "Test content", 0, "Test remark");
+        ApiResponse<?> response = taskService.insertTask(1, LocalDate.now(), LocalDate.now().plusDays(1), "Testinhalt", 0, "Testbemerkung");
         verify(taskRepository).insertTask(anyInt(), any(), any(), anyString(), anyInt(), anyString());
-        assertEquals("任务插入成功", response.getMessage());
+        assertEquals("Aufgabe erfolgreich eingefügt", response.getMessage());
     }
 
     @Test
     void testInsertTask_invalidUserId() {
         assertThrows(InvalidParameterException.class, () -> {
-            taskService.insertTask(0, LocalDate.now(), LocalDate.now().plusDays(1), "Test", 0, "Remark");
+            taskService.insertTask(0, LocalDate.now(), LocalDate.now().plusDays(1), "Test", 0, "Bemerkung");
         });
     }
 
@@ -46,7 +47,7 @@ public class TaskServiceTest {
     void testDeleteTask_success() {
         ApiResponse<?> response = taskService.deleteTask(1);
         verify(taskRepository).deleteTask(1);
-        assertEquals("任务删除成功", response.getMessage());
+        assertEquals("Aufgabe erfolgreich gelöscht", response.getMessage());
     }
 
     @Test
@@ -56,27 +57,26 @@ public class TaskServiceTest {
 
     @Test
     void testUpdateTaskStatus_success() {
-        // 准备一个 Task 对象
+        // Vorbereitung eines Task-Objekts
         Task task = new Task();
         task.setId(1);
         task.setIfFinished(0);
         task.setRemark("");
 
-        // mock findById 返回 task
+        // Simuliere findById Rückgabe von task
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
 
-        // 调用方法
-        ApiResponse<?> response = taskService.updateTaskStatus(1, 1, "Remark");
+        // Aufruf der Methode
+        ApiResponse<?> response = taskService.updateTaskStatus(1, 1, "Bemerkung");
 
-        // 验证 save() 被调用，且 task 字段被修改了
+        // Verifiziere, dass save() aufgerufen wurde und Felder geändert wurden
         verify(taskRepository).save(task);
         assertEquals(1, task.getIfFinished());
-        assertEquals("Remark", task.getRemark());
+        assertEquals("Bemerkung", task.getRemark());
 
-        // 断言返回信息
-        assertEquals("任务更新成功", response.getMessage());
+        // Überprüfe Rückgabemeldung
+        assertEquals("Aufgabe erfolgreich aktualisiert", response.getMessage());
     }
-
 
     @Test
     void testFindTasksByUserId_success() {
@@ -85,7 +85,7 @@ public class TaskServiceTest {
 
         ApiResponse<?> response = taskService.findTasksByUserId(1);
         verify(taskRepository).findTasksByUserId(1);
-        assertEquals("任务获取成功", response.getMessage());
+        assertEquals("Aufgaben erfolgreich abgerufen", response.getMessage());
         assertEquals(tasks, response.getData());
     }
 
@@ -94,5 +94,4 @@ public class TaskServiceTest {
         when(taskRepository.findTasksByUserId(1)).thenReturn(null);
         assertThrows(BusinessException.class, () -> taskService.findTasksByUserId(1));
     }
-
 }

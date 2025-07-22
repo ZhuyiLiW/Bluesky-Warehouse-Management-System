@@ -20,7 +20,7 @@ public class LoginUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 把数字角色转为 Spring Security 所识别的角色字符串
+        // Die numerischen Rollen in von Spring Security erkannte Rollen-Strings umwandeln.
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRoleId()));
     }
 

@@ -23,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.List;
 
 @Service
@@ -36,128 +35,127 @@ public class UserService implements UserDetailsService {
 
     public ApiResponse<?> getUserId(String userName){
         if (userName == null || userName.trim().isEmpty()) {
-            logger.warn("获取用户ID失败：用户名为空");
-            throw new InvalidParameterException("用户名不能为空");
+            logger.warn("Benutzer-ID konnte nicht abgerufen werden: Benutzername ist leer");
+            throw new InvalidParameterException("Benutzername darf nicht leer sein");
         }
 
-        // 获取用户ID
+        // Benutzer-ID abrufen
         Integer userId = userRepository.userId(userName);
-        String checkUserName=userRepository.checkUserName(userId);
+        String checkUserName = userRepository.checkUserName(userId);
 
-        // 判断是否存在该用户
+        // Prüfen, ob Benutzer existiert
         if (userId == null) {
-            logger.info("用户名未找到：{}", userName);
-            throw new BusinessException("未找到对应的用户");
+            logger.info("Benutzername nicht gefunden: {}", userName);
+            throw new BusinessException("Benutzer nicht gefunden");
         }
 
-        logger.info("获取用户ID成功：userName={}, userId={}", userName, userId);
-        return ApiResponse.success("获取用户ID成功", userId+":"+checkUserName);
+        logger.info("Benutzer-ID erfolgreich abgerufen: userName={}, userId={}", userName, userId);
+        return ApiResponse.success("Benutzer-ID erfolgreich abgerufen", userId + ":" + checkUserName);
     }
-    // 建议把 PasswordEncoder 作为成员变量，减少重复创建
 
     @Transactional
     public ApiResponse<?> addNewUser(String userName, String password, int role) {
 
-        logger.info("尝试添加新用户，用户名: {}", userName);
+        logger.info("Versuche, neuen Benutzer hinzuzufügen, Benutzername: {}", userName);
 
         if (userName == null || password == null || userName.trim().isEmpty() || password.trim().isEmpty()) {
-            logger.warn("添加用户失败：用户名或密码为空");
-            throw new InvalidParameterException("用户名或密码不能为空");
+            logger.warn("Benutzer konnte nicht hinzugefügt werden: Benutzername oder Passwort ist leer");
+            throw new InvalidParameterException("Benutzername oder Passwort darf nicht leer sein");
         }
 
         if (password.length() < 8) {
-            logger.warn("添加用户失败：密码长度不足，用户名：{}", userName);
-            throw new BusinessException("密码长度需大于8位");
+            logger.warn("Benutzer konnte nicht hinzugefügt werden: Passwort zu kurz, Benutzername: {}", userName);
+            throw new BusinessException("Passwort muss länger als 8 Zeichen sein");
         }
 
         String isUserNameExisted = userRepository.getUserName(userName);
         if (isUserNameExisted != null) {
-            logger.warn("添加用户失败：用户名已存在，用户名：{}", userName);
-            throw new BusinessException("用户名已存在");
+            logger.warn("Benutzer konnte nicht hinzugefügt werden: Benutzername existiert bereits, Benutzername: {}", userName);
+            throw new BusinessException("Benutzername existiert bereits");
         }
 
         String encryptPwd = passwordEncoder.encode(password);
 
         userRepository.insertNewUser(userName, encryptPwd, role);
-        logger.info("成功添加新用户：{}", userName);
-        return ApiResponse.success("用户添加成功", null);
+        logger.info("Neuer Benutzer erfolgreich hinzugefügt: {}", userName);
+        return ApiResponse.success("Benutzer erfolgreich hinzugefügt", null);
     }
 
     public ApiResponse<?> login(String userName, String password) {
 
-        logger.info("用户尝试登录，用户名: {}", userName);
+        logger.info("Benutzer versucht anzumelden, Benutzername: {}", userName);
 
         if (userName == null || userName.trim().isEmpty() || password == null || password.trim().isEmpty()) {
-            logger.warn("登录失败：用户名或密码为空");
-            throw new InvalidParameterException("用户名或密码不能为空");
+            logger.warn("Login fehlgeschlagen: Benutzername oder Passwort ist leer");
+            throw new InvalidParameterException("Benutzername oder Passwort darf nicht leer sein");
         }
 
         String getUserName = userRepository.getUserName(userName);
         if (getUserName == null) {
-            logger.warn("登录失败：用户名 [{}] 不存在", userName);
-            throw new BusinessException("用户名不存在");
+            logger.warn("Login fehlgeschlagen: Benutzername [{}] existiert nicht", userName);
+            throw new BusinessException("Benutzername existiert nicht");
         }
 
         String getPassword = userRepository.getPwd(userName);
         if (getPassword == null) {
-            logger.warn("登录失败：用户名 [{}] 的密码未设置", userName);logger.warn("登录失败：用户名 [{}] 的密码未设置", userName);
-            throw new BusinessException("用户密码未设置");
+            logger.warn("Login fehlgeschlagen: Passwort für Benutzername [{}] nicht gesetzt", userName);
+            throw new BusinessException("Benutzerpasswort nicht gesetzt");
         }
 
         boolean matches = passwordEncoder.matches(password, getPassword);
         if (!matches) {
-            logger.warn("登录失败：用户名 [{}] 密码错误", userName);
-            throw new BusinessException("密码错误");
+            logger.warn("Login fehlgeschlagen: Falsches Passwort für Benutzername [{}]", userName);
+            throw new BusinessException("Falsches Passwort");
         }
 
         int getRoleId = userRepository.getRoleId(userName);
-        logger.debug("用户名 [{}] 验证通过，角色ID: {}", userName, getRoleId);
+        logger.debug("Benutzername [{}] verifiziert, Rollen-ID: {}", userName, getRoleId);
         User thisUser = new User(userName, null, getRoleId);
 
-
-        logger.info("用户 [{}] 登录成功", userName);
+        logger.info("Benutzer [{}] erfolgreich angemeldet", userName);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        auth.getAuthorities().forEach(a -> System.out.println("权限: " + a.getAuthority()));
-        return ApiResponse.success("登录成功", thisUser);
+        auth.getAuthorities().forEach(a -> System.out.println("Berechtigung: " + a.getAuthority()));
+        return ApiResponse.success("Login erfolgreich", thisUser);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("尝试加载用户名为 [{}] 的用户", username);
-        String userName = userRepository.getUserName(username); // 你要确保这个方法存在
-        Integer userRole=userRepository.getRoleId(username);
-        logger.debug("从数据库获取的角色ID: {}", userRole);
-        User user=new User();
+        logger.info("Versuche, Benutzer mit Namen [{}] zu laden", username);
+        String userName = userRepository.getUserName(username); // Stelle sicher, dass diese Methode existiert
+        Integer userRole = userRepository.getRoleId(username);
+        logger.debug("Aus Datenbank geladene Rollen-ID: {}", userRole);
+        User user = new User();
         user.setName(userName);
         user.setPwd(null);
-        if(userRole!=null)
-        user.setRoleId(userRole);
-        if (userName == null||userName=="") {
-            logger.warn("用户 [{}] 不存在", username);
-            throw new UsernameNotFoundException("用户不存在");
+        if (userRole != null)
+            user.setRoleId(userRole);
+        if (userName == null || userName.isEmpty()) {
+            logger.warn("Benutzer [{}] existiert nicht", username);
+            throw new UsernameNotFoundException("Benutzer existiert nicht");
         }
-        logger.info("用户 [{}] 加载成功，准备返回 LoginUserDetails", userName);
+        logger.info("Benutzer [{}] erfolgreich geladen, bereite LoginUserDetails vor", userName);
         return new LoginUserDetails(user);
     }
+
     @Transactional
     public ApiResponse<?> roleChange(int userId, int role) {
-        User user= userRepository.findById((long) userId).orElseThrow(()->new RuntimeException("用户不存在"+userId));
+        User user = userRepository.findById((long) userId).orElseThrow(() -> new RuntimeException("Benutzer existiert nicht " + userId));
         user.setRoleId(role);
         userRepository.save(user);
-        logger.info("用户角色已更新成功：{}", userId,role);
-        return ApiResponse.success("更新成功",null);
+        logger.info("Benutzerrolle erfolgreich aktualisiert: Benutzer-ID={}, Rolle={}", userId, role);
+        return ApiResponse.success("Aktualisierung erfolgreich", null);
     }
 
     public ApiResponse<?> getAllUser() {
-       List<User>allUser= userRepository.getAllUser();
-        logger.info("用户角色已获取成功：{}", allUser);
-        return ApiResponse.success("获取所有用户成功",allUser);
-
+        List<User> allUser = userRepository.getAllUser();
+        logger.info("Benutzerliste erfolgreich abgerufen: {}", allUser);
+        return ApiResponse.success("Alle Benutzer erfolgreich abgerufen", allUser);
     }
+
     @Transactional
     public ApiResponse<?> deleteUser(int id) {
         userRepository.deleteUser(id);
-        logger.info("用户角色已删除，id为:", id);
-        return ApiResponse.success("已删除完成",null);
+        logger.info("Benutzer erfolgreich gelöscht, ID: {}", id);
+        return ApiResponse.success("Löschung erfolgreich", null);
     }
 }

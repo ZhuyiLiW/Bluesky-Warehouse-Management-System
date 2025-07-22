@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <!-- 日志文件路径 -->
+    <!-- Pfad zur Logdatei -->
     <property name="APP_NAME" value="bluesky-warehouse"/>
     <property name="LOG_PATH" value="/logs"/>
 
-    <!-- 控制台输出 -->
+    <!-- Konsolenausgabe -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [%X{traceId} - %X{userId}] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- JSON 文件输出 -->
+    <!-- JSON-Dateiausgabe -->
     <appender name="JsonFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/${APP_NAME}.json</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">

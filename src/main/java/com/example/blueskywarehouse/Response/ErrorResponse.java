@@ -3,7 +3,7 @@ package com.example.blueskywarehouse.Response;
 public class ErrorResponse {
     private int errorCode;
     private String errorMessage;
-    private String errorDetails; // 错误的详细信息，便于调试
+    private String errorDetails;
 
     public ErrorResponse() {
 

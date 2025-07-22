@@ -26,73 +26,73 @@ public class CheckStockInfoService {
     PalletInfoRepository palletInfoRepository;
     Logger logger = LoggerFactory.getLogger(CheckStockInfoService.class);
     /**
-     * 获取全部库存信息
+     * Alle Bestandsinformationen abrufen
      */
 
     public ApiResponse<?> getAllStockInfo() {
-            List<AllStock> allStockList = checkStockInfoRepository.getAllStock();
+        List<AllStock> allStockList = checkStockInfoRepository.getAllStock();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("当前认证用户：" + authentication.getName());
-        System.out.println("权限：" + authentication.getAuthorities());
-            return ApiResponse.success("现存库存如下", allStockList);
+        System.out.println("Aktueller authentifizierter Benutzer: " + authentication.getName());
+        System.out.println("Berechtigungen: " + authentication.getAuthorities());
+        return ApiResponse.success("Aktueller Bestand wie folgt", allStockList);
     }
 
     /**
-     * 获取每个商品对应的位置和库存汇总
+     * Positionen und Lagerbestände für jedes Produkt abrufen
      */
 
     public ApiResponse<?> getAllStockLocation() {
-            //这里Object[]因为 location是 Group 如果把对象直接变成AllStock会有无法映射的问题 所以需要手动映射
-            List<Object[]> allStockLocation = checkStockInfoRepository.getAllStockLocation();
-            List<StockWithLocation> transferAllStockLocation = new ArrayList<>();
-           //手动映射所有商品对应仓位信息
-            for (Object[] row : allStockLocation) {
-                String name = (String) row[0];
-                String location = (String) row[1];
+        // Hier Object[] verwenden, da location gruppiert ist. Direkte Abbildung auf AllStock ist problematisch, daher manuelle Abbildung notwendig
+        List<Object[]> allStockLocation = checkStockInfoRepository.getAllStockLocation();
+        List<StockWithLocation> transferAllStockLocation = new ArrayList<>();
+        // Manuelle Abbildung aller Produkt-Lagerplatzinformationen
+        for (Object[] row : allStockLocation) {
+            String name = (String) row[0];
+            String location = (String) row[1];
 
-                // 防止类型转换异常
-                double totalBoxStock =row[2]==null?0: ((Number) row[2]).doubleValue();
-                double totalUnitStock =row[3]==null?0:  ((Number) row[3]).doubleValue();
+            // Vermeidung von Typumwandlungsfehlern
+            double totalBoxStock =row[2]==null?0: ((Number) row[2]).doubleValue();
+            double totalUnitStock =row[3]==null?0:  ((Number) row[3]).doubleValue();
 
-                StockWithLocation allStock = new StockWithLocation(name, location, totalBoxStock, totalUnitStock);
-                transferAllStockLocation.add(allStock);
-            }
+            StockWithLocation allStock = new StockWithLocation(name, location, totalBoxStock, totalUnitStock);
+            transferAllStockLocation.add(allStock);
+        }
 
-            return ApiResponse.success("现存库存对应位置如下", transferAllStockLocation);
+        return ApiResponse.success("Lagerbestände mit zugehörigen Positionen wie folgt", transferAllStockLocation);
 
     }
 
     /**
-     * 根据 itemId 查询该商品所在的所有货位
+     * Alle Lagerplätze für ein Produkt anhand der Artikel-ID abfragen
      */
 
     public ApiResponse<?> getLocationByItemId(int itemId) {
-            List<String> allBinCodeByItemId = checkStockInfoRepository.getAllBincodeByItemId(itemId);
-            return ApiResponse.success("该商品的库存位置如下", allBinCodeByItemId);
+        List<String> allBinCodeByItemId = checkStockInfoRepository.getAllBincodeByItemId(itemId);
+        return ApiResponse.success("Lagerplätze für das Produkt wie folgt", allBinCodeByItemId);
     }
 
     /**
-     * 根据托盘ID更新托盘信息
-     * @param id 托盘ID
-     * @param itemId 物料编号
-     * @param boxStock 总箱数
-     * @param unitStock 总件数
+     * Paletteninformationen anhand der Paletten-ID aktualisieren
+     * @param id Paletten-ID
+     * @param itemId Artikelnummer
+     * @param boxStock Gesamtanzahl der Kartons
+     * @param unitStock Gesamtstückzahl
      */
     @Transactional
     public ApiResponse<?> updatePalletinfoById(int id, int itemId, double boxStock, int unitStock) {
         PalletInfo palletInfo = palletInfoRepository.findById((long) id)
-                .orElseThrow(() -> new RuntimeException("托盘信息不存在，id=" + id));
+                .orElseThrow(() -> new RuntimeException("Paletteninformation nicht gefunden, id=" + id));
         palletInfo.setItemId(itemId);
         palletInfo.setBoxStock(boxStock);
         palletInfo.setUnitStock(unitStock);
-        palletInfoRepository.save(palletInfo);  // 直接调用save()，JPA会帮你update
-        logger.info("托盘信息更新成功，id={}, itemId={}, boxStock={}, unitStock={}", id, itemId, boxStock, unitStock);
-        return ApiResponse.success("托盘信息更新成功", null);
+        palletInfoRepository.save(palletInfo);  // save() direkt aufrufen, JPA führt update durch
+        logger.info("Paletteninformation erfolgreich aktualisiert, id={}, itemId={}, boxStock={}, unitStock={}", id, itemId, boxStock, unitStock);
+        return ApiResponse.success("Paletteninformation erfolgreich aktualisiert", null);
     }
 
     @Transactional
     public ApiResponse<?> deletePalletinfoById(int id) {
         checkStockInfoRepository.deletePalletinfoById(id);
-        return ApiResponse.success("删除托盘成功",null);
+        return ApiResponse.success("Palette erfolgreich gelöscht",null);
     }
 }

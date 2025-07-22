@@ -22,36 +22,40 @@ import static org.mockito.Mockito.*;
 public class PriceListServiceTest {
     @Mock
     private PriceListRepository priceListRepository;
+
     @InjectMocks
     private PriceListService priceListService;
-    final int itemId=5;
-    final double price=10.23;
-    final String remark="test remark";
+
+    final int itemId = 5;
+    final double price = 10.23;
+    final String remark = "Testbemerkung";
     LocalDate date = LocalDate.now();
+
     @Test
-    void insertPriceList(){
-        ApiResponse<?> response =priceListService.insertPriceList(itemId,price,remark);
-        assertEquals("价格插入成功",response.getMessage());
-        verify(priceListRepository).insertPriceList(itemId,price,remark);
-        verify(priceListRepository,times(1)).insertPriceList(itemId,price,remark);
+    void insertPriceList() {
+        ApiResponse<?> response = priceListService.insertPriceList(itemId, price, remark);
+        assertEquals("Preis erfolgreich eingefügt", response.getMessage());
+        verify(priceListRepository).insertPriceList(itemId, price, remark);
+        verify(priceListRepository, times(1)).insertPriceList(itemId, price, remark);
     }
+
     @Test
-    void updatePriceList(){
-        ApiResponse<?> response =priceListService.updatePriceList(itemId,price);
-        assertEquals("价格更新成功",response.getMessage());
-        verify(priceListRepository).updatePriceList(itemId,price);
-        verify(priceListRepository,times(1)).updatePriceList(itemId,price);
+    void updatePriceList() {
+        ApiResponse<?> response = priceListService.updatePriceList(itemId, price);
+        assertEquals("Preis erfolgreich aktualisiert", response.getMessage());
+        verify(priceListRepository).updatePriceList(itemId, price);
+        verify(priceListRepository, times(1)).updatePriceList(itemId, price);
     }
+
     @Test
-    void showPriceList(){
+    void showPriceList() {
         List<PriceList> mockData = Arrays.asList(
-                new PriceList(1, "test", "2.34", "test remark"),
-                new PriceList(2, "test", "3.34", "test remark"),
-                new PriceList(3, "test", "2.64", "test remark")
+                new PriceList(1, "Test", "2.34", "Testbemerkung"),
+                new PriceList(2, "Test", "3.34", "Testbemerkung"),
+                new PriceList(3, "Test", "2.64", "Testbemerkung")
         );
         when(priceListRepository.searchPriceList()).thenReturn(mockData);
-        ApiResponse<?> response =priceListService.showPriceList();
-        assertEquals("所有产品价格如下:",response.getMessage());
-
+        ApiResponse<?> response = priceListService.showPriceList();
+        assertEquals("Alle Produktpreise wie folgt:", response.getMessage());
     }
 }

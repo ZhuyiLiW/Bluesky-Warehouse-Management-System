@@ -50,7 +50,7 @@ public class AmazonRefund {
     @Version
     private Integer version;
 
-    // -------------------- 构造方法 --------------------
+    // ----------------------------------------
 
     public AmazonRefund() {
     }
@@ -85,7 +85,7 @@ public class AmazonRefund {
         this.creditNoteNumber = creditNoteNumber;
         this.version = version;
     }
-    // Getters and Setters
+
 
 
     public Long getId() {

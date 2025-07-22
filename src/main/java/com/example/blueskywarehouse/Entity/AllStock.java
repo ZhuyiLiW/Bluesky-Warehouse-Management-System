@@ -21,13 +21,9 @@ public class AllStock {
     private double totalUnitStock;
     @Version
     private Integer version;
-    // -------------------- 构造函数 --------------------
 
-    // 无参构造函数（JPA 必须要有）
     public AllStock() {
     }
-
-    // 带 id 的构造函数（仅在手动赋值场景使用）
     public AllStock(int id, String name, double totalBoxStock, double totalUnitStock) {
         this.id = id;
         this.name = name;
@@ -42,7 +38,7 @@ public class AllStock {
         this.totalUnitStock = totalUnitStock;
         this.version = version;
     }
-    // -------------------- Getter 和 Setter --------------------
+
 
     public int getId() {
         return id;

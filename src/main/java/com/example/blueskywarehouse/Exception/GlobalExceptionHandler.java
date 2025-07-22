@@ -15,15 +15,15 @@ public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    // 处理业务异常
+    // Geschäftsbezogene Ausnahmen behandeln
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<?>> handleBusinessException(BusinessException ex) {
-        logger.warn("业务异常: {}", ex.getMessage());
+        logger.warn("Geschäftsbezogene Ausnahmen: {}", ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ApiResponse.failure(404, ex.getMessage()));
     }
-    // 输入参数异常
+    // Ungültige Eingabeparameter
     @ExceptionHandler(InvalidParameterException.class)
     public ResponseEntity<ApiResponse<?>> handleInvalidParameter(InvalidParameterException ex) {
         return ResponseEntity
@@ -31,29 +31,29 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.failure(400, ex.getMessage()));
     }
 
-    // 处理数据库异常（JPA、JDBC 相关）
+    // Behandlung von Datenbankausnahmen (JPA, JDBC-bezogen)
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ApiResponse<?>> handleDatabaseException(DataAccessException ex) {
-        logger.error("数据库异常: {}", ex.getMessage(), ex);
+        logger.error("Datenbankfehler: {}", ex.getMessage(), ex);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.failure(500, "数据库错误，请联系管理员"));
+                .body(ApiResponse.failure(500, "Datenbankfehler. Bitte wenden Sie sich an den Administrator."));
     }
-    // 乐观锁出现更新冲突处理
+    // Behandlung von Aktualisierungskonflikten bei Optimistic Locking
     @ExceptionHandler(OptimisticLockException.class)
     public ResponseEntity<ApiResponse<?>> handleOptimisticLockException(OptimisticLockException ex) {
-        logger.warn("乐观锁冲突: {}", ex.getMessage());
+        logger.warn("Optimistic-Locking-Konflikt: {}", ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.CONFLICT) // 409冲突
-                .body(ApiResponse.failure(409, "数据已被修改，请刷新后重试"));
+                .body(ApiResponse.failure(409, "Die Daten wurden geändert. Bitte aktualisieren Sie die Seite und versuchen Sie es erneut."));
     }
 
-    // 兜底异常（系统级）
+    //Fallback-Ausnahme auf Systemebene
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<?>> handleOtherException(Exception ex) {
-        logger.error("系统异常:", ex);
+        logger.error("Fallback-Ausnahme:", ex);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.failure(500, "系统异常，请稍后再试"));
+                .body(ApiResponse.failure(500, "Systemfehler. Bitte versuchen Sie es später erneut."));
     }
 }

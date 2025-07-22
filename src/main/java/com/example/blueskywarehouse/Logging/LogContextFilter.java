@@ -23,18 +23,18 @@ public class LogContextFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            // 设置 traceId
+            // Einstellen traceId
             MDC.put("traceId", UUID.randomUUID().toString());
 
-            // 从 Spring Security 中获取 userId
+            // Abrufen der userId aus Spring Security
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
-                MDC.put("userId", auth.getName());  // 你可以根据实际需要改成 ID 或用户名
+                MDC.put("userId", auth.getName());
             }
 
-            filterChain.doFilter(request, response);  // 继续请求链
+            filterChain.doFilter(request, response);
         } finally {
-            MDC.clear();  // 请求结束清除，防止线程污染
+            MDC.clear();  // Am Ende der Anfrage aufräumen, um Thread-Verschmutzung zu vermeiden.
         }
     }
 }

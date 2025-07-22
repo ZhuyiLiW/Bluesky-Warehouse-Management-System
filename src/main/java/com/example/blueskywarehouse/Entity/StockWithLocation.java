@@ -24,13 +24,13 @@ public class StockWithLocation {
     @Version
     private Integer version;
 
-    // -------------------- 构造方法 --------------------
 
-    // 无参构造函数（JPA 需要）
+
+
     public StockWithLocation() {
     }
 
-    // 包含所有字段的构造函数
+
     public StockWithLocation(String name, String location, double totalBoxStock, double totalUnitStock) {
         this.name = name;
         this.location = location;
@@ -46,7 +46,7 @@ public class StockWithLocation {
         this.location = location;
         this.version = version;
     }
-    // -------------------- Getter 和 Setter --------------------
+
 
     public int getId() {
         return id;

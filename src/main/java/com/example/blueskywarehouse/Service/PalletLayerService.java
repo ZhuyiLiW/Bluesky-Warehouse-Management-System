@@ -21,68 +21,71 @@ public class PalletLayerService {
     Logger logger = LoggerFactory.getLogger(WorkLogService.class);
 
     /**
-     * 更新托盘位置：从旧仓位移动部分或全部库存到新仓位
+     * Aktualisiert die Palettenposition: Verschiebt teilweise oder gesamten Bestand vom alten zum neuen Lagerplatz
      */
-
     @Transactional
     public ApiResponse<?> updatePalett(String oldBinCode, String newBinCode, int itemId, int unitCount) {
 
-            lock.lock();
+        lock.lock();
         try {
-        // 获取旧仓位库存
+            // Bestand am alten Lagerplatz abrufen
             Integer oldStock = palletLayerRepository.getStock(itemId, oldBinCode);
             int currentOldStock = (oldStock != null) ? oldStock : 0;
 
-            // 判断旧仓位库存是否足够移动
+            // Prüfen, ob genügend Bestand zum Verschieben vorhanden ist
             if (currentOldStock > unitCount) {
                 palletLayerRepository.minusStock(itemId, unitCount, oldBinCode, currentOldStock);
-                logger.info("从旧仓位移除部分库存：itemId={}, oldBinCode={}, 移动数量={}, 当前库存={}", itemId, oldBinCode, unitCount, currentOldStock);
+                logger.info("Teilweise Verschiebung vom alten Lagerplatz: itemId={}, oldBinCode={}, Menge={}, aktueller Bestand={}", itemId, oldBinCode, unitCount, currentOldStock);
             } else if (currentOldStock == unitCount) {
                 palletLayerRepository.changePalettStatusInto49(itemId, oldBinCode);
                 palletLayerRepository.deleteItemId49();
-                logger.info("旧仓位库存正好全部转移，已设置状态为49并清除记录：itemId={}, binCode={}", itemId, oldBinCode);
+                logger.info("Gesamter Bestand vom alten Lagerplatz verschoben, Status auf 49 gesetzt und Eintrag gelöscht: itemId={}, binCode={}", itemId, oldBinCode);
             } else {
-                logger.warn("库存不足：无法从旧仓位移动库存。itemId={}, oldBinCode={}, 请求移动={}, 实际库存={}",
+                logger.warn("Unzureichender Bestand: Verschiebung vom alten Lagerplatz nicht möglich. itemId={}, oldBinCode={}, angefragte Menge={}, tatsächlicher Bestand={}",
                         itemId, oldBinCode, unitCount, currentOldStock);
-                throw new BusinessException("库存不足");
+                throw new BusinessException("Unzureichender Lagerbestand");
             }
 
-            // 获取新仓位库存
+            // Bestand am neuen Lagerplatz abrufen
             Integer newStock = palletLayerRepository.getStock(itemId, newBinCode);
             int currentNewStock = (newStock != null) ? newStock : 0;
 
-            // 添加库存到新仓位
+            // Bestand zum neuen Lagerplatz hinzufügen
             if (currentNewStock != 0) {
                 palletLayerRepository.addStock(currentNewStock, itemId, unitCount, newBinCode);
-                logger.info("向已有的新仓位添加库存：itemId={}, newBinCode={}, 添加数量={}, 原库存={}", itemId, newBinCode, unitCount, currentNewStock);
+                logger.info("Bestand zum vorhandenen neuen Lagerplatz hinzugefügt: itemId={}, newBinCode={}, Menge hinzugefügt={}, vorheriger Bestand={}", itemId, newBinCode, unitCount, currentNewStock);
             } else {
                 palletLayerRepository.insertStockPalett(itemId, unitCount, newBinCode);
                 palletLayerRepository.insertStockBin(newBinCode);
-                logger.info("新建新仓位托盘并插入库存：itemId={}, newBinCode={}, 数量={}", itemId, newBinCode, unitCount);
+                logger.info("Neuen Lagerplatz angelegt und Bestand eingefügt: itemId={}, newBinCode={}, Menge={}", itemId, newBinCode, unitCount);
             }
 
-            return ApiResponse.success("托盘位置移动成功",null);  }
-         finally {
+            return ApiResponse.success("Palettenposition erfolgreich verschoben", null);
+        } finally {
             lock.unlock();
         }
-
     }
+
     /**
-     * 清空指定仓位中的所有托盘数据。
+     * Löscht alle Paletten-Daten von einem angegebenen Lagerplatz.
      *
-     * @param binCode 仓位编码
-     * @return 操作结果响应
+     * @param binCode Lagerplatz-Code
+     * @return Antwort mit dem Ergebnis der Operation
      */
     @Transactional
     public ApiResponse<?> deleteAllPalettFromBin(String binCode) {
-            palletLayerRepository.deleteAllPalettFromBin(binCode);
-            palletLayerRepository.deleteBin(binCode);
-            logger.info("仓位清空成功：{}", binCode);
-            return ApiResponse.success("仓位清空成功",null);
+        palletLayerRepository.deleteAllPalettFromBin(binCode);
+        palletLayerRepository.deleteBin(binCode);
+        logger.info("Lagerplatz erfolgreich geleert: {}", binCode);
+        return ApiResponse.success("Lagerplatz erfolgreich geleert", null);
     }
-    public ApiResponse<?> searchAllItemFromBin( String binCode) {
-        List<Object[]>allItemFromBin=palletLayerRepository.searchAllItemFromBin(binCode);
-        logger.info("仓位搜索：{}", allItemFromBin);
-        return ApiResponse.success("仓位搜索成功",allItemFromBin);
+
+    /**
+     * Sucht alle Artikel an einem bestimmten Lagerplatz.
+     */
+    public ApiResponse<?> searchAllItemFromBin(String binCode) {
+        List<Object[]> allItemFromBin = palletLayerRepository.searchAllItemFromBin(binCode);
+        logger.info("Lagerplatz-Suche Ergebnisse: {}", allItemFromBin);
+        return ApiResponse.success("Lagerplatzsuche erfolgreich", allItemFromBin);
     }
 }

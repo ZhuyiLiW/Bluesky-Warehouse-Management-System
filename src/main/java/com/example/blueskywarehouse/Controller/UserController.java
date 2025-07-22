@@ -40,20 +40,20 @@ public class UserController {
     public ApiResponse<?> login(@RequestParam String userName,@RequestParam String password,
                                 HttpServletRequest request)  {ApiResponse<?> response = userService.login(userName, password);
 
-        if (response.getStatus() == 200) { // 登录成功，code根据你的 ApiResponse 结构判断
+        if (response.getStatus() == 200) { // Login success
             User user = (User) response.getData();
 
-            // 构造认证信息
+            // Authentifizierungsdaten konstruieren
             LoginUserDetails loginUser = new LoginUserDetails(user);
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
 
-            // 设置 SecurityContext
+            // SecurityContext setzen
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             context.setAuthentication(authToken);
             SecurityContextHolder.setContext(context);
 
-            // 保存 SecurityContext 到 Session
+            // SecurityContext in der Session speichern
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
         }

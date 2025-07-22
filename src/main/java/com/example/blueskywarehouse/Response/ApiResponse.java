@@ -21,7 +21,7 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    // 静态工厂方法，方便调用
+    // Statische Fabrikmethode zur einfachen Verwendung
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(200, "Success", data);
     }

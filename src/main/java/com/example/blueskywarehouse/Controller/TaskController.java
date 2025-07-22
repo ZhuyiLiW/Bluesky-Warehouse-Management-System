@@ -35,7 +35,7 @@ public class TaskController {
         return taskService.updateTaskStatus(taskId,ifFinished,remark);
     }
 
-    //@RequestParam(required = false) 如果参数没有传返回null就好
+    // @RequestParam(required = false) – Wenn kein Parameter übergeben wird, einfach null zurückgeben
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
     @PostMapping("/searchTask")
     public ApiResponse<?> searchTask(@RequestParam(required = false) Integer userId,
@@ -62,7 +62,7 @@ public class TaskController {
             return taskService.findTasksByUserIdAndDateRange(userId, taskStartDate, taskEndDate);
         }
 
-        throw new InvalidParameterException("参数不完整，必须同时提供开始时间和结束时间，或仅提供 userId");
+        throw new InvalidParameterException("Ungültige Parameter: Entweder Start- und Enddatum zusammen angeben oder nur userId.");
     }
 
 
@@ -71,9 +71,9 @@ public class TaskController {
     public ApiResponse<?> searchFailedTask(@RequestParam(required = false) Integer userId) {
         boolean hasUserId=userId!=null;
         if (!hasUserId) {
-            return taskService.findFailedTasks(); // 查所有失败任务
+            return taskService.findFailedTasks(); //Alle fehlgeschlagenen Aufgaben abrufen
         } else {
-            return taskService.findFailedTasksByUserId(userId); // 查指定用户失败任务
+            return taskService.findFailedTasksByUserId(userId); // Fehlgeschlagene Aufgaben eines bestimmten Benutzers abrufen
         }
     }
 

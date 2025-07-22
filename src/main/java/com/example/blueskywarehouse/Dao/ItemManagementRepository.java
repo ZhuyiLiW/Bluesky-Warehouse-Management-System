@@ -20,10 +20,7 @@ public interface ItemManagementRepository extends JpaRepository<Item, Long> {
     VALUES (:name, :type, :unitPerBox, :productGroup)
 """, nativeQuery = true)
     void addItem(
-            @Param("name") String name,
-            @Param("type") String type,
-            @Param("unitPerBox") Integer unitPerBox,
-            @Param("productGroup") String productGroup
+           String name, String type, Integer unitPerBox, String productGroup
     );
 
 

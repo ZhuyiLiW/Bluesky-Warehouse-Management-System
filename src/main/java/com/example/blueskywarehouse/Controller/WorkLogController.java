@@ -27,15 +27,15 @@ public class WorkLogController {
     @Autowired
     private WorkLogService workLogService;
 
-    // 获取所有日志
+    // Alle Logs abrufen
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
     @GetMapping
     public List<WorkLog> getAll(@RequestParam(required = false) String s) {
-        // 如果有传递 content 参数，进行模糊查询，否则获取所有日志
+        //Wenn ein 'content'-Parameter übergeben wird, eine unscharfe Suche durchführen, andernfalls alle Protokolle abrufen.
         return workLogService.searchWorkLogsByContent(s);
     }
 
-    // 插入新的工作日志
+    // Einen neuen Arbeitslog einfüge
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
     @PostMapping("/insertWorklog")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -45,7 +45,7 @@ public class WorkLogController {
                              @RequestParam int itemsCount,
                              @RequestParam int status,
                              @RequestParam String binCode) {
-        // 调用 Service 层方法插入数据
+        // Eine Methode der Service-Schicht aufrufen, um Daten einzufügen
 
        return workLogService.insertNewWorklog(customerName, operationDate, itemId, itemsCount, status, binCode);
     }
@@ -85,27 +85,28 @@ public class WorkLogController {
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
     @PostMapping("/getCustomerRecord")
     public ResponseEntity<InputStreamResource> exportExcel(
-            // 接收请求参数 startDate，格式为 yyyy-MM-dd，并将其自动转换为 Java 的 Date 类型
+            // Den Anfrageparameter startDate im Format yyyy-MM-dd empfangen und automatisch in den Java-Typ Date umwandeln.
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-            // 接收请求参数 endDate，同样格式化并转换
+            //Den Anfrageparameter endDate ebenfalls im Format yyyy-MM-dd empfangen und in den Java-Typ Date umwandeln.
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate
     ) throws IOException {
-        // 调用业务层的导出方法，生成 Excel 数据并以流的形式返回
+        // Die Exportmethode der Business-Logik aufrufen, um Excel-Daten zu erzeugen und diese als Stream zurückzugeben.
         ByteArrayInputStream in = workLogService.exportToExcel(startDate, endDate);
 
-        // 设置响应头，告知客户端下载的文件名为 customer_records.xlsx
+        // Den Response-Header setzen, um dem Client den Dateinamen customer_records.xlsx für den Download mitzuteilen.
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=customer_records.xlsx");
 
-        // 构建 HTTP 响应对象，设置：
-        // - 状态码为 200 OK
-        // - 内容类型为 Excel 文件类型
-        // - 响应体为 InputStreamResource（包装了 Excel 文件流）
+        // Aufbau des HTTP-Antwortobjekts mit folgenden Einstellungen:
+        // - Statuscode: 200 OK
+       // - Content-Type: Excel-Dateityp
+      // - Antwortinhalt: InputStreamResource (eingepackter Excel-Dateistream)
+
         return ResponseEntity
                 .ok()  // HTTP 200
-                .headers(headers)  // 添加响应头
+                .headers(headers)  // Response-Header hinzufügen
                 .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-                .body(new InputStreamResource(in));  // 设置文件内容
+                .body(new InputStreamResource(in));  // Dateiinhalt festlegen
     }
 
 }

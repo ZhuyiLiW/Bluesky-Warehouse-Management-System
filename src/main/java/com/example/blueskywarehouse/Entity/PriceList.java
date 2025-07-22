@@ -21,7 +21,6 @@ public class PriceList {
     @Version
     private Integer version;
 
-    // -------------------- 构造方法 --------------------
 
 
     public PriceList() {
@@ -51,7 +50,7 @@ public class PriceList {
         this.version = version;
     }
 
-// -------------------- Getter 和 Setter --------------------
+
 
     public int getId() {
         return id;

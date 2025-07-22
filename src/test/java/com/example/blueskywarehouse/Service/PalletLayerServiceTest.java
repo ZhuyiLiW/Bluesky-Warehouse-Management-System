@@ -18,13 +18,15 @@ import static org.mockito.Mockito.*;
 public class PalletLayerServiceTest {
     @Mock
     private PalletLayerRepository palletLayerRepository;
+
     @InjectMocks
     private PalletLayerService palletLayerService;
+
     private final int itemId = 1;
     private final String oldBinCode = "OLD_BIN";
     private final String newBinCode = "NEW_BIN";
 
-    // 库存充足：部分转移
+    // Ausreichender Lagerbestand: Teilweise Verschiebung
     @Test
     void testUpdatePalett_PartialMove() {
         int currentOldStock = 10;
@@ -39,17 +41,17 @@ public class PalletLayerServiceTest {
         verify(palletLayerRepository).minusStock(itemId, unitCount, oldBinCode, currentOldStock);
         verify(palletLayerRepository).addStock(currentNewStock, itemId, unitCount, newBinCode);
 
-        assertEquals("托盘位置移动成功", response.getMessage());
+        assertEquals("Palettenposition erfolgreich verschoben", response.getMessage());
     }
 
-    // 库存刚好：全量转移
+    // Genauer Lagerbestand: Vollständige Verschiebung
     @Test
     void testUpdatePalett_ExactStockMove() {
         int currentOldStock = 5;
         int unitCount = 5;
 
         when(palletLayerRepository.getStock(itemId, oldBinCode)).thenReturn(currentOldStock);
-        when(palletLayerRepository.getStock(itemId, newBinCode)).thenReturn(null);  // 新位置无库存
+        when(palletLayerRepository.getStock(itemId, newBinCode)).thenReturn(null);  // Kein Lagerbestand an neuer Position
 
         ApiResponse<?> response =  palletLayerService.updatePalett(oldBinCode, newBinCode, itemId, unitCount);
 
@@ -58,10 +60,10 @@ public class PalletLayerServiceTest {
         verify(palletLayerRepository).insertStockPalett(itemId, unitCount, newBinCode);
         verify(palletLayerRepository).insertStockBin(newBinCode);
 
-        assertEquals("托盘位置移动成功", response.getMessage());
+        assertEquals("Palettenposition erfolgreich verschoben", response.getMessage());
     }
 
-    // 库存不足：抛出异常
+    // Unzureichender Lagerbestand: Ausnahme werfen
     @Test
     void testUpdatePalett_InsufficientStock() {
         int currentOldStock = 2;
@@ -72,9 +74,9 @@ public class PalletLayerServiceTest {
         BusinessException exception = assertThrows(BusinessException.class, () ->
                 palletLayerService.updatePalett(oldBinCode, newBinCode, itemId, unitCount));
 
-        assertEquals("库存不足", exception.getMessage());
+        assertEquals("Unzureichender Lagerbestand", exception.getMessage());
 
-        // 验证没有执行后续行为
+        // Verifizieren, dass keine weiteren Aktionen ausgeführt wurden
         verify(palletLayerRepository, never()).minusStock(anyInt(), anyInt(), anyString(), anyInt());
         verify(palletLayerRepository, never()).addStock(anyInt(), anyInt(), anyInt(), anyString());
     }
