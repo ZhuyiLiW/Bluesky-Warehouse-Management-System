@@ -160,12 +160,7 @@ public class WorkLogService {
             if (log.getStatus() == OUT) {
                 if (originalUnitStock != 0.0)
                     workLogRepository.rollbackWorklog0(originalUnitStock, log.getItemsCount(), log.getItemId(), log.getBin_code());
-                else {
-                    workLogRepository.creatNewPalettForRollback(log.getItemsCount(), log.getItemId());
-                    Integer newPalettId = workLogRepository.getPalettForRollback();
-                    String slotCode = log.getBin_code().split("-")[0];
-                    workLogRepository.insertNewPalettIntoBin(newPalettId, slotCode, log.getBin_code());
-                }
+
             } else {
                 workLogRepository.rollbackWorklog1(originalUnitStock, log.getItemsCount(), log.getItemId(), log.getBin_code());
                 Integer getStock = workLogRepository.getStock(log.getItemId(), log.getBin_code());

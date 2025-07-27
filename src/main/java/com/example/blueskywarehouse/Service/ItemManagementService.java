@@ -10,14 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Produktverwaltungsservice, verantwortlich für die Verarbeitung der geschäftlichen Logik rund um Produkte wie Hinzufügen, Aktualisieren und Abfragen von Produktinformationen.
- */
 @Service
 public class ItemManagementService {
 
@@ -26,53 +22,51 @@ public class ItemManagementService {
 
     Logger logger = LoggerFactory.getLogger(ItemManagementService.class);
 
-    /**
-     * Einen neuen Produkteintrag hinzufügen. Falls es sich um Kundenlagerbestand handelt, wird der Artikelname als Kundenname + Produktname definiert, und der Typ entspricht dem Kundennamen.
-     */
     @Transactional
     public ApiResponse<?> addItem(String name, String type, Integer unitPerBox, String productGroup) {
+        logger.info("addItem() aufgerufen mit name={}, type={}, unitPerBox={}, productGroup={}", name, type, unitPerBox, productGroup);
+        logger.debug("Versuche neues Produkt in die Datenbank einzufügen");
         itemManagementRepository.addItem(name, type, unitPerBox, productGroup);
-        return ApiResponse.success("Neues Produkt erfolgreich hinzugefügt",null);
+        return ApiResponse.success("Neues Produkt erfolgreich hinzugefügt", null);
     }
 
-    /**
-     * Bestehendes Produktname und Typ aktualisieren.
-     */
     @Transactional
-    public ApiResponse<?> updateItem(int id, String name, String type, int unitPerBox,String productGroup) {
-        Item item=itemManagementRepository.findById((long) id).orElseThrow(() -> new RuntimeException("Paletteninformation nicht gefunden, id=" + id));
+    public ApiResponse<?> updateItem(int id, String name, String type, int unitPerBox, String productGroup) {
+        logger.info("updateItem() aufgerufen mit id={}, name={}, type={}, unitPerBox={}, productGroup={}", id, name, type, unitPerBox, productGroup);
+        logger.debug("Lade Produkt mit ID {} zur Aktualisierung", id);
+        Item item = itemManagementRepository.findById((long) id)
+                .orElseThrow(() -> new RuntimeException("Paletteninformation nicht gefunden, id=" + id));
         item.setName(name);
         item.setUnitPerBox(unitPerBox);
         item.setProductGroup(productGroup);
         itemManagementRepository.save(item);
-        return ApiResponse.success("Produkt erfolgreich aktualisiert",null);
+        logger.debug("Produkt gespeichert: {}", item);
+        return ApiResponse.success("Produkt erfolgreich aktualisiert", null);
     }
 
-    /**
-     * Produkte anhand des Namens per Like-Suche suchen.
-     */
     public ApiResponse<?> searchItem(String name) {
+        logger.info("searchItem() aufgerufen mit name={}", name);
         name = name == null ? "" : name.trim();
         List<Item> itemsList = Optional.ofNullable(itemManagementRepository.searchItem(name))
                 .orElse(Collections.emptyList());
-        if(itemsList.size()==0)throw new BusinessException("Material existiert nicht");
+        logger.debug("Gefundene Items: {}", itemsList);
+        if (itemsList.size() == 0) throw new BusinessException("Material existiert nicht");
         return ApiResponse.success("Produktdetails erfolgreich abgerufen", itemsList);
     }
 
-    /**
-     * Lagerort eines Produkttyps abfragen.
-     */
     public ApiResponse<?> searchItemLocation(int itemId) {
+        logger.info("searchItemLocation() aufgerufen mit itemId={}", itemId);
         List<String> itemsLocationList = itemManagementRepository.searchItemLocation(itemId);
+        logger.debug("Gefundene Standorte: {}", itemsLocationList);
         return ApiResponse.success("Produktstandorte erfolgreich abgerufen", itemsLocationList);
     }
-    /**
-     * Menge eines Produkttyps abfragen: itemsCount[0] = Kartonanzahl, itemsCount[1] = Stückzahl
-     */
-    public ApiResponse<?> searchItemCount(int itemId) {
-        Object[] itemCount =itemManagementRepository.searchItemCount(itemId);
-        return ApiResponse.success("Produktmengen erfolgreich abgerufen", itemCount);
 
+    public ApiResponse<?> searchItemCount(int itemId) {
+        logger.info("searchItemCount() aufgerufen mit itemId={}", itemId);
+        Object[] itemCount = itemManagementRepository.searchItemCount(itemId);
+        logger.debug("Gefundene Mengen: Kartons={}, Stück={}", itemCount[0], itemCount[1]);
+        return ApiResponse.success("Produktmengen erfolgreich abgerufen", itemCount);
     }
+
 
 }

@@ -26,9 +26,10 @@ public interface CheckStockInfoRepository extends JpaRepository<AllStock, Long> 
                   JOIN
                       pallet_info p ON i.id = p.item_id
                   WHERE
-                      i.id IN (1,2,3,4,5,16,19,22,25,27,23,28,30,32,34,35,36,37,38,39,40,41,42,43,44,33,6,7,8,9,10,11,62,67,68,69,70,71,72,73,74,75) 
+                      i.product_group IN ('corona test','mask','paper bag','solar panel','Huawei','powerway Set','Liu','APS','Anker','BC','RJW','5PAIRS BAG','solar cabel','rail','bluesky','deepblue')  
                   GROUP BY
                       i.id, i.name, i.product_group
+                      HAVING total_unit_stock>0
                   ORDER BY
                       CASE
                           WHEN i.product_group = 'Huawei' THEN 4
