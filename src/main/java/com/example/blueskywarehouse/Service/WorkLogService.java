@@ -14,8 +14,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Pageable;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -214,10 +217,17 @@ public class WorkLogService {
     /**
      * Arbeitslogs eines Kunden im Zeitraum abrufen (überladene Methoden)
      */
-    public ApiResponse<?> getWorklogByPeriode(String startDate, String endDate) {
-        List<WorkLog> workLogList = workLogRepository.getWorklistByPeriode(startDate + startDateSuffix, endDate + endDateSuffix);
-        return ApiResponse.success(workLogList);
+    public ApiResponse<?> getWorklogByPeriode(String startDate, String endDate,int page,int size) {
+        Pageable pageable = (Pageable) PageRequest.of(page, size); // Spring Data JPA Paginierungsobjekt, beginnend mit der ersten Seite, 10 Einträge pro Seite.
+
+        Page<WorkLog> workLogPage = workLogRepository.getWorklistByPeriode(
+                startDate ,
+                endDate ,
+                pageable);
+
+        return ApiResponse.success(workLogPage);
     }
+
 
     public ApiResponse<?> getWorklogByPeriode(String startDate, String endDate, String customerName) {
         customerName = customerName.trim();
@@ -315,3 +325,4 @@ public class WorkLogService {
     }
 
 }
+

@@ -46,7 +46,7 @@ public interface CheckStockInfoRepository extends JpaRepository<AllStock, Long> 
                       i.id;
                   
             
-""", nativeQuery = true)
+""", nativeQuery = true) 
     List<AllStock> getAllStock();
     @Query(value = """
     SELECT

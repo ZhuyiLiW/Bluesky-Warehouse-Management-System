@@ -40,14 +40,14 @@ public class WorkLogController {
     @PostMapping("/insertWorklog")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public ApiResponse<?> insertWorkLog(@RequestParam String customerName,
-                             @RequestParam LocalDateTime operationDate,
-                             @RequestParam int itemId,
-                             @RequestParam int itemsCount,
-                             @RequestParam int status,
-                             @RequestParam String binCode) {
+                                        @RequestParam LocalDateTime operationDate,
+                                        @RequestParam int itemId,
+                                        @RequestParam int itemsCount,
+                                        @RequestParam int status,
+                                        @RequestParam String binCode) {
         // Eine Methode der Service-Schicht aufrufen, um Daten einzufügen
 
-       return workLogService.insertNewWorklog(customerName, operationDate, itemId, itemsCount, status, binCode);
+        return workLogService.insertNewWorklog(customerName, operationDate, itemId, itemsCount, status, binCode);
     }
 
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
@@ -67,21 +67,29 @@ public class WorkLogController {
             @RequestParam String startDate,
             @RequestParam String endDate,
             @RequestParam(required = false) String customerName,
-            @RequestParam(required = false) Integer itemId) {
+            @RequestParam(required = false) Integer itemId,
+            @RequestParam(defaultValue = "0") int page,   // ✅ 仅在无过滤条件时使用
+            @RequestParam(defaultValue = "10") int size   // ✅ 每页10条
+    ) {
 
         boolean hasCustomer = customerName != null && !customerName.trim().isEmpty();
         boolean hasItem = itemId != null;
 
         if (!hasCustomer && !hasItem) {
-            return workLogService.getWorklogByPeriode(startDate, endDate);
+            // ✅ 无过滤条件 → 走分页查询
+            return workLogService.getWorklogByPeriode(startDate, endDate, page, size);
         } else if (!hasCustomer) {
+            // ✅ 只有 itemId → 走原来的方法
             return workLogService.getWorklogByPeriode(startDate, endDate, itemId);
         } else if (!hasItem) {
+            // ✅ 只有 customerName → 走原来的方法
             return workLogService.getWorklogByPeriode(startDate, endDate, customerName);
         } else {
+            // ✅ 两个过滤条件都有 → 走原来的方法
             return workLogService.getWorklogByPeriode(startDate, endDate, customerName, itemId);
         }
     }
+
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
     @PostMapping("/getCustomerRecord")
     public ResponseEntity<InputStreamResource> exportExcel(
@@ -99,8 +107,8 @@ public class WorkLogController {
 
         // Aufbau des HTTP-Antwortobjekts mit folgenden Einstellungen:
         // - Statuscode: 200 OK
-       // - Content-Type: Excel-Dateityp
-      // - Antwortinhalt: InputStreamResource (eingepackter Excel-Dateistream)
+        // - Content-Type: Excel-Dateityp
+        // - Antwortinhalt: InputStreamResource (eingepackter Excel-Dateistream)
 
         return ResponseEntity
                 .ok()  // HTTP 200
@@ -110,3 +118,4 @@ public class WorkLogController {
     }
 
 }
+
