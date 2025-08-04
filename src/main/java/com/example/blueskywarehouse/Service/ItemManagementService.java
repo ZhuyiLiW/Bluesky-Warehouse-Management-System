@@ -7,6 +7,7 @@ import com.example.blueskywarehouse.Response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class ItemManagementService {
     Logger logger = LoggerFactory.getLogger(ItemManagementService.class);
 
     @Transactional
+    @CacheEvict(value = "allStock", allEntries = true)
     public ApiResponse<?> addItem(String name, String type, Integer unitPerBox, String productGroup) {
         logger.info("addItem() aufgerufen mit name={}, type={}, unitPerBox={}, productGroup={}", name, type, unitPerBox, productGroup);
         logger.debug("Versuche neues Produkt in die Datenbank einzufügen");
@@ -31,6 +33,7 @@ public class ItemManagementService {
     }
 
     @Transactional
+    @CacheEvict(value = "allStock", allEntries = true)
     public ApiResponse<?> updateItem(int id, String name, String type, int unitPerBox, String productGroup) {
         logger.info("updateItem() aufgerufen mit id={}, name={}, type={}, unitPerBox={}, productGroup={}", id, name, type, unitPerBox, productGroup);
         logger.debug("Lade Produkt mit ID {} zur Aktualisierung", id);

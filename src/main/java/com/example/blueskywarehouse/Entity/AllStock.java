@@ -2,8 +2,10 @@ package com.example.blueskywarehouse.Entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
-public class AllStock {
+public class AllStock  implements Serializable {
 
 
     @Id
@@ -21,6 +23,8 @@ public class AllStock {
     private double totalUnitStock;
     @Version
     private Integer version;
+
+    private static final long serialVersionUID = 1L;
 
     public AllStock() {
     }
@@ -79,4 +83,6 @@ public class AllStock {
     public void setVersion(Integer version) {
         this.version = version;
     }
+
+
 }

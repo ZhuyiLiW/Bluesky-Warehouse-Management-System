@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class WorkLogService {
      * Fügt ein neues Arbeitslog hinzu und aktualisiert den Lagerbestand je nach Status
      */
     @Transactional
+    @CacheEvict(value = "allStock", allEntries = true)
     public ApiResponse<?> insertNewWorklog(String customerName, LocalDateTime operationDate, int itemId, int itemsCount, int status, String optimalBin) {
         Integer allStock = Optional.ofNullable(workLogRepository.getAllStockCount(itemId)).orElse(0);
 
@@ -137,6 +139,7 @@ public class WorkLogService {
      * Markiert Arbeitslog als ungültig und rollt Lagerbestandsänderungen zurück
      */
     @Transactional
+    @CacheEvict(value = "allStock", allEntries = true)
     public ApiResponse<?> invalidWorklog(int worklogId) {
         lock.lock();
         try {

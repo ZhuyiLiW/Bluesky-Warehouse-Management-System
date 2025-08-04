@@ -2,10 +2,11 @@ package com.example.blueskywarehouse.Entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-public class PriceList {
+public class PriceList implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -21,7 +22,7 @@ public class PriceList {
     @Version
     private Integer version;
 
-
+    private static final long serialVersionUID = 1L;
 
     public PriceList() {
 

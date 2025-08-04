@@ -1,7 +1,9 @@
 package com.example.blueskywarehouse.Response;
 
-public class ApiResponse<T> {
+import java.io.Serializable;
 
+public class ApiResponse<T>implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int status;
     private String message;
     private T data;
