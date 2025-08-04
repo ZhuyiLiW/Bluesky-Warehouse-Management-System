@@ -33,6 +33,13 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
     Logger logger = LoggerFactory.getLogger(OptimalStorageLocationService.class);
 
+    /**
+     * Gibt die Benutzer-ID für einen gegebenen Benutzernamen zurück.
+     * Überprüft, ob der Benutzername gültig ist und ob der Benutzer existiert.
+     *
+     * @param userName Der Benutzername
+     * @return ApiResponse mit Benutzer-ID und überprüftem Benutzernamen
+     */
     public ApiResponse<?> getUserId(String userName){
         if (userName == null || userName.trim().isEmpty()) {
             logger.warn("Benutzer-ID konnte nicht abgerufen werden: Benutzername ist leer");
@@ -52,7 +59,10 @@ public class UserService implements UserDetailsService {
         logger.info("Benutzer-ID erfolgreich abgerufen: userName={}, userId={}", userName, userId);
         return ApiResponse.success("Benutzer-ID erfolgreich abgerufen", userId + ":" + checkUserName);
     }
-
+    /**
+     * Fügt einen neuen Benutzer dem System hinzu.
+     * Führt Validierungen durch (leere Eingaben, Passwortlänge, vorhandener Benutzername).
+     */
     @Transactional
     public ApiResponse<?> addNewUser(String userName, String password, int role) {
 
@@ -81,6 +91,10 @@ public class UserService implements UserDetailsService {
         return ApiResponse.success("Benutzer erfolgreich hinzugefügt", null);
     }
 
+    /**
+     * Authentifiziert einen Benutzer mit Benutzername und Passwort.
+     * Überprüft die Anmeldedaten und gibt Benutzerinformationen zurück.
+     */
     public ApiResponse<?> login(String userName, String password) {
 
         logger.info("Benutzer versucht anzumelden, Benutzername: {}", userName);
@@ -118,6 +132,10 @@ public class UserService implements UserDetailsService {
         return ApiResponse.success("Login erfolgreich", thisUser);
     }
 
+    /**
+     * Lädt die Benutzerdetails für Spring Security anhand des Benutzernamens.
+     * Wird intern bei der Authentifizierung verwendet.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("Versuche, Benutzer mit Namen [{}] zu laden", username);
@@ -137,6 +155,9 @@ public class UserService implements UserDetailsService {
         return new LoginUserDetails(user);
     }
 
+    /**
+     * Ändert die Rolle eines Benutzers anhand der Benutzer-ID.
+     */
     @Transactional
     public ApiResponse<?> roleChange(int userId, int role) {
         User user = userRepository.findById((long) userId).orElseThrow(() -> new RuntimeException("Benutzer existiert nicht " + userId));
@@ -146,12 +167,18 @@ public class UserService implements UserDetailsService {
         return ApiResponse.success("Aktualisierung erfolgreich", null);
     }
 
+    /**
+     * Gibt eine Liste aller Benutzer im System zurück.
+     */
     public ApiResponse<?> getAllUser() {
         List<User> allUser = userRepository.getAllUser();
         logger.info("Benutzerliste erfolgreich abgerufen: {}", allUser);
         return ApiResponse.success("Alle Benutzer erfolgreich abgerufen", allUser);
     }
 
+    /**
+     * Löscht einen Benutzer aus dem System anhand der ID.
+     */
     @Transactional
     public ApiResponse<?> deleteUser(int id) {
         userRepository.deleteUser(id);

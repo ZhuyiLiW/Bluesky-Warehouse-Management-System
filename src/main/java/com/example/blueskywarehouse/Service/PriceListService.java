@@ -9,6 +9,8 @@ import com.example.blueskywarehouse.Response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +36,7 @@ public class PriceListService {
      * @param price  Der aktuelle Produktpreis, muss eine nicht-negative Zahl sein
      */
     @Transactional
+    @CacheEvict(value = "showPriceList", allEntries = true)
     public ApiResponse<?> insertPriceList(int itemId, double price, String remark) {
         // Prüfen ob itemId bereits existiert
         List<Integer> isItemIdExisted = priceListRepository.checkItemId(itemId);
@@ -69,6 +72,7 @@ public class PriceListService {
      * @param price  Der neue Produktpreis, muss nicht-negativ sein
      */
     @Transactional
+    @CacheEvict(value = "showPriceList", allEntries = true)
     public ApiResponse<?> updatePriceList(int itemId, double price) {
         LocalDate date = LocalDate.now();
 
@@ -94,6 +98,7 @@ public class PriceListService {
      * <p>
      * Diese Methode liest alle Datensätze aus der Tabelle price_list aus und gibt sie für die Anzeige an das Frontend zurück.
      */
+    @Cacheable(value = "showPriceList")
     public ApiResponse<?> showPriceList() {
         List<PriceList> priceList = priceListRepository.searchPriceList();
 

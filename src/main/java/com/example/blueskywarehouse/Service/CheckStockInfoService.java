@@ -9,6 +9,8 @@ import com.example.blueskywarehouse.Response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -29,11 +31,14 @@ public class CheckStockInfoService {
      * Alle Bestandsinformationen abrufen
      */
 
+    @Cacheable(value = "allStock")
+
     public ApiResponse<?> getAllStockInfo() {
         List<AllStock> allStockList = checkStockInfoRepository.getAllStock();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("Aktueller authentifizierter Benutzer: " + authentication.getName());
         System.out.println("Berechtigungen: " + authentication.getAuthorities());
+        System.out.println("查询数据库...");
         return ApiResponse.success("Aktueller Bestand wie folgt", allStockList);
     }
 
@@ -78,6 +83,7 @@ public class CheckStockInfoService {
      * @param boxStock Gesamtanzahl der Kartons
      * @param unitStock Gesamtstückzahl
      */
+    @CacheEvict(value = "allStock", allEntries = true)
     @Transactional
     public ApiResponse<?> updatePalletinfoById(int id, int itemId, double boxStock, int unitStock) {
         PalletInfo palletInfo = palletInfoRepository.findById((long) id)
@@ -89,7 +95,7 @@ public class CheckStockInfoService {
         logger.info("Paletteninformation erfolgreich aktualisiert, id={}, itemId={}, boxStock={}, unitStock={}", id, itemId, boxStock, unitStock);
         return ApiResponse.success("Paletteninformation erfolgreich aktualisiert", null);
     }
-
+    @CacheEvict(value = "allStock", allEntries = true)
     @Transactional
     public ApiResponse<?> deletePalletinfoById(int id) {
         checkStockInfoRepository.deletePalletinfoById(id);

@@ -2,17 +2,15 @@ package com.example.blueskywarehouse.Dao;
 
 import com.example.blueskywarehouse.Dto.CustomerRecord;
 import com.example.blueskywarehouse.Entity.WorkLog;
-import jakarta.persistence.LockModeType;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 @Repository
 public interface WorkLogRepository extends JpaRepository<WorkLog, Long> {
@@ -251,10 +249,20 @@ public interface WorkLogRepository extends JpaRepository<WorkLog, Long> {
     """, nativeQuery = true)
     List<Object[] > getWorkLogByDate(String date);
     @Query(value = """
-SELECT * from  inventory_operations where operation_date BETWEEN :startDate and :endDate and (remarks IS NULL OR remarks <> 'deleted')
-                        
-    """, nativeQuery = true)
-    List<WorkLog> getWorklistByPeriode(String startDate, String endDate);
+SELECT * 
+FROM inventory_operations 
+WHERE operation_date BETWEEN :startDate AND :endDate 
+  AND (remarks IS NULL OR remarks <> 'deleted')
+""",
+            countQuery = """
+SELECT count(*) 
+FROM inventory_operations 
+WHERE operation_date BETWEEN :startDate AND :endDate 
+  AND (remarks IS NULL OR remarks <> 'deleted')
+""",
+            nativeQuery = true)
+    Page<WorkLog> getWorklistByPeriode(String startDate, String endDate, Pageable pageable);
+
     @Query(value = """
 SELECT * from  inventory_operations where operation_date BETWEEN :startDate and :endDate and customer_name LIKE CONCAT('%', :customerName, '%') and (remarks IS NULL OR remarks <> 'deleted')
                         
@@ -329,3 +337,4 @@ WHERE id IN (
     """, nativeQuery = true)
     void deletePalettByItemId(int itemId, String binCode);
 }
+

@@ -6,6 +6,7 @@ import com.example.blueskywarehouse.Response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +74,7 @@ public class PalletLayerService {
      * @return Antwort mit dem Ergebnis der Operation
      */
     @Transactional
+    @CacheEvict(value = "allStock", allEntries = true)
     public ApiResponse<?> deleteAllPalettFromBin(String binCode) {
         palletLayerRepository.deleteAllPalettFromBin(binCode);
         palletLayerRepository.deleteBin(binCode);

@@ -23,7 +23,6 @@ public interface ItemManagementRepository extends JpaRepository<Item, Long> {
            String name, String type, Integer unitPerBox, String productGroup
     );
 
-
     @Query(value = """
     select * from items where name like concat('%',:name,'%') or id=:name
 """, nativeQuery = true)
@@ -39,4 +38,5 @@ public interface ItemManagementRepository extends JpaRepository<Item, Long> {
                                                                                                     
 """, nativeQuery = true)
     Object[] searchItemCount(int itemId);
+
 }
