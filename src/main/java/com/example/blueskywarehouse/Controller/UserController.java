@@ -56,6 +56,9 @@ public class UserController {
             // SecurityContext in der Session speichern
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+
+
+
         }
 
         return response;

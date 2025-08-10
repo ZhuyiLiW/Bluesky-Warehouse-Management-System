@@ -127,8 +127,6 @@ public class UserService implements UserDetailsService {
         User thisUser = new User(userName, null, getRoleId);
 
         logger.info("Benutzer [{}] erfolgreich angemeldet", userName);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        auth.getAuthorities().forEach(a -> System.out.println("Berechtigung: " + a.getAuthority()));
         return ApiResponse.success("Login erfolgreich", thisUser);
     }
 

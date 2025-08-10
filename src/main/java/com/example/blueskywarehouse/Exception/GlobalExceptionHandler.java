@@ -10,6 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.naming.AuthenticationException;
+import java.nio.file.AccessDeniedException;
+import java.util.Map;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -23,6 +27,16 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(ApiResponse.failure(404, ex.getMessage()));
     }
+    @ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
+    public ResponseEntity<?> auth(AuthenticationException e) {
+        return ResponseEntity.status(401).body(Map.of("code",401,"message","Unauthenticated"));
+    }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<?> denied(AccessDeniedException e) {
+        return ResponseEntity.status(403).body(Map.of("code",403,"message","Access denied， Sie haben keine Berechtigung."));
+    }
+
     // Ungültige Eingabeparameter
     @ExceptionHandler(InvalidParameterException.class)
     public ResponseEntity<ApiResponse<?>> handleInvalidParameter(InvalidParameterException ex) {

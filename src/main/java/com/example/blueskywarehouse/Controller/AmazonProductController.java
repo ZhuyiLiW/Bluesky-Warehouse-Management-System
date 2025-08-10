@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AmazonProductController {
     @Autowired
     private AmazonProductService amazonProductService;
-    @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
+    @PreAuthorize("hasRole('4') ")
     @PostMapping("/getNewBarCode")
     public ApiResponse<?> getNewBarCode(String oldBarCode){
         return amazonProductService.getNewBarCode(oldBarCode);
