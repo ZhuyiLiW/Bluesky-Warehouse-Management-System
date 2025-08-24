@@ -1,5 +1,6 @@
 package com.example.blueskywarehouse.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,7 +23,7 @@ public class AllStock  implements Serializable {
     @Column(name = "total_unit_stock")
     private double totalUnitStock;
     @Version
-    private Integer version;
+    private Integer version=0;
 
     private static final long serialVersionUID = 1L;
 
