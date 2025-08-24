@@ -3,6 +3,7 @@ package com.example.blueskywarehouse.Entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "packing_info")
 public class PackingInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

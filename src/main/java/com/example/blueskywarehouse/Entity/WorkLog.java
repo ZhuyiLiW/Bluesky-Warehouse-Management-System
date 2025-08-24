@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;  // 导入 Timestamp 类型
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "inventory_operations")
 public class WorkLog {
 
     @Id

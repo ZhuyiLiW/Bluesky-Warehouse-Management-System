@@ -6,7 +6,7 @@ import lombok.extern.apachecommons.CommonsLog;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "\"warehouse_worker_tasks\"")
+@Table(name = "warehouse_worker_tasks")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +51,9 @@ public class Task {
         this.ifFinished = ifFinished;
         this.remark = remark;
         this.version = version;
+    }
+
+    public Task(int userId, LocalDate taskDate, LocalDate deadline, String content, int ifFinished, String remark) {
     }
 
 

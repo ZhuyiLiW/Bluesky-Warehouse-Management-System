@@ -2,6 +2,8 @@ package com.example.blueskywarehouse.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "items")
 public class Item {
@@ -19,7 +21,6 @@ public class Item {
     private String productGroup;
     @Version
     private Integer version;
-
 
     public Item() {
     }

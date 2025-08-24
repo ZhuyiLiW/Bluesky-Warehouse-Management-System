@@ -2,10 +2,12 @@ package com.example.blueskywarehouse.Entity;
 
 import jakarta.persistence.*;
 
-@Table(name = "\"user\"")
+@Table(name = "user")
 @Entity
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
     @Column(name="name")
     private String name;

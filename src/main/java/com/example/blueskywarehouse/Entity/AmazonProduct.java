@@ -3,6 +3,7 @@ package com.example.blueskywarehouse.Entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "amazon_products")
 public class AmazonProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

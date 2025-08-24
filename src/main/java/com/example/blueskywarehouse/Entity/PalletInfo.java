@@ -3,8 +3,10 @@ package com.example.blueskywarehouse.Entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Table(name = "pallet_info")
 public class PalletInfo {
 
     @Id
@@ -35,6 +37,7 @@ public class PalletInfo {
     private String note;
     @Version
     private Integer version;
+
 
     public PalletInfo() {
 

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "price_list")
 public class PriceList implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +14,8 @@ public class PriceList implements Serializable {
     private int id;
     @Column(name = "item_name")
     private String itemName;
+    @Column(name = "item_id")
+    private Integer itemId;
     @Column(name="price")
     private String price;
     @Transient
@@ -20,9 +23,12 @@ public class PriceList implements Serializable {
     @Column(name="remark")
     private String remark;
     @Version
-    private Integer version;
+    private Integer version=0;
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Item item;
 
     public PriceList() {
 
@@ -52,6 +58,13 @@ public class PriceList implements Serializable {
     }
 
 
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
 
     public int getId() {
         return id;
