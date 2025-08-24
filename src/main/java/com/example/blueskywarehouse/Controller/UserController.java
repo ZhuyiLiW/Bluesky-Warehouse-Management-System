@@ -13,37 +13,44 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/UserController")
 public class UserController {
+
     @Autowired
     private UserService userService;
+
+    // Benutzer-ID anhand des Benutzernamens suchen
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
-    @PostMapping("/searchUserId")
-    public ApiResponse<?> searchUserId(@RequestParam String userName)  {
+    @GetMapping("/searchUserId")
+    public ApiResponse<?> searchUserId(@RequestParam String userName) {
         return userService.getUserId(userName);
     }
+
+    // Neuen Benutzer hinzufügen
     @PreAuthorize("hasRole('1') or hasRole('3')")
     @PostMapping("/addNewUser")
-    public ApiResponse<?> addNewUser(@RequestParam String userName,@RequestParam String password,@RequestParam int role)  {
-        return userService.addNewUser(userName,password,role);
+    public ApiResponse<?> addNewUser(@RequestParam String userName,
+                                     @RequestParam String password,
+                                     @RequestParam int role) {
+        return userService.addNewUser(userName, password, role);
     }
 
+    // Benutzer-Login
     @PostMapping("/login")
-    public ApiResponse<?> login(@RequestParam String userName,@RequestParam String password,
-                                HttpServletRequest request)  {ApiResponse<?> response = userService.login(userName, password);
+    public ApiResponse<?> login(@RequestParam String userName,
+                                @RequestParam String password,
+                                HttpServletRequest request) {
+        ApiResponse<?> response = userService.login(userName, password);
 
-        if (response.getStatus() == 200) { // Login success
+        if (response.getStatus() == 200) { // Login erfolgreich
             User user = (User) response.getData();
 
-            // Authentifizierungsdaten konstruieren
+            // Authentifizierungsdaten erstellen
             LoginUserDetails loginUser = new LoginUserDetails(user);
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
@@ -56,28 +63,30 @@ public class UserController {
             // SecurityContext in der Session speichern
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-
-
-
         }
 
         return response;
     }
-    @PreAuthorize("hasRole('1')  or hasRole('3')")
-    @PostMapping("/roleChange")
-    public ApiResponse<?> roleChange(@RequestParam int userId,@RequestParam int role)  {
-        return userService.roleChange(userId,role);
+
+    // Benutzerrolle ändern
+    @PreAuthorize("hasRole('1') or hasRole('3')")
+    @PutMapping("/roleChange")
+    public ApiResponse<?> roleChange(@RequestParam int userId,
+                                     @RequestParam int role) {
+        return userService.roleChange(userId, role);
     }
 
+    // Alle Benutzer abrufen
     @PreAuthorize("hasRole('1') or hasRole('2') or hasRole('3')")
-    @PostMapping("/getAllUser")
-    public ApiResponse<?> getAllUser()  {
+    @GetMapping("/getAllUser")
+    public ApiResponse<?> getAllUser() {
         return userService.getAllUser();
     }
 
+    // Benutzer löschen
     @PreAuthorize("hasRole('1') or hasRole('3')")
-    @PostMapping("/deleteUser")
-    public ApiResponse<?> deleteUser(int id)  {
+    @DeleteMapping("/deleteUser")
+    public ApiResponse<?> deleteUser(int id) {
         return userService.deleteUser(id);
     }
 }

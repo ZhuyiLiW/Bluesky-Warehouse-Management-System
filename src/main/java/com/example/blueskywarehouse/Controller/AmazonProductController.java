@@ -5,18 +5,16 @@ import com.example.blueskywarehouse.Service.AmazonProductService;
 import com.example.blueskywarehouse.Service.ItemManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/AmazonProductController")
 public class AmazonProductController {
     @Autowired
     private AmazonProductService amazonProductService;
-    @PreAuthorize("hasRole('4') ")
-    @PostMapping("/getNewBarCode")
-    public ApiResponse<?> getNewBarCode(String oldBarCode){
+    @PreAuthorize("hasRole('1') ")
+    @GetMapping("/getNewBarCode")
+    public ApiResponse<?> getNewBarCode(@RequestParam String oldBarCode){
         return amazonProductService.getNewBarCode(oldBarCode);
     }
 }
