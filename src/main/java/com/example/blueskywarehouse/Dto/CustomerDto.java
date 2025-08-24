@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class CustomerRecord {
+public class CustomerDto {
     private Long workNumber;
     private String deliveryLocation;
     private String productName;
@@ -13,7 +13,7 @@ public class CustomerRecord {
     private String remark;
     private Date date;
 
-    public CustomerRecord(Long workNumber, String deliveryLocation, String productName, Integer quantity, String remark, Date date) {
+    public CustomerDto(Long workNumber, String deliveryLocation, String productName, Integer quantity, String remark, Date date) {
         this.workNumber = workNumber;
         this.deliveryLocation = deliveryLocation;
         this.productName = productName;
@@ -22,7 +22,7 @@ public class CustomerRecord {
         this.date = date;
     }
 
-    public CustomerRecord() {
+    public CustomerDto() {
 
     }
 }
