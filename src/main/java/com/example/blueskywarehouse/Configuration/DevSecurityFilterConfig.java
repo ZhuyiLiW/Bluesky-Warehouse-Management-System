@@ -24,7 +24,7 @@ import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = false)
 @Profile("dev")
 public class DevSecurityFilterConfig {
 
@@ -58,8 +58,8 @@ public class DevSecurityFilterConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/UserController/login").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
+
                 )
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authEx) ->
@@ -79,7 +79,7 @@ public class DevSecurityFilterConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://192.168.178.94:3000","http://192.168.2.132:3000","http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
