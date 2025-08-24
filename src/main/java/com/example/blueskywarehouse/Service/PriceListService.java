@@ -1,7 +1,7 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.OptimalStorageLocationRepository;
-import com.example.blueskywarehouse.Dao.PriceListRepository;
+import com.example.blueskywarehouse.Dto.PriceListDto;
+import com.example.blueskywarehouse.Repository.PriceListRepository;
 import com.example.blueskywarehouse.Entity.PriceList;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Exception.InvalidParameterException;
@@ -13,10 +13,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -52,9 +50,14 @@ public class PriceListService {
 
         LocalDate date = LocalDate.now();
         // Aktuellen Preis einfügen
-        priceListRepository.insertPriceList(itemId, price, remark);
+        PriceList priceList=new PriceList();
+        priceList.setItemId(itemId);
+        priceList.setPrice(String.valueOf(price));
+        priceList.setRemark(remark);
+        priceListRepository.save(priceList);
 
         // Preis-Historie aufzeichnen (für Verlaufsgrafik)
+
         priceListRepository.insertPriceListHistory(itemId, price, date);
 
         logger.info("Preis und Historie erfolgreich eingefügt, itemId={}, price={}, date={}", itemId, price, date);
@@ -83,7 +86,7 @@ public class PriceListService {
         }
 
         // Aktuellen Preis aktualisieren
-        priceListRepository.updatePriceList(itemId, price);
+        priceListRepository.updatePriceList(itemId, String.valueOf(price));
 
         // Historischen Preis einfügen (für Preisverlaufsgrafik)
         priceListRepository.insertPriceListHistory(itemId, price, date);
@@ -100,7 +103,7 @@ public class PriceListService {
      */
     @Cacheable(value = "showPriceList")
     public ApiResponse<?> showPriceList() {
-        List<PriceList> priceList = priceListRepository.searchPriceList();
+        List<PriceListDto> priceList = priceListRepository.searchPriceList();
 
         if (priceList == null || priceList.isEmpty()) {
             logger.warn("Preisliste abgefragt: keine Daten gefunden");

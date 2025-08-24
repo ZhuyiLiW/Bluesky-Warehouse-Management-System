@@ -1,6 +1,6 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.OptimalStorageLocationRepository;
+import com.example.blueskywarehouse.Repository.OptimalStorageLocationRepository;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Response.ApiResponse;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

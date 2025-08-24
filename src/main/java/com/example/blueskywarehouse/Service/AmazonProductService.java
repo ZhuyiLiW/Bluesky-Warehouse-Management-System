@@ -1,20 +1,19 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.AmazonProductRepository;
+import com.example.blueskywarehouse.Repository.AmazonProductRepository;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AmazonProductService {
     @Autowired
     private AmazonProductRepository amazonProductRepository;
 
-    Logger logger = LoggerFactory.getLogger(ItemManagementService.class);
+    Logger logger = LoggerFactory.getLogger(AmazonProductService.class);
 
     /**
      * Neuen Produkteintrag hinzufügen. Bei Kundenlager: Artikelname = Kundenname + Produktname, Typ = Kundenname.

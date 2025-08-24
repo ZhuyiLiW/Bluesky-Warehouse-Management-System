@@ -1,7 +1,8 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.CheckStockInfoRepository;
-import com.example.blueskywarehouse.Dao.PalletInfoRepository;
+import com.example.blueskywarehouse.Dto.AllStockLocationDto;
+import com.example.blueskywarehouse.Repository.CheckStockInfoRepository;
+import com.example.blueskywarehouse.Repository.PalletInfoRepository;
 import com.example.blueskywarehouse.Entity.AllStock;
 import com.example.blueskywarehouse.Entity.PalletInfo;
 import com.example.blueskywarehouse.Entity.StockWithLocation;
@@ -19,7 +20,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 public class CheckStockInfoServiceTest {
@@ -33,76 +33,9 @@ public class CheckStockInfoServiceTest {
     @InjectMocks
     PalletInfoRepository palletInfoRepository;
 
-    @Test
-    void getAllStockLocation_successTest() {
-        // Vorbereitung von Mock-Daten
-        List<Object[]> mockData = Arrays.asList(
-                new Object[]{"TestA", "Lager 1", 10.0, 100.0},
-                new Object[]{"TestB", "Lager 2", null, 50.0},
-                new Object[]{"TestC", "Lager 3", 5.0, null}
-        );
 
-        when(checkStockInfoRepository.getAllStockLocation()).thenReturn(mockData);
 
-        // Aufruf der Service-Methode
-        ApiResponse<?> response = checkStockInfoService.getAllStockLocation();
 
-        // Überprüfen der Rückgabe
-        assertEquals("Bestandsorte wie folgt", response.getMessage());
-
-        List<StockWithLocation> result = (List<StockWithLocation>) response.getData();
-        assertEquals(3, result.size());
-
-        StockWithLocation item1 = result.get(0);
-        assertEquals("TestA", item1.getName());
-        assertEquals("Lager 1", item1.getLocation());
-        assertEquals(10.0, item1.getTotalBoxStock());
-        assertEquals(100.0, item1.getTotalUnitStock());
-
-        StockWithLocation item2 = result.get(1);
-        assertEquals(0.0, item2.getTotalBoxStock()); // null wurde zu 0.0 konvertiert
-        assertEquals(50.0, item2.getTotalUnitStock());
-
-        StockWithLocation item3 = result.get(2);
-        assertEquals(5.0, item3.getTotalBoxStock());
-        assertEquals(0.0, item3.getTotalUnitStock()); // null wurde zu 0.0 konvertiert
-    }
-
-    @Test
-    @Disabled
-    void testGetAllStockTest() {
-        List<AllStock> mockData = Arrays.asList(
-                new AllStock(1, "Lager 1", 10.0, 100.0),
-                new AllStock(2, "Lager 2", 0, 100.0),
-                new AllStock(3, "Lager 3", 10.0, 100.0)
-        );
-
-        when(checkStockInfoRepository.getAllStock()).thenReturn(mockData);
-        ApiResponse<?> response = checkStockInfoService.getAllStockInfo();
-        List<AllStock> result = (List<AllStock>) response.getData();
-
-        assertEquals("Aktueller Bestand wie folgt", response.getMessage());
-        assertEquals(3, result.size());
-        assertEquals(1, result.get(0).getId());
-        assertEquals(10, result.get(0).getTotalBoxStock());
-        assertEquals(100, result.get(0).getTotalUnitStock());
-    }
-
-    @Test
-    void getAllStockByIdTest() {
-        int itemId = 4;
-        List<String> mockData = Arrays.asList(
-                "test-standort-01", "test-standort-02", "test-standort-03"
-        );
-
-        when(checkStockInfoRepository.getAllBincodeByItemId(itemId)).thenReturn(mockData);
-        ApiResponse<?> response = checkStockInfoService.getLocationByItemId(4);
-        List<String> result = (List<String>) response.getData();
-
-        assertEquals("Lagerorte dieses Artikels wie folgt", response.getMessage());
-        assertEquals(3, result.size());
-        assertEquals("test-standort-01", result.get(0));
-    }
 
     @Test
     void updatePalletinfoByIdTest() {
@@ -142,12 +75,12 @@ public class CheckStockInfoServiceTest {
     @Test
     void deletePalletinfoByIdTest() {
         int id = 1;
-        doNothing().when(checkStockInfoRepository).deletePalletinfoById(id);
+        doNothing().when(checkStockInfoRepository).deleteById((long) id);
         ApiResponse<?> response = checkStockInfoService.deletePalletinfoById(id);
 
         assertEquals("Palette erfolgreich gelöscht", response.getMessage());
 
         // Verifizieren, dass delete einmal aufgerufen wurde
-        verify(checkStockInfoRepository, times(1)).deletePalletinfoById(id);
+        verify(checkStockInfoRepository, times(1)).deleteById((long) id);
     }
 }

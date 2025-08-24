@@ -1,7 +1,6 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.TaskRepository;
-import com.example.blueskywarehouse.Entity.PalletInfo;
+import com.example.blueskywarehouse.Repository.TaskRepository;
 import com.example.blueskywarehouse.Entity.Task;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Exception.InvalidParameterException;
@@ -33,8 +32,14 @@ public class TaskService {
             logger.warn("Aufgabeneinfügung fehlgeschlagen: ungültige Parameter userId={}", userId);
             throw new InvalidParameterException("Ungültige Parameter");
         }
-
-        taskRepository.insertTask(userId, taskDate, deadline, content, ifFinished, remark);
+        Task newTask=new Task();
+        newTask.setUserId(userId);
+        newTask.setTaskDate(taskDate);
+        newTask.setDeadline(deadline);
+        newTask.setTaskContent(content);
+        newTask.setIfFinished(ifFinished);
+        newTask.setRemark(remark);
+        taskRepository.save(newTask);
         logger.info("Aufgabe erfolgreich eingefügt: userId={}, taskDate={}, deadline={}, ifFinished={}, remark={}",
                 userId, taskDate, deadline, ifFinished, remark);
         return ApiResponse.success("Aufgabe erfolgreich eingefügt", null);
@@ -50,7 +55,7 @@ public class TaskService {
             throw new InvalidParameterException("Ungültige Parameter");
         }
 
-        taskRepository.deleteTask(taskId);
+        taskRepository.deleteById((long) taskId);
         logger.info("Aufgabe erfolgreich gelöscht taskId={}", taskId);
         return ApiResponse.success("Aufgabe erfolgreich gelöscht", null);
     }
@@ -130,7 +135,7 @@ public class TaskService {
      * Holt alle erledigten Aufgaben
      */
     public ApiResponse<?> findCompletedTasks() {
-        List<Task> getAllFinishedTask = taskRepository.findCompletedTasks();
+        List<Task> getAllFinishedTask = taskRepository.findAll();
         logger.info("Alle erledigten Aufgaben erfolgreich abgefragt, Anzahl={}", getAllFinishedTask.size());
         return ApiResponse.success("Aufgaben erfolgreich abgerufen", getAllFinishedTask);
     }

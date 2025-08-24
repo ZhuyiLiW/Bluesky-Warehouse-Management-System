@@ -1,7 +1,6 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.AmazonRefundRepository;
-import com.example.blueskywarehouse.Dao.CheckStockInfoRepository;
+import com.example.blueskywarehouse.Repository.AmazonRefundRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,5 +11,5 @@ public class AmazonRefundService {
 
     @Autowired
     AmazonRefundRepository amazonRefundRepository;
-    Logger logger = LoggerFactory.getLogger(CheckStockInfoService.class);
+    Logger logger = LoggerFactory.getLogger(AmazonRefundService.class);
 }

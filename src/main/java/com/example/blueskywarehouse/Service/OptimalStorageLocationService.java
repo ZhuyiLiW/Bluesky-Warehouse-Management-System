@@ -1,15 +1,15 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.OptimalStorageLocationRepository;
+import com.example.blueskywarehouse.Repository.OptimalStorageLocationRepository;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Response.ApiResponse;
+import com.example.blueskywarehouse.Util.SqlLikeEscaper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,6 +37,7 @@ public class OptimalStorageLocationService {
         logger.debug("Ermittelter optimaler slot_code: {}", optimalSlot);
 
         // Verfügbare bins basierend auf slot_code abfragen
+        SqlLikeEscaper.escape(optimalSlot);
         List<String> binList = optimalStorageLocationRepository.getOptimalBinlist(optimalSlot);
         if (binList.isEmpty()) {
             logger.warn("Kein geeigneter Lagerplatz für itemId={} gefunden", itemId);
@@ -52,6 +53,7 @@ public class OptimalStorageLocationService {
      */
     public ApiResponse<?> getAllEmptyBin(int itemId){
         String optimalSlot = optimalStorageLocationRepository.getOneOptimalSlot(itemId);
+        SqlLikeEscaper.escape(optimalSlot);
         List<String> allEmptyBinList = optimalStorageLocationRepository.getAllEmptyBinListBySlot(optimalSlot);
 
         if (allEmptyBinList == null || allEmptyBinList.isEmpty()) {

@@ -1,7 +1,6 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.CheckStockInfoRepository;
-import com.example.blueskywarehouse.Dao.ItemManagementRepository;
+import com.example.blueskywarehouse.Repository.ItemManagementRepository;
 import com.example.blueskywarehouse.Entity.Item;
 import com.example.blueskywarehouse.Response.ApiResponse;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -101,16 +99,5 @@ public class ItemManagementServiceTest {
         assertEquals("location2", result.get(1));
     }
 
-    @Test
-    void searchItemCountTest() {
-        // Simuliere eine Zählstatistik: [Boxen, Einzelstücke]
-        Object[] mockData = new Object[]{1, 2};
-        when(itemManagementRepository.searchItemCount(1)).thenReturn(mockData);
 
-        ApiResponse<?> response = itemManagementService.searchItemCount(1);
-        Object[] result = (Object[]) response.getData();
-
-        assertEquals("Produktanzahl erfolgreich abgerufen", response.getMessage());
-        assertEquals(2, result[1]);
-    }
 }

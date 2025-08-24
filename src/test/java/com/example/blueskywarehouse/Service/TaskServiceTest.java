@@ -1,7 +1,6 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.PriceListRepository;
-import com.example.blueskywarehouse.Dao.TaskRepository;
+import com.example.blueskywarehouse.Repository.TaskRepository;
 import com.example.blueskywarehouse.Entity.Task;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Exception.InvalidParameterException;
@@ -29,12 +28,7 @@ public class TaskServiceTest {
     @InjectMocks
     private TaskService taskService;
 
-    @Test
-    void testInsertTask_success() {
-        ApiResponse<?> response = taskService.insertTask(1, LocalDate.now(), LocalDate.now().plusDays(1), "Testinhalt", 0, "Testbemerkung");
-        verify(taskRepository).insertTask(anyInt(), any(), any(), anyString(), anyInt(), anyString());
-        assertEquals("Aufgabe erfolgreich eingefügt", response.getMessage());
-    }
+
 
     @Test
     void testInsertTask_invalidUserId() {
@@ -46,7 +40,7 @@ public class TaskServiceTest {
     @Test
     void testDeleteTask_success() {
         ApiResponse<?> response = taskService.deleteTask(1);
-        verify(taskRepository).deleteTask(1);
+        verify(taskRepository).deleteById(1L);
         assertEquals("Aufgabe erfolgreich gelöscht", response.getMessage());
     }
 

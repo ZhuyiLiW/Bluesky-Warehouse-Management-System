@@ -1,9 +1,6 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dao.TaskRepository;
-import com.example.blueskywarehouse.Dao.UserRepository;
-import com.example.blueskywarehouse.Entity.LoginUserDetails;
-import com.example.blueskywarehouse.Entity.User;
+import com.example.blueskywarehouse.Repository.UserRepository;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Exception.InvalidParameterException;
 import com.example.blueskywarehouse.Response.ApiResponse;
@@ -12,8 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;

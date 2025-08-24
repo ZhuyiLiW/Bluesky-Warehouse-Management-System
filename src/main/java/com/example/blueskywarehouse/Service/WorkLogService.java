@@ -1,10 +1,11 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Dto.CustomerRecord;
+import com.example.blueskywarehouse.Dto.CustomerDto;
 import com.example.blueskywarehouse.Entity.WorkLog;
-import com.example.blueskywarehouse.Dao.WorkLogRepository;
+import com.example.blueskywarehouse.Repository.WorkLogRepository;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Response.ApiResponse;
+import com.example.blueskywarehouse.Util.DateTimeUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -39,8 +40,6 @@ public class WorkLogService {
     Logger logger = LoggerFactory.getLogger(WorkLogService.class);
     final int OUT = 0;  // Ausgang (Lagerabgang)
     final int IN = 1;   // Eingang (Lagerzugang)
-    final String startDateSuffix = " 00:00:00";
-    final String endDateSuffix = " 23:59:59";
     private final ReentrantLock lock = new ReentrantLock();
 
     /**
@@ -80,11 +79,19 @@ public class WorkLogService {
                 if (remainingItems <= 0) break;
 
                 Integer currentStock = Optional.ofNullable(workLogRepository.getStock(itemId, binCode)).orElse(0);
-
+                WorkLog workLog=new WorkLog();
+                workLog.setBin_code(binCode);
+                workLog.setStatus(status);
+                workLog.setItemsCount(remainingItems);
+                workLog.setItemId(itemId);
+                workLog.setOperationDate(Timestamp.valueOf(operationDate));
+                workLog.setCustomerName(customerName);
                 if (remainingItems < currentStock || status == IN) {
-                    workLogRepository.insertWorklog(customerName, operationDate, itemId, remainingItems, status, binCode);
+                    workLogRepository.save(workLog);
+
                 } else {
-                    workLogRepository.insertWorklog(customerName, operationDate, itemId, currentStock, status, binCode);
+                    workLog.setItemsCount(currentStock);
+                    workLogRepository.save(workLog);
                 }
 
                 if (status == OUT) {
@@ -221,11 +228,14 @@ public class WorkLogService {
      * Arbeitslogs eines Kunden im Zeitraum abrufen (überladene Methoden)
      */
     public ApiResponse<?> getWorklogByPeriode(String startDate, String endDate,int page,int size) {
-        Pageable pageable = (Pageable) PageRequest.of(page, size); // Spring Data JPA Paginierungsobjekt, beginnend mit der ersten Seite, 10 Einträge pro Seite.
 
+        Timestamp startTs = DateTimeUtil.toTimestamp(startDate);
+        Timestamp endTs   = DateTimeUtil.toTimestamp(endDate);
+
+        Pageable pageable = (Pageable) PageRequest.of(page, size); // Spring Data JPA Paginierungsobjekt, beginnend mit der ersten Seite, 10 Einträge pro Seite.
         Page<WorkLog> workLogPage = workLogRepository.getWorklistByPeriode(
-                startDate ,
-                endDate ,
+                startTs ,
+                endTs  ,
                 pageable);
 
         return ApiResponse.success(workLogPage);
@@ -233,27 +243,33 @@ public class WorkLogService {
 
 
     public ApiResponse<?> getWorklogByPeriode(String startDate, String endDate, String customerName) {
+        Timestamp startTs = DateTimeUtil.toTimestamp(startDate);
+        Timestamp endTs   = DateTimeUtil.toTimestamp(endDate);
         customerName = customerName.trim();
         List<WorkLog> workLogList = workLogRepository.getWorklistByPeriodeAndCustomerName(
-                startDate + startDateSuffix,
-                endDate + endDateSuffix,
+                startTs,
+                endTs,
                 customerName);
         return ApiResponse.success(workLogList);
     }
 
     public ApiResponse<?> getWorklogByPeriode(String startDate, String endDate, int itemId) {
+        Timestamp startTs = DateTimeUtil.toTimestamp(startDate);
+        Timestamp endTs   = DateTimeUtil.toTimestamp(endDate);
         List<WorkLog> workLogList = workLogRepository.getWorklistByPeriodeAndItemId(
-                startDate + startDateSuffix,
-                endDate + endDateSuffix,
+                startTs,
+                endTs ,
                 itemId);
         return ApiResponse.success(workLogList);
     }
 
     public ApiResponse<?> getWorklogByPeriode(String startDate, String endDate, String customerName, int itemId) {
         customerName = customerName.trim();
+        Timestamp startTs = DateTimeUtil.toTimestamp(startDate);
+        Timestamp endTs   = DateTimeUtil.toTimestamp(endDate);
         List<WorkLog> workLogList = workLogRepository.getWorklistByPeriodeAndItemIdAndCName(
-                startDate + startDateSuffix,
-                endDate + endDateSuffix,
+                startTs,
+                endTs ,
                 itemId,
                 customerName);
         return ApiResponse.success(workLogList);
@@ -262,17 +278,13 @@ public class WorkLogService {
     /**
      * Kundendaten gruppiert nach Datum abrufen
      */
-    public Map<java.sql.Date, List<CustomerRecord>> getCustomerRecordsGroupedByDate(Date start, Date end) {
-        Map<java.sql.Date, List<CustomerRecord>> groupedRecords = new HashMap<>();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String startFormatted = sdf.format(start);
-        String endFormatted = sdf.format(end);
-
-        List<CustomerRecord> allRecords = workLogRepository.findByDateBetween(startFormatted, endFormatted);
+    public Map<java.sql.Date, List<CustomerDto>> getCustomerRecordsGroupedByDate(Date start, Date end) {
+        Map<java.sql.Date, List<CustomerDto>> groupedRecords = new HashMap<>();
+        List<CustomerDto> allRecords = workLogRepository.findByDateBetween(  new Timestamp(start.getTime()),
+                new Timestamp(end.getTime()));
 
         groupedRecords = allRecords.stream()
-                .collect(Collectors.groupingBy(CustomerRecord::getDate));
+                .collect(Collectors.groupingBy(CustomerDto::getDate));
 
         return groupedRecords;
     }
@@ -281,7 +293,7 @@ public class WorkLogService {
      * Kundendaten in Excel exportieren (pro Datum ein Blatt)
      */
     public ByteArrayInputStream exportToExcel(Date startDate, Date endDate) throws IOException {
-        Map<java.sql.Date, List<CustomerRecord>> dataMap = getCustomerRecordsGroupedByDate(startDate, endDate);
+        Map<java.sql.Date, List<CustomerDto>> dataMap = getCustomerRecordsGroupedByDate(startDate, endDate);
         List<java.sql.Date> sortedDates = new ArrayList<>(dataMap.keySet());
         sortedDates.sort(Comparator.naturalOrder());
 
@@ -308,10 +320,10 @@ public class WorkLogService {
             sheet.setColumnWidth(1, 25 * 256);
             sheet.setColumnWidth(2, 30 * 256);
 
-            List<CustomerRecord> records = dataMap.get(date);
+            List<CustomerDto> records = dataMap.get(date);
             int count = 1;
             for (int i = 0; i < records.size(); i++) {
-                CustomerRecord r = records.get(i);
+                CustomerDto r = records.get(i);
                 Row row = sheet.createRow(i + 2 + count - 1);
                 row.createCell(0).setCellValue(count++);
                 row.createCell(1).setCellValue(r.getDeliveryLocation());
