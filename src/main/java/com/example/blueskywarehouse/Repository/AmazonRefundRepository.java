@@ -1,6 +1,5 @@
-package com.example.blueskywarehouse.Dao;
+package com.example.blueskywarehouse.Repository;
 
-import com.example.blueskywarehouse.Entity.AllStock;
 import com.example.blueskywarehouse.Entity.AmazonRefund;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
