@@ -1,107 +1,122 @@
 package com.example.blueskywarehouse.Service;
 
-import com.example.blueskywarehouse.Repository.UserRepository;
+import com.example.blueskywarehouse.Entity.User;
 import com.example.blueskywarehouse.Exception.BusinessException;
 import com.example.blueskywarehouse.Exception.InvalidParameterException;
+import com.example.blueskywarehouse.Repository.UserRepository;
 import com.example.blueskywarehouse.Response.ApiResponse;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
     @Mock
-    private UserRepository userRepository;
+    UserRepository userRepository;
     @Mock
     private PasswordEncoder passwordEncoder;
     @InjectMocks
-    private UserService userService;
-
+    UserService userService;
+    // for method login
     @Test
-    void testGetUserId_success() {
-        String username = "testUser";
-        int mockUserId = 42;
-        String checkUserName = "testUser";
+    public void shouldThrowException_whenUsernameDoesNotExist() {
+        when(userRepository.getUserName("testname")).thenReturn(null);
 
-        // Simulation des Verhaltens von userRepository
-        when(userRepository.userId(username)).thenReturn(mockUserId);
-        when(userRepository.checkUserName(mockUserId)).thenReturn(checkUserName);
+        assertThrows(BusinessException.class, () -> userService.login("testname", anyString()));
 
-        // Methodenaufruf
-        ApiResponse<?> response = userService.getUserId(username);
-
-        // Überprüfen der Aufrufe und des Ergebnisses
-        verify(userRepository).userId(username);
-        verify(userRepository).checkUserName(mockUserId);
-
-        assertEquals("Benutzer-ID erfolgreich abgerufen", response.getMessage());
-        assertEquals(mockUserId + ":" + checkUserName, response.getData());
+        verify(userRepository, never()).getPwd("testname");
+        verify(userRepository, never()).getRoleId("testname");
     }
 
     @Test
-    void testGetUserId_nullOrEmptyUsername() {
-        assertThrows(InvalidParameterException.class, () -> userService.getUserId(null));
-        assertThrows(InvalidParameterException.class, () -> userService.getUserId(""));
-        assertThrows(InvalidParameterException.class, () -> userService.getUserId("   "));
+    public void shouldThrowException_whenUsernameOrPasswordIsEmpty() {
+        assertThrows(InvalidParameterException.class, () -> userService.login("", anyString()));
+        assertThrows(InvalidParameterException.class, () -> userService.login(null, anyString()));
+        assertThrows(InvalidParameterException.class, () -> userService.login(null, null));
+        assertThrows(InvalidParameterException.class, () -> userService.login(null, ""));
+        assertThrows(InvalidParameterException.class, () -> userService.login(anyString(), null));
+        assertThrows(InvalidParameterException.class, () -> userService.login(anyString(), ""));
     }
 
     @Test
-    void testGetUserId_userNotFound() {
-        String username = "nonexistentUser";
+    public  void shouldThrowException_whenPasswordDoesNotMatch() {
+        when(userRepository.getUserName("testname")).thenReturn("testname");
+        when(userRepository.getPwd("testname")).thenReturn("encodedPassword");
+        when(passwordEncoder.matches("falsepwd", "encodedPassword")).thenReturn(false);
 
-        when(userRepository.userId(username)).thenReturn(null);
+        assertThrows(BusinessException.class, () -> userService.login("testname", "falsepwd"));
 
-        assertThrows(BusinessException.class, () -> userService.getUserId(username));
-        verify(userRepository).userId(username);
+        verify(userRepository).getUserName("testname");
+        verify(userRepository).getPwd("testname");
+        verify(userRepository, never()).getRoleId("testname");
     }
 
     @Test
-    void testLogin_emptyUsernameOrPassword() {
-        assertThrows(InvalidParameterException.class, () -> userService.login(null, "12345678"));
-        assertThrows(InvalidParameterException.class, () -> userService.login("   ", "12345678"));
-        assertThrows(InvalidParameterException.class, () -> userService.login("test", null));
-        assertThrows(InvalidParameterException.class, () -> userService.login("test", " "));
+    public void shouldLoginSuccessfully_whenCredentialsAreCorrect() {
+        when(userRepository.getUserName("testname")).thenReturn("testname");
+        when(userRepository.getPwd("testname")).thenReturn("encodedPassword");
+        when(passwordEncoder.matches("getpwdsuccess", "encodedPassword")).thenReturn(true);
+        when(userRepository.getRoleId("testname")).thenReturn(1);
+
+        assertDoesNotThrow(() -> userService.login("testname", "getpwdsuccess"));
+
+        verify(userRepository).getUserName("testname");
+        verify(userRepository).getPwd("testname");
+        verify(userRepository).getRoleId("testname");
+    }
+
+    // for method  addNewUser
+    @Test
+    public void shouldThrowException_whenAddUsernameOrPasswordIsEmpty() {
+        assertThrows(InvalidParameterException.class, () -> userService.addNewUser("", null, 1));
+        assertThrows(InvalidParameterException.class, () -> userService.addNewUser(null, null, 1));
+        assertThrows(InvalidParameterException.class, () -> userService.addNewUser(null, "", 1));
+        assertThrows(InvalidParameterException.class, () -> userService.addNewUser("", "", 1));
+
+        verify(userRepository, never()).getUserName(anyString());
+        verify(userRepository, never()).save(any(User.class));
     }
 
     @Test
-    void testLogin_userNotExist() {
-        String username = "notExist";
-        when(userRepository.getUserName(username)).thenReturn(null);
-        assertThrows(BusinessException.class, () -> userService.login(username, "123456"));
-        verify(userRepository).getUserName(username);
+    public void shouldThrowException_whenPasswordTooShort() {
+        assertThrows(BusinessException.class, () -> userService.addNewUser("testuser", "short", 1));
+
+        verify(userRepository, never()).getUserName(anyString());
+        verify(userRepository, never()).save(any(User.class));
     }
 
     @Test
-    void testLogin_passwordNotSet() {
-        String username = "testuser";
-        when(userRepository.getUserName(username)).thenReturn(username);
-        when(userRepository.getPwd(username)).thenReturn(null);
+    public void shouldThrowException_whenUsernameAlreadyExists() {
+        when(userRepository.getUserName("existingUser")).thenReturn("existingUser");
 
-        assertThrows(BusinessException.class, () -> userService.login(username, "123456"));
-        verify(userRepository).getUserName(username);
-        verify(userRepository).getPwd(username);
+        assertThrows(BusinessException.class, () ->
+                userService.addNewUser("existingUser", "validPassword123", 1)
+        );
+
+        verify(userRepository).getUserName("existingUser");
+        verify(userRepository, never()).save(any(User.class));
     }
 
     @Test
-    void testLogin_wrongPassword() {
-        String username = "testuser";
-        String inputPassword = "wrongPassword";
-        String encodedPassword = "$2a$10$encoded";
+    public void shouldAddNewUserSuccessfully() {
+        when(userRepository.getUserName("newUser")).thenReturn(null);
+        when(passwordEncoder.encode("validPassword123")).thenReturn("encryptedPassword");
 
-        when(userRepository.getUserName(username)).thenReturn(username);
-        when(userRepository.getPwd(username)).thenReturn(encodedPassword);
-        when(passwordEncoder.matches(inputPassword, encodedPassword)).thenReturn(false);
+        ApiResponse<?> response = assertDoesNotThrow(() ->
+                userService.addNewUser("newUser", "validPassword123", 2)
+        );
 
-        assertThrows(BusinessException.class, () -> userService.login(username, inputPassword));
+        verify(userRepository).getUserName("newUser");
+        verify(passwordEncoder).encode("validPassword123");
+        verify(userRepository).save(any(User.class));
 
-        verify(userRepository).getUserName(username);
-        verify(userRepository).getPwd(username);
-        verify(passwordEncoder).matches(inputPassword, encodedPassword);
+        assertNotNull(response);
+        assertEquals("Benutzer erfolgreich hinzugefügt", response.getMessage());
     }
 }
