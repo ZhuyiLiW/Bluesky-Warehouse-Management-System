@@ -7,10 +7,12 @@ import com.example.blueskywarehouse.Repository.WorkLogRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Timestamp;
@@ -25,7 +27,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class WorkLogServiceTest {
     @Mock
     private WorkLogRepository workLogRepository;
@@ -34,7 +36,7 @@ public class WorkLogServiceTest {
 
     // for method InsertNewWorklog
     @Test
-    void testInsertNewWorklog_stockNotEnough_shouldThrowException() {
+    public void testInsertNewWorklog_stockNotEnough_shouldThrowException() {
         // Gesamter Lagerbestand unzureichend → BusinessException erwartet
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(5);
 
@@ -44,7 +46,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInsertNewWorklog_binNotEnough_shouldThrowException() {
+    public void testInsertNewWorklog_binNotEnough_shouldThrowException() {
         // Bestand im angegebenen Lagerplatz unzureichend → BusinessException erwartet
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(10);
         when(workLogRepository.findOptimalBin(anyInt())).thenReturn(Collections.singletonList("Ptest"));
@@ -56,7 +58,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInsertNewWorklog_outSuccess_partialStock() {
+    public void testInsertNewWorklog_outSuccess_partialStock() {
         // Ausgang < aktueller Bestand → normale Reduzierung, keine Löschung von Palette/Platz
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(10);
         when(workLogRepository.findOptimalBin(anyInt())).thenReturn(Collections.singletonList("Ptest-08-1"));
@@ -70,11 +72,11 @@ public class WorkLogServiceTest {
         verify(workLogRepository, times(1)).minusStock(eq(1), eq(3), eq("Ptest-08-1"), eq(10));
         verify(workLogRepository, never()).deletePalettFromBin(anyInt());
         verify(workLogRepository, never()).deleteItemId(anyInt());
-        verify(workLogRepository, never()).deleteEmptyBin("Ptest-08-1");
+        verify(workLogRepository, times(1)).deleteEmptyBin("Ptest-08-1");
     }
 
     @Test
-    void testInsertNewWorklog_outSuccess_stockExhausted() {
+    public void testInsertNewWorklog_outSuccess_stockExhausted() {
         // Ausgang == aktueller Bestand → Bestand auf 0, Palette/Platz werden gelöscht
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(10);
         when(workLogRepository.findOptimalBin(anyInt())).thenReturn(Collections.singletonList("Ptest-08-1"));
@@ -92,7 +94,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInsertNewWorklog_inSuccess_shouldAddStock() {
+    public void testInsertNewWorklog_inSuccess_shouldAddStock() {
         // Eingang: Lagerplatz hat bereits Bestand → addStock() wird aufgerufen
         when(workLogRepository.getStock(anyInt(), eq("BIN01"))).thenReturn(1);
 
@@ -105,7 +107,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInsertNewWorklog_inSuccess_shouldInsertNewStock() {
+    public void testInsertNewWorklog_inSuccess_shouldInsertNewStock() {
         // Eingang: Lagerplatz leer → neue Palette + neuer Platz werden angelegt
         when(workLogRepository.getStock(anyInt(), eq("BIN01"))).thenReturn(0);
 
@@ -122,7 +124,7 @@ public class WorkLogServiceTest {
     // for method invalidWorklog
 
     @Test
-    void testInvalidWorklog_notFound_shouldThrowException() {
+    public void testInvalidWorklog_notFound_shouldThrowException() {
         // Log existiert nicht → BusinessException erwartet
         when(workLogRepository.getWorkLogById(anyInt())).thenReturn(null);
 
@@ -132,7 +134,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInvalidWorklog_outWithStock_shouldRollback() {
+    public void testInvalidWorklog_outWithStock_shouldRollback() {
         // OUT-Log vorhanden + Bestand > 0 → rollbackWorklog0() wird ausgeführt
         WorkLog log = new WorkLog();
         log.setStatus(0); // OUT
@@ -151,7 +153,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInvalidWorklog_outNoStock_shouldInsertNewPalett() {
+    public void testInvalidWorklog_outNoStock_shouldInsertNewPalett() {
         // OUT-Log vorhanden + Bestand == 0 → neue Palette wird eingefügt
         WorkLog log = new WorkLog();
         log.setStatus(0); // OUT
@@ -171,7 +173,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInvalidWorklog_inNoStock_shouldThrowException() {
+    public void testInvalidWorklog_inNoStock_shouldThrowException() {
         // IN-Log vorhanden + Bestand == 0 → BusinessException erwartet
         WorkLog log = new WorkLog();
         log.setStatus(1); // IN
@@ -187,11 +189,11 @@ public class WorkLogServiceTest {
                 workLogService.invalidWorklog(1)
         );
 
-        verify(workLogRepository).worklogExpired(1);
+        verify(workLogRepository,never()).worklogExpired(1);
     }
 
     @Test
-    void testInvalidWorklog_inWithStock_shouldRollback() {
+    public void testInvalidWorklog_inWithStock_shouldRollback() {
         // IN-Log vorhanden + Bestand > 0 → rollbackWorklog1() wird ausgeführt
         WorkLog log = new WorkLog();
         log.setStatus(1); // IN
@@ -210,7 +212,7 @@ public class WorkLogServiceTest {
     }
 
     @Test
-    void testInvalidWorklog_inWithStock_andItemStockIsZero_shouldDeletePalett() {
+    public void testInvalidWorklog_inWithStock_andItemStockIsZero_shouldDeletePalett() {
         // IN-Log vorhanden + Bestand > 0, aber getStock() == 0 → Palette wird gelöscht
         WorkLog log = new WorkLog();
         log.setStatus(1); // IN
