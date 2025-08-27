@@ -23,7 +23,7 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
     @InjectMocks
     UserService userService;
-
+    // Methode login
     // Testfall: Wenn Benutzername nicht existiert → BusinessException
     @Test
     public void shouldThrowException_whenUsernameDoesNotExist() {
@@ -51,7 +51,7 @@ public class UserServiceTest {
 
     // Testfall: Wenn Passwort nicht übereinstimmt → BusinessException
     @Test
-    public  void shouldThrowException_whenPasswordDoesNotMatch() {
+    public void shouldThrowException_whenPasswordDoesNotMatch() {
         // Arrange
         when(userRepository.getUserName("testname")).thenReturn("testname");
         when(userRepository.getPwd("testname")).thenReturn("encodedPassword");
@@ -81,7 +81,7 @@ public class UserServiceTest {
         verify(userRepository).getPwd("testname");
         verify(userRepository).getRoleId("testname");
     }
-
+    // Methode addNewUser
     // Testfall: Wenn neuer Benutzername oder Passwort leer → InvalidParameterException
     @Test
     public void shouldThrowException_whenAddUsernameOrPasswordIsEmpty() {
