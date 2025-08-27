@@ -23,19 +23,24 @@ public class UserServiceTest {
     private PasswordEncoder passwordEncoder;
     @InjectMocks
     UserService userService;
-    // for method login
+
+    // Testfall: Wenn Benutzername nicht existiert → BusinessException
     @Test
     public void shouldThrowException_whenUsernameDoesNotExist() {
+        // Arrange
         when(userRepository.getUserName("testname")).thenReturn(null);
 
+        // Act
         assertThrows(BusinessException.class, () -> userService.login("testname", anyString()));
 
         verify(userRepository, never()).getPwd("testname");
         verify(userRepository, never()).getRoleId("testname");
     }
 
+    // Testfall: Wenn Benutzername oder Passwort leer ist → InvalidParameterException
     @Test
     public void shouldThrowException_whenUsernameOrPasswordIsEmpty() {
+        // Act
         assertThrows(InvalidParameterException.class, () -> userService.login("", anyString()));
         assertThrows(InvalidParameterException.class, () -> userService.login(null, anyString()));
         assertThrows(InvalidParameterException.class, () -> userService.login(null, null));
@@ -44,12 +49,15 @@ public class UserServiceTest {
         assertThrows(InvalidParameterException.class, () -> userService.login(anyString(), ""));
     }
 
+    // Testfall: Wenn Passwort nicht übereinstimmt → BusinessException
     @Test
     public  void shouldThrowException_whenPasswordDoesNotMatch() {
+        // Arrange
         when(userRepository.getUserName("testname")).thenReturn("testname");
         when(userRepository.getPwd("testname")).thenReturn("encodedPassword");
         when(passwordEncoder.matches("falsepwd", "encodedPassword")).thenReturn(false);
 
+        // Act
         assertThrows(BusinessException.class, () -> userService.login("testname", "falsepwd"));
 
         verify(userRepository).getUserName("testname");
@@ -57,13 +65,16 @@ public class UserServiceTest {
         verify(userRepository, never()).getRoleId("testname");
     }
 
+    // Testfall: Erfolgreiches Login wenn Benutzername und Passwort korrekt sind
     @Test
     public void shouldLoginSuccessfully_whenCredentialsAreCorrect() {
+        // Arrange
         when(userRepository.getUserName("testname")).thenReturn("testname");
         when(userRepository.getPwd("testname")).thenReturn("encodedPassword");
         when(passwordEncoder.matches("getpwdsuccess", "encodedPassword")).thenReturn(true);
         when(userRepository.getRoleId("testname")).thenReturn(1);
 
+        // Act
         assertDoesNotThrow(() -> userService.login("testname", "getpwdsuccess"));
 
         verify(userRepository).getUserName("testname");
@@ -71,9 +82,10 @@ public class UserServiceTest {
         verify(userRepository).getRoleId("testname");
     }
 
-    // for method  addNewUser
+    // Testfall: Wenn neuer Benutzername oder Passwort leer → InvalidParameterException
     @Test
     public void shouldThrowException_whenAddUsernameOrPasswordIsEmpty() {
+        // Act
         assertThrows(InvalidParameterException.class, () -> userService.addNewUser("", null, 1));
         assertThrows(InvalidParameterException.class, () -> userService.addNewUser(null, null, 1));
         assertThrows(InvalidParameterException.class, () -> userService.addNewUser(null, "", 1));
@@ -83,18 +95,23 @@ public class UserServiceTest {
         verify(userRepository, never()).save(any(User.class));
     }
 
+    // Testfall: Wenn Passwort zu kurz → BusinessException
     @Test
     public void shouldThrowException_whenPasswordTooShort() {
+        // Act
         assertThrows(BusinessException.class, () -> userService.addNewUser("testuser", "short", 1));
 
         verify(userRepository, never()).getUserName(anyString());
         verify(userRepository, never()).save(any(User.class));
     }
 
+    // Testfall: Wenn Benutzername bereits existiert → BusinessException
     @Test
     public void shouldThrowException_whenUsernameAlreadyExists() {
+        // Arrange
         when(userRepository.getUserName("existingUser")).thenReturn("existingUser");
 
+        // Act
         assertThrows(BusinessException.class, () ->
                 userService.addNewUser("existingUser", "validPassword123", 1)
         );
@@ -103,11 +120,14 @@ public class UserServiceTest {
         verify(userRepository, never()).save(any(User.class));
     }
 
+    // Testfall: Erfolgreiches Hinzufügen eines neuen Benutzers
     @Test
     public void shouldAddNewUserSuccessfully() {
+        // Arrange
         when(userRepository.getUserName("newUser")).thenReturn(null);
         when(passwordEncoder.encode("validPassword123")).thenReturn("encryptedPassword");
 
+        // Act
         ApiResponse<?> response = assertDoesNotThrow(() ->
                 userService.addNewUser("newUser", "validPassword123", 2)
         );
@@ -120,3 +140,4 @@ public class UserServiceTest {
         assertEquals("Benutzer erfolgreich hinzugefügt", response.getMessage());
     }
 }
+
