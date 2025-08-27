@@ -33,7 +33,7 @@ public class WorkLogServiceTest {
     private WorkLogRepository workLogRepository;
     @InjectMocks
     private WorkLogService workLogService;
-
+    // Methode insertNewWorklog
     // Testfall: Einfügen Worklog → Bestand insgesamt nicht ausreichend → BusinessException erwartet
     @Test
     public void testInsertNewWorklog_stockNotEnough_shouldThrowException() {
@@ -130,7 +130,7 @@ public class WorkLogServiceTest {
         verify(workLogRepository, times(1)).insertStockPalett(eq(1), eq(5), eq("BIN01"));
         verify(workLogRepository, times(1)).insertStockBin(eq("BIN01"));
     }
-
+    // Methode invalidWorklog
     // Testfall: invalidWorklog → Log existiert nicht → BusinessException
     @Test
     public void testInvalidWorklog_notFound_shouldThrowException() {
