@@ -34,36 +34,41 @@ public class WorkLogServiceTest {
     @InjectMocks
     private WorkLogService workLogService;
 
-    // for method InsertNewWorklog
+    // Testfall: Einfügen Worklog → Bestand insgesamt nicht ausreichend → BusinessException erwartet
     @Test
     public void testInsertNewWorklog_stockNotEnough_shouldThrowException() {
-        // Gesamter Lagerbestand unzureichend → BusinessException erwartet
+        // Arrange
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(5);
 
+        // Act
         assertThrows(BusinessException.class, () ->
                 workLogService.insertNewWorklog("Kunde1", LocalDateTime.now(), 1, 10, 0, null)
         );
     }
 
+    // Testfall: Einfügen Worklog → Bestand im angegebenen Lagerplatz nicht ausreichend → BusinessException erwartet
     @Test
     public void testInsertNewWorklog_binNotEnough_shouldThrowException() {
-        // Bestand im angegebenen Lagerplatz unzureichend → BusinessException erwartet
+        // Arrange
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(10);
         when(workLogRepository.findOptimalBin(anyInt())).thenReturn(Collections.singletonList("Ptest"));
         when(workLogRepository.getStock(anyInt(), eq("Ptest"))).thenReturn(1);
 
+        // Act
         assertThrows(BusinessException.class, () ->
                 workLogService.insertNewWorklog("Kunde1", LocalDateTime.now(), 1, 3, 0, "Ptest")
         );
     }
 
+    // Testfall: Worklog OUT → Ausgang kleiner als Bestand → nur minusStock, keine Löschungen
     @Test
     public void testInsertNewWorklog_outSuccess_partialStock() {
-        // Ausgang < aktueller Bestand → normale Reduzierung, keine Löschung von Palette/Platz
+        // Arrange
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(10);
         when(workLogRepository.findOptimalBin(anyInt())).thenReturn(Collections.singletonList("Ptest-08-1"));
         when(workLogRepository.getStock(anyInt(), eq("Ptest-08-1"))).thenReturn(10);
 
+        // Act
         assertDoesNotThrow(() ->
                 workLogService.insertNewWorklog("Kunde1", LocalDateTime.now(), 1, 3, 0, null)
         );
@@ -75,13 +80,15 @@ public class WorkLogServiceTest {
         verify(workLogRepository, times(1)).deleteEmptyBin("Ptest-08-1");
     }
 
+    // Testfall: Worklog OUT → Ausgang = Bestand → minusStock + Palette/Platz löschen
     @Test
     public void testInsertNewWorklog_outSuccess_stockExhausted() {
-        // Ausgang == aktueller Bestand → Bestand auf 0, Palette/Platz werden gelöscht
+        // Arrange
         when(workLogRepository.getAllStockCount(anyInt())).thenReturn(10);
         when(workLogRepository.findOptimalBin(anyInt())).thenReturn(Collections.singletonList("Ptest-08-1"));
         when(workLogRepository.getStock(anyInt(), eq("Ptest-08-1"))).thenReturn(10);
 
+        // Act
         assertDoesNotThrow(() ->
                 workLogService.insertNewWorklog("Kunde1", LocalDateTime.now(), 1, 10, 0, null)
         );
@@ -93,11 +100,13 @@ public class WorkLogServiceTest {
         verify(workLogRepository, times(1)).deleteEmptyBin("Ptest-08-1");
     }
 
+    // Testfall: Worklog IN → Lagerplatz vorhanden → addStock()
     @Test
     public void testInsertNewWorklog_inSuccess_shouldAddStock() {
-        // Eingang: Lagerplatz hat bereits Bestand → addStock() wird aufgerufen
+        // Arrange
         when(workLogRepository.getStock(anyInt(), eq("BIN01"))).thenReturn(1);
 
+        // Act
         assertDoesNotThrow(() ->
                 workLogService.insertNewWorklog("KundeA", LocalDateTime.now(), 1, 5, 1, "BIN01")
         );
@@ -106,11 +115,13 @@ public class WorkLogServiceTest {
         verify(workLogRepository, times(1)).addStock(eq(1), eq(1), eq(5), eq("BIN01"));
     }
 
+    // Testfall: Worklog IN → Lagerplatz leer → neue Palette + neuer Bin
     @Test
     public void testInsertNewWorklog_inSuccess_shouldInsertNewStock() {
-        // Eingang: Lagerplatz leer → neue Palette + neuer Platz werden angelegt
+        // Arrange
         when(workLogRepository.getStock(anyInt(), eq("BIN01"))).thenReturn(0);
 
+        // Act
         assertDoesNotThrow(() ->
                 workLogService.insertNewWorklog("KundeA", LocalDateTime.now(), 1, 5, 1, "BIN01")
         );
@@ -120,22 +131,22 @@ public class WorkLogServiceTest {
         verify(workLogRepository, times(1)).insertStockBin(eq("BIN01"));
     }
 
-
-    // for method invalidWorklog
-
+    // Testfall: invalidWorklog → Log existiert nicht → BusinessException
     @Test
     public void testInvalidWorklog_notFound_shouldThrowException() {
-        // Log existiert nicht → BusinessException erwartet
+        // Arrange
         when(workLogRepository.getWorkLogById(anyInt())).thenReturn(null);
 
+        // Act
         assertThrows(BusinessException.class, () ->
                 workLogService.invalidWorklog(1)
         );
     }
 
+    // Testfall: invalidWorklog OUT + Bestand > 0 → rollbackWorklog0()
     @Test
     public void testInvalidWorklog_outWithStock_shouldRollback() {
-        // OUT-Log vorhanden + Bestand > 0 → rollbackWorklog0() wird ausgeführt
+        // Arrange
         WorkLog log = new WorkLog();
         log.setStatus(0); // OUT
         log.setItemId(1);
@@ -146,15 +157,17 @@ public class WorkLogServiceTest {
         when(workLogRepository.getWorkLogById(1)).thenReturn(log);
         when(workLogRepository.getUnitstockFromWorklog(log.getItemId(), log.getBin_code())).thenReturn(30.0);
 
+        // Act
         assertDoesNotThrow(() -> workLogService.invalidWorklog(1));
 
         verify(workLogRepository).rollbackWorklog0(30.0, log.getItemsCount(), log.getItemId(), log.getBin_code());
         verify(workLogRepository).worklogExpired(1);
     }
 
+    // Testfall: invalidWorklog OUT + Bestand == 0 → neue Palette/Bin einfügen
     @Test
     public void testInvalidWorklog_outNoStock_shouldInsertNewPalett() {
-        // OUT-Log vorhanden + Bestand == 0 → neue Palette wird eingefügt
+        // Arrange
         WorkLog log = new WorkLog();
         log.setStatus(0); // OUT
         log.setItemId(1);
@@ -165,6 +178,7 @@ public class WorkLogServiceTest {
         when(workLogRepository.getWorkLogById(1)).thenReturn(log);
         when(workLogRepository.getUnitstockFromWorklog(log.getItemId(), log.getBin_code())).thenReturn(0.0);
 
+        // Act
         assertDoesNotThrow(() -> workLogService.invalidWorklog(1));
 
         verify(workLogRepository).insertStockPalett(log.getItemId(), log.getItemsCount(), log.getBin_code());
@@ -172,9 +186,10 @@ public class WorkLogServiceTest {
         verify(workLogRepository).worklogExpired(1);
     }
 
+    // Testfall: invalidWorklog IN + Bestand == 0 → BusinessException
     @Test
     public void testInvalidWorklog_inNoStock_shouldThrowException() {
-        // IN-Log vorhanden + Bestand == 0 → BusinessException erwartet
+        // Arrange
         WorkLog log = new WorkLog();
         log.setStatus(1); // IN
         log.setItemId(1);
@@ -185,6 +200,7 @@ public class WorkLogServiceTest {
         when(workLogRepository.getWorkLogById(1)).thenReturn(log);
         when(workLogRepository.getUnitstockFromWorklog(log.getItemId(), log.getBin_code())).thenReturn(0.0);
 
+        // Act
         assertThrows(BusinessException.class, () ->
                 workLogService.invalidWorklog(1)
         );
@@ -192,9 +208,10 @@ public class WorkLogServiceTest {
         verify(workLogRepository,never()).worklogExpired(1);
     }
 
+    // Testfall: invalidWorklog IN + Bestand > 0 → rollbackWorklog1()
     @Test
     public void testInvalidWorklog_inWithStock_shouldRollback() {
-        // IN-Log vorhanden + Bestand > 0 → rollbackWorklog1() wird ausgeführt
+        // Arrange
         WorkLog log = new WorkLog();
         log.setStatus(1); // IN
         log.setItemId(1);
@@ -205,15 +222,17 @@ public class WorkLogServiceTest {
         when(workLogRepository.getWorkLogById(1)).thenReturn(log);
         when(workLogRepository.getUnitstockFromWorklog(log.getItemId(), log.getBin_code())).thenReturn(30.0);
 
+        // Act
         assertDoesNotThrow(() -> workLogService.invalidWorklog(1));
 
         verify(workLogRepository).rollbackWorklog1(30.0, log.getItemsCount(), log.getItemId(), log.getBin_code());
         verify(workLogRepository).worklogExpired(1);
     }
 
+    // Testfall: invalidWorklog IN + Bestand > 0, aber getStock()==0 → Palette löschen
     @Test
     public void testInvalidWorklog_inWithStock_andItemStockIsZero_shouldDeletePalett() {
-        // IN-Log vorhanden + Bestand > 0, aber getStock() == 0 → Palette wird gelöscht
+        // Arrange
         WorkLog log = new WorkLog();
         log.setStatus(1); // IN
         log.setItemId(1);
@@ -225,13 +244,11 @@ public class WorkLogServiceTest {
         when(workLogRepository.getUnitstockFromWorklog(log.getItemId(), log.getBin_code())).thenReturn(30.0);
         when(workLogRepository.getStock(log.getItemId(), log.getBin_code())).thenReturn(0);
 
+        // Act
         assertDoesNotThrow(() -> workLogService.invalidWorklog(1));
 
         verify(workLogRepository).rollbackWorklog1(30.0, log.getItemsCount(), log.getItemId(), log.getBin_code());
         verify(workLogRepository).deletePalettByItemId(log.getItemId(), log.getBin_code());
         verify(workLogRepository).worklogExpired(1);
     }
-
-
-
 }
