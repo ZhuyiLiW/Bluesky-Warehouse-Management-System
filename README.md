@@ -1,75 +1,162 @@
-🏭 Bluesky Warehouse Management System Bluesky Warehouse ist ein enterprise-level Lagerverwaltungssystem, das mit Java und Spring Boot entwickelt wurde. Es umfasst wichtige Funktionen wie Benutzerberechtigungen, Ein- und Auslagerungen, Bestandsmanagement, Lageroptimierung, Materialpreiserfassung und Aufgabenverteilung für Mitarbeiter. Es unterstützt React-Frontend-Anbindungen und Docker-Containerisierung, geeignet für den Einsatz in größeren Netzwerken und internen Serverumgebungen.
+🏭 Bluesky Warehouse Management System
 
-GitHub Repository: ZhuyiLiW/Bluesky-Warehouse-Management-System
+Bluesky Warehouse ist ein enterprise-level ERP-System für Lagerverwaltung, entwickelt mit Java (Spring Boot) und React.
+Es bietet Funktionen wie Benutzer- und Rollenverwaltung, Warenein-/-auslagerung, Bestandsführung, Preisverwaltung, KPI-Monitoring für Mitarbeiter und zentrale Protokollierung.
+Dank Docker-Containerisierung und ELK-Integration ist es für größere Netzwerke und interne Produktivumgebungen geeignet.
+
+📂 GitHub Repository: ZhuyiLiW/Bluesky-Warehouse-Management-System
 
 🚀 Hauptfunktionen
+🔐 Benutzerverwaltung & Sicherheit
 
-Benutzer-Authentifizierung und Berechtigungssteuerung Ein Sicherheitssystem basierend auf Spring Security und JWT, das Benutzerregistrierung, Login, Logout, Token-Aktualisierung und rollenbasierte Berechtigungen unterstützt. Dies gewährleistet die Sicherheit des Zugriffs auf das System und bietet Flexibilität in Szenarien mit mehreren Berechtigungsstufen.
+Spring Security + JWT: Login, Logout, Rollen (Admin, Mitarbeiter usw.).
 
-Ein- und Auslagerungsoperationen sowie intelligente Lagerplatzzuweisung Unterstützt standardisierte Material-Einlagerungs- und Auslagerungsprozesse, protokolliert automatisch Bestandsänderungen und die beteiligten Benutzer, und erstellt eine vollständige Prüfprotokollkette. Das System enthält eine intelligente Auslagerungsstrategie, die basierend auf Parametern wie Materialcharge, Restmenge und Ablaufdatum automatisch den optimalen Auslagerungsplatz auswählt, um die Effizienz zu steigern und manuelle Entscheidungen zu reduzieren.
+Method-Level Security mit @PreAuthorize.
 
-Bestandsaufnahme und dynamische Positionsanpassung Bietet eine Echtzeit-Bestandsaufnahme-Schnittstelle und einen automatisierten Abgleichmechanismus, der die Bewegungen, Umlagerungen und Bestandsprüfungen der Waren im Lager unterstützt. Durch Transaktionssicherung wird die Konsistenz der Daten gewährleistet. Historische Bestandsaufnahmen können zur Unterstützung des Bestandsmanagements abgefragt werden.
+CORS- und Profil-spezifische Konfigurationen (dev/prod).
 
-Lagerplatzstrukturverwaltung und dynamische Inhaltsbearbeitung Unterstützt das Modellieren und Verwalten der Lagerplatzstruktur. Das System ermöglicht das Leeren, Verschieben und Visualisieren von Waren an verschiedenen Lagerplätzen sowie das Markieren der Verfügbarkeit. Zur Verbesserung der Raumauslastung werden batch-orientierte Operationen und die Zusammenarbeit mit einer Regel-Engine zur Optimierung der Lagerplatzzuweisung unterstützt.
+📦 Ein- und Auslagerungen
 
-Materialpreisverwaltung und historische Rückverfolgbarkeit Bietet Funktionen zum Erfassen, Bearbeiten, Einfrieren und Verwalten historischer Versionen von Materialpreisen. Dies stellt sicher, dass der Preisbildungsprozess kontrollierbar und nachvollziehbar bleibt. Es ist mit der Bestandskostenberechnung verbunden, um die Integration von Beschaffungskosten, Gewinnverlustanalyse und Finanzabgleich zu ermöglichen.
+Standardisierte Prozesse für Wareneingang & Warenausgang.
 
-Aufgabenplanung und Mitarbeiterleistungsüberwachung Ein System zur Aufgabenvergabe für Lageraufgaben, das verschiedene Dimensionen wie Aufgabentyp, Priorität und Frist unterstützt und an verschiedene Mitarbeiterrollen und -arten angepasst ist. Das System protokolliert automatisch die Ausführungsprotokolle der Aufgaben, die zur Bewertung der Mitarbeiterleistung verwendet werden können.
+Automatisches Protokollieren mit Benutzer und Zeitstempel.
 
-🛠 Technologischer Stack und Projektstruktur 📦 Übersicht der verwendeten Technologien
+Intelligente Slot-Auswahl (Menge, Haltbarkeit, Chargen-Strategie).
 
-Ebene Technologie Sprache Java 21 — Unterstützung für moderne Parallelität und Leistungsoptimierungen
+Transaktionssicherheit durch @Transactional + Sperrmechanismen.
 
-Framework Spring Boot 3.x
+📊 Bestandsaufnahme & Umlagerung
 
-ORM Spring Data JPA — Persistenzschicht basierend auf Hibernate
+Echtzeit-Inventur mit automatischem Abgleich.
 
-Sicherheit Spring Security + JWT — Authentifizierung und Autorisierung
+Umlagerungen zwischen Lagerplätzen mit Transaktionsschutz.
 
-Datenbank MySQL — Relationale Datenbankverwaltung
+Historische Inventuren abrufbar für Reporting.
 
-Nebenläufigkeit Optimistische Sperren (@Version) und pessimistische Sperren (@Lock), geschäftskritische Logik mit ReentrantLock fein abgestimmt
+🗄️ Lagerplatzverwaltung
 
-Fehlerbehandlung Eigene Fehlerklassen + globale Fehlerbehandlung für eine einheitliche API-Ausgabe
+Modellierung von Slots (frei, belegt, reserviert).
 
-Containerisierung Docker & Docker Compose — Unterstützung für Container-basierte Bereitstellung
+Batch-Operationen & dynamische Optimierung mit Regel-Engine.
 
-Frontend React (siehe Frontend-Repository)
+Visualisierung der Slot-Struktur.
 
-Bereitstellung Interne Serverbereitstellung mit Firewall- und Sicherheitsisolierung sowie Portweiterleitung
+💰 Preisverwaltung
 
-🧱 Projektstruktur
+Erfassung, Änderung und Historisierung von Materialpreisen.
 
-src/ ├── controller/ // Controller-Schicht: Empfängt Frontend-Anfragen, verarbeitet Parameter, ruft Geschäftslogik auf ├── service/ // Service-Schicht: Kapselt Kernlogik und Geschäftsregeln ├── dao/ // Datenzugriffs-Schicht: Datenbankoperationen mit Spring Data JPA ├── entity/ // Entitäten: Datenbank-Entities mit Optimismus-Sperre @Version ├── configuration/ // Konfigurationen: Spring Security, CORS, JWT usw. ├── exception/ // Fehlerbehandlung: Eigene Fehlerklassen und globale Fehlerbehandlung ├── response/ // Einheitliche Antwortstruktur: Standardisierte API-Antworten ├── Application.java // Einstiegspunkt der Anwendung
+Rückverfolgbarkeit und Verknüpfung mit Kosten- und Gewinnanalyse.
 
-⚙️ Schnellstart-Anleitung
+📋 Aufgaben & KPI
 
-Projekt klonen bash
-git clone https://github.com/ZhuyiLiW/Bluesky-Warehouse-Management-System.git cd Bluesky-Warehouse-Management-System
+Zuweisung von Aufgaben mit Priorität und Deadline.
 
-Datenbank-Konfiguration Erstellen Sie die Datenbank bluesky_warehouse und konfigurieren Sie die Verbindung in der application.yml:
-yaml spring: datasource: url: jdbc:mysql://localhost:3306/bluesky_warehouse username: root password: ihr_passwort 3. Lokale Ausführung bash mvn clean install mvn spring-boot:run 4. Docker-Start (Die Docker-Konfigurationsdatei finden Sie in meinem GitHub-Repository. ) bash docker-compose up -d 📡 API-Antwortformat Die einheitliche Antwortstruktur sieht folgendermaßen aus:
+Automatisches Logging für Leistungsbewertung.
 
-json { "code": 200, "message": "Operation erfolgreich", "data": { // Tatsächliche Rückgabedaten } } Fehlerbehandlungen folgen ebenfalls diesem einheitlichen Format, um eine globale Fehlerbehandlung und Frontend-Integration zu erleichtern.
+KPI-Monitoring pro Mitarbeiter.
 
-📝 Changelog v1.0.0 Fertigstellung der Kernmodule (Authentifizierung, Ein- und Auslagerung, Bestandsmanagement)
+🛠 Technologischer Stack
+Ebene	Technologie
+Sprache	Java 21
+Framework	Spring Boot 3.x
+ORM	Spring Data JPA (Hibernate)
+Sicherheit	Spring Security + JWT, CORS, @PreAuthorize
+Datenbank	MySQL
+Caching	Redis
+Nebenläufigkeit	Optimistic Locking (@Version), Pessimistic Locking, ReentrantLock
+Fehlerbehandlung	Globale Exception-Handler + eigene Exceptions
+Logging & Monitoring	Logback (MDC: traceId, userId), JSON Logs, ELK (Filebeat, Elasticsearch, Kibana)
+Frontend	React (separates Repository)
+Containerisierung	Docker & Docker Compose (Backend, Frontend, MySQL, ELK)
+Deployment	Dev/Prod Profiles, interne Serverbereitstellung
+Tests	JUnit + Mockito (Happy Path, Edge Cases, Exceptions)
+📂 Projektstruktur
+src/main/java/com.example.blueskywarehouse
+ ├── Configuration   // Security, Profiles, CORS, JWT
+ ├── Controller      // REST-APIs
+ ├── Dto             // Data Transfer Objects
+ ├── Entity          // JPA Entities (@Version für Optimistic Locking)
+ ├── Exception       // Custom Exceptions + Global ExceptionHandler
+ ├── Logging         // LogContext (MDC: traceId, userId)
+ ├── Repository      // JPA Repositories + Native SQL
+ ├── Response        // Einheitliche API-Response-Struktur
+ ├── Service         // Business-Logik (Transaktionen, Locking, Caching)
+ ├── Util            // Hilfsklassen (z.B. DateTimeUtil)
+ └── BlueskyWarehouseApplication // Einstiegspunkt
 
-Unterstützung für JWT-basierte Sicherheits- und Berechtigungssteuerung
+src/main/resources
+ ├── application.properties
+ ├── application-dev.properties
+ ├── application-prod.properties
+ └── logback-spring.xml
 
-Aufbau der globalen Fehlerbehandlung und einheitlichen API-Antwortstruktur
+src/test/java/com.example.blueskywarehouse
+ └── Service
+     └── BlueskyWarehouseApplicationTests // Unit Tests
 
-Docker-Containerisierung für die Bereitstellung
+⚙️ Installation & Start
+1. Projekt klonen
+git clone https://github.com/ZhuyiLiW/Bluesky-Warehouse-Management-System.git
+cd Bluesky-Warehouse-Management-System
 
-🤝 Beitrag leisten Beiträge sind willkommen! Bitte folgen Sie diesen Schritten:
+2. Datenbank konfigurieren
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bluesky_warehouse
+    username: root
+    password: <your_password>
 
-Forken Sie dieses Repository
+3. Lokal starten
+mvn clean install
+mvn spring-boot:run
 
-Erstellen Sie einen Feature-Branch: git checkout -b feature/xxx
+4. Docker Start
+docker-compose up -d
 
-Führen Sie Ihre Änderungen durch: git commit -am 'Füge xxx Funktion hinzu'
+📡 API Response-Format
+{
+  "code": 200,
+  "message": "Operation erfolgreich",
+  "data": { ... }
+}
 
-Pushen Sie den Branch: git push origin feature/xxx
 
-Erstellen Sie eine Pull-Anfrage
+Einheitliches Fehler- und Erfolgsformat.
 
-📄 Lizenz Dieses Projekt wird unter der MIT-Lizenz lizenziert.
+Einfache Integration mit Frontend (React).
+
+📝 Changelog
+
+v2.0.0
+
+✅ Enhanced JUnit Test Coverage: Added more unit test scenarios, covering both success and failure cases.
+
+✅ Improved JPQL with Entities: Refactored queries to leverage entity-based JPQL for better readability and maintainability.
+
+✅ Refined Global Exception Handling: Unified error codes and response formats to ensure consistent front-end integration.
+
+✅ Spring Security Error Handling Improved: More precise handling of authentication and authorization exceptions.
+
+✅ Redis Circuit Breaker Added: Ensures system stability by preventing cache failures from impacting core business processes.
+
+✅ RESTful API Standardization: Adjusted API naming and endpoints to align with REST best practices.
+
+🤝 Contribution
+
+Fork Repository
+
+Branch erstellen:
+
+git checkout -b feature/xyz
+
+
+Änderungen committen:
+
+git commit -am "Add xyz feature"
+
+
+Push & Pull Request
+
+📄 Lizenz
+
+MIT License
