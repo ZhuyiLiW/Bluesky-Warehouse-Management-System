@@ -72,16 +72,16 @@ Deployment	Dev/Prod Profiles, interne Serverbereitstellung
 Tests	JUnit + Mockito (Happy Path, Edge Cases, Exceptions)
 📂 Projektstruktur
 src/main/java/com.example.blueskywarehouse
- ├── Configuration   // Security, Profiles, CORS, JWT
- ├── Controller      // REST-APIs
- ├── Dto             // Data Transfer Objects
- ├── Entity          // JPA Entities (@Version für Optimistic Locking)
- ├── Exception       // Custom Exceptions + Global ExceptionHandler
- ├── Logging         // LogContext (MDC: traceId, userId)
- ├── Repository      // JPA Repositories + Native SQL
- ├── Response        // Einheitliche API-Response-Struktur
- ├── Service         // Business-Logik (Transaktionen, Locking, Caching)
- ├── Util            // Hilfsklassen (z.B. DateTimeUtil)
+ ├── Configuration              // Security, Profiles, CORS, JWT
+ ├── Controller                 // REST-APIs
+ ├── Dto                        // Data Transfer Objects
+ ├── Entity                     // JPA Entities (@Version für Optimistic Locking)
+ ├── Exception                  // Custom Exceptions + Global ExceptionHandler
+ ├── Logging                    // LogContext (MDC: traceId, userId)
+ ├── Repository                 // JPA Repositories + Native SQL
+ ├── Response                   // Einheitliche API-Response-Struktur
+ ├── Service                    // Business-Logik (Transaktionen, Locking, Caching)
+ ├── Util                       // Hilfsklassen (z.B. DateTimeUtil)
  └── BlueskyWarehouseApplication // Einstiegspunkt
 
 src/main/resources
@@ -93,6 +93,7 @@ src/main/resources
 src/test/java/com.example.blueskywarehouse
  └── Service
      └── BlueskyWarehouseApplicationTests // Unit Tests
+
 
 ⚙️ Installation & Start
 1. Projekt klonen
