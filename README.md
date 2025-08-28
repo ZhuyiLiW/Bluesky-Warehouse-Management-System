@@ -1,7 +1,20 @@
 🏭 Bluesky Warehouse Management System
 
-Bluesky Warehouse ist ein enterprise-level ERP-System für Lagerverwaltung, entwickelt mit Java (Spring Boot) und React.
-Es bietet Funktionen wie Benutzer- und Rollenverwaltung, Warenein-/-auslagerung, Bestandsführung, Preisverwaltung, KPI-Monitoring für Mitarbeiter und zentrale Protokollierung.
+Bluesky Warehouse ist ein Enterprise-ERP-System für Lagerverwaltung, entwickelt mit Java (Spring Boot) und React.
+Es bietet Funktionen wie:
+
+Benutzer- und Rollenverwaltung
+
+Warenein-/-auslagerung
+
+Bestandsführung
+
+Preisverwaltung
+
+KPI-Monitoring für Mitarbeiter
+
+zentrale Protokollierung
+
 Dank Docker-Containerisierung und ELK-Integration ist es für größere Netzwerke und interne Produktivumgebungen geeignet.
 
 📂 GitHub Repository: ZhuyiLiW/Bluesky-Warehouse-Management-System
@@ -9,51 +22,51 @@ Dank Docker-Containerisierung und ELK-Integration ist es für größere Netzwerk
 🚀 Hauptfunktionen
 🔐 Benutzerverwaltung & Sicherheit
 
-Spring Security + JWT: Login, Logout, Rollen (Admin, Mitarbeiter usw.).
+Spring Security + JWT (Login, Logout, Rollen: Admin, Mitarbeiter usw.)
 
-Method-Level Security mit @PreAuthorize.
+Method-Level Security mit @PreAuthorize
 
-CORS- und Profil-spezifische Konfigurationen (dev/prod).
+CORS- und Profil-spezifische Konfigurationen (dev/prod)
 
 📦 Ein- und Auslagerungen
 
-Standardisierte Prozesse für Wareneingang & Warenausgang.
+Standardisierte Prozesse für Wareneingang & Warenausgang
 
-Automatisches Protokollieren mit Benutzer und Zeitstempel.
+Automatisches Protokollieren (Benutzer, Zeitstempel)
 
-Intelligente Slot-Auswahl (Menge, Haltbarkeit, Chargen-Strategie).
+Intelligente Slot-Auswahl (Menge, Haltbarkeit, Chargen-Strategie)
 
-Transaktionssicherheit durch @Transactional + Sperrmechanismen.
+Transaktionssicherheit durch @Transactional + Sperrmechanismen
 
 📊 Bestandsaufnahme & Umlagerung
 
-Echtzeit-Inventur mit automatischem Abgleich.
+Echtzeit-Inventur mit automatischem Abgleich
 
-Umlagerungen zwischen Lagerplätzen mit Transaktionsschutz.
+Umlagerungen zwischen Lagerplätzen mit Transaktionsschutz
 
-Historische Inventuren abrufbar für Reporting.
+Historische Inventuren abrufbar für Reporting
 
 🗄️ Lagerplatzverwaltung
 
-Modellierung von Slots (frei, belegt, reserviert).
+Modellierung von Slots (frei, belegt, reserviert)
 
-Batch-Operationen & dynamische Optimierung mit Regel-Engine.
+Batch-Operationen & dynamische Optimierung mit Regel-Engine
 
-Visualisierung der Slot-Struktur.
+Visualisierung der Slot-Struktur
 
 💰 Preisverwaltung
 
-Erfassung, Änderung und Historisierung von Materialpreisen.
+Erfassung, Änderung und Historisierung von Materialpreisen
 
-Rückverfolgbarkeit und Verknüpfung mit Kosten- und Gewinnanalyse.
+Rückverfolgbarkeit, Kosten- & Gewinnanalyse
 
 📋 Aufgaben & KPI
 
-Zuweisung von Aufgaben mit Priorität und Deadline.
+Aufgaben mit Priorität und Deadline
 
-Automatisches Logging für Leistungsbewertung.
+Automatisches Logging für Leistungsbewertung
 
-KPI-Monitoring pro Mitarbeiter.
+KPI-Monitoring pro Mitarbeiter
 
 🛠 Technologischer Stack
 Ebene	Technologie
@@ -64,13 +77,12 @@ Sicherheit	Spring Security + JWT, CORS, @PreAuthorize
 Datenbank	MySQL
 Caching	Redis
 Nebenläufigkeit	Optimistic Locking (@Version), Pessimistic Locking, ReentrantLock
-Fehlerbehandlung	Globale Exception-Handler + eigene Exceptions
+Fehlerhandling	Globale Exception-Handler, Custom Exceptions
 Logging & Monitoring	Logback (MDC: traceId, userId), JSON Logs, ELK (Filebeat, Elasticsearch, Kibana)
-Frontend	React (separates Repository)
-Containerisierung	Docker & Docker Compose (Backend, Frontend, MySQL, ELK)
+Frontend	React (separates Repo)
+Containerisierung	Docker & Docker Compose
 Deployment	Dev/Prod Profiles, interne Serverbereitstellung
-Tests	JUnit + Mockito (Happy Path, Edge Cases, Exceptions)
-
+Tests	JUnit + Mockito
 📂 Projektstruktur
 src/main/java/com.example.blueskywarehouse
  ├── Configuration              // Security, Profiles, CORS, JWT
@@ -97,22 +109,31 @@ src/test/java/com.example.blueskywarehouse
 
 
 ⚙️ Installation & Start
-1. Projekt klonen
+
+Projekt klonen
+
 git clone https://github.com/ZhuyiLiW/Bluesky-Warehouse-Management-System.git
 cd Bluesky-Warehouse-Management-System
 
-2. Datenbank konfigurieren
+
+Datenbank konfigurieren
+application-dev.properties
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/bluesky_warehouse
     username: root
     password: <your_password>
 
-3. Lokal starten
+
+Lokal starten
+
 mvn clean install
 mvn spring-boot:run
 
-4. Docker Start
+
+Docker Start
+
 docker-compose up -d
 
 📡 API Response-Format
@@ -123,30 +144,27 @@ docker-compose up -d
 }
 
 
-Einheitliches Fehler- und Erfolgsformat.
+Einheitliches Fehler- und Erfolgsformat
 
-Einfache Integration mit Frontend (React).
+Einfache Integration mit React-Frontend
 
+📝 Changelog (v2.0.0)
 
-📝 Changelog
+✅ JUnit-Testabdeckung erweitert
 
-v2.0.0
+✅ JPQL-Abfragen mit Entitäten verbessert
 
-✅ JUnit-Testabdeckung erweitert: Zusätzliche Testszenarien implementiert, sowohl für Erfolgs- als auch Fehlerfälle.
+✅ Einheitliche Fehlercodes & Response-Formate
 
-✅ JPQL mit Entitäten verbessert: Abfragen auf Basis von Entitätsklassen refaktoriert, für bessere Lesbarkeit und Wartbarkeit.
+✅ Spring-Security-Fehlerbehandlung verfeinert
 
-✅ Globale Fehlerbehandlung optimiert: Einheitliche Fehlercodes und Response-Formate eingeführt, für konsistente Frontend-Integration.
+✅ Redis-Circuit-Breaker für Cache-Fehler eingebaut
 
-✅ Spring-Security-Fehlerbehandlung verfeinert: Präzisere Behandlung von Authentifizierungs- und Autorisierungsfehlern.
-
-✅ Redis-Circuit-Breaker hinzugefügt: Erhöhte Systemstabilität durch Abkopplung von Cache-Fehlern.
-
-✅ RESTful-API-Standardisierung: Endpunkte und Benennungen angepasst, um REST-Best Practices zu erfüllen.
+✅ RESTful-API-Standardisierung (Endpoints & Naming)
 
 🤝 Contribution
 
-Fork Repository
+Repository forken
 
 Branch erstellen:
 
