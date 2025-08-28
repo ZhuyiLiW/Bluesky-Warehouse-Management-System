@@ -70,6 +70,7 @@ Frontend	React (separates Repository)
 Containerisierung	Docker & Docker Compose (Backend, Frontend, MySQL, ELK)
 Deployment	Dev/Prod Profiles, interne Serverbereitstellung
 Tests	JUnit + Mockito (Happy Path, Edge Cases, Exceptions)
+
 📂 Projektstruktur
 src/main/java/com.example.blueskywarehouse
  ├── Configuration              // Security, Profiles, CORS, JWT
@@ -126,9 +127,8 @@ Einheitliches Fehler- und Erfolgsformat.
 
 Einfache Integration mit Frontend (React).
 
-📝 Changelog
 
-v2.0.0
+📝 Changelog
 
 v2.0.0
 
