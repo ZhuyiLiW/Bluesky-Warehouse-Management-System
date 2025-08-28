@@ -130,17 +130,19 @@ Einfache Integration mit Frontend (React).
 
 v2.0.0
 
-✅ Enhanced JUnit Test Coverage: Added more unit test scenarios, covering both success and failure cases.
+v2.0.0
 
-✅ Improved JPQL with Entities: Refactored queries to leverage entity-based JPQL for better readability and maintainability.
+✅ JUnit-Testabdeckung erweitert: Zusätzliche Testszenarien implementiert, sowohl für Erfolgs- als auch Fehlerfälle.
 
-✅ Refined Global Exception Handling: Unified error codes and response formats to ensure consistent front-end integration.
+✅ JPQL mit Entitäten verbessert: Abfragen auf Basis von Entitätsklassen refaktoriert, für bessere Lesbarkeit und Wartbarkeit.
 
-✅ Spring Security Error Handling Improved: More precise handling of authentication and authorization exceptions.
+✅ Globale Fehlerbehandlung optimiert: Einheitliche Fehlercodes und Response-Formate eingeführt, für konsistente Frontend-Integration.
 
-✅ Redis Circuit Breaker Added: Ensures system stability by preventing cache failures from impacting core business processes.
+✅ Spring-Security-Fehlerbehandlung verfeinert: Präzisere Behandlung von Authentifizierungs- und Autorisierungsfehlern.
 
-✅ RESTful API Standardization: Adjusted API naming and endpoints to align with REST best practices.
+✅ Redis-Circuit-Breaker hinzugefügt: Erhöhte Systemstabilität durch Abkopplung von Cache-Fehlern.
+
+✅ RESTful-API-Standardisierung: Endpunkte und Benennungen angepasst, um REST-Best Practices zu erfüllen.
 
 🤝 Contribution
 
