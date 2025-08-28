@@ -20,6 +20,7 @@ Dank Docker-Containerisierung und ELK-Integration ist es für größere Netzwerk
 📂 GitHub Repository: ZhuyiLiW/Bluesky-Warehouse-Management-System
 
 🚀 Hauptfunktionen
+
 🔐 Benutzerverwaltung & Sicherheit
 
 Spring Security + JWT (Login, Logout, Rollen: Admin, Mitarbeiter usw.)
@@ -69,20 +70,34 @@ Automatisches Logging für Leistungsbewertung
 KPI-Monitoring pro Mitarbeiter
 
 🛠 Technologischer Stack
+
 Ebene	Technologie
+
 Sprache	Java 21
+
 Framework	Spring Boot 3.x
 ORM	Spring Data JPA (Hibernate)
 Sicherheit	Spring Security + JWT, CORS, @PreAuthorize
+
 Datenbank	MySQL
+
 Caching	Redis
+
 Nebenläufigkeit	Optimistic Locking (@Version), Pessimistic Locking, ReentrantLock
+
 Fehlerhandling	Globale Exception-Handler, Custom Exceptions
+
 Logging & Monitoring	Logback (MDC: traceId, userId), JSON Logs, ELK (Filebeat, Elasticsearch, Kibana)
+
 Frontend	React (separates Repo)
+
 Containerisierung	Docker & Docker Compose
+
 Deployment	Dev/Prod Profiles, interne Serverbereitstellung
+
 Tests	JUnit + Mockito
+
+
 📂 Projektstruktur
 src/main/java/com.example.blueskywarehouse
  ├── Configuration              // Security, Profiles, CORS, JWT
